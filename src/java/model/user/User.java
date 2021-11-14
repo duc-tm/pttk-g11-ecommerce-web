@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package model.user;
+
+import model.user.FullName;
+import model.user.Address;
+import model.user.Account;
 
 /**
  *

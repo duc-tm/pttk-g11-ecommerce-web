@@ -1,0 +1,72 @@
+.search i {
+    top: 7px;
+    right: 10px;
+    font-size: 1.6rem;
+}
+
+.search i:hover {
+    cursor: pointer;
+}
+
+.navbar {
+    z-index: 10;
+}
+
+.cart {
+    position: relative;
+}
+
+.cart::after {
+    content: "0";
+    position: absolute;
+    top: -2px;
+    right: -4px;
+    font-size: 1rem;
+    padding: 0 5px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.user {
+    margin-left: 96px;
+}
+
+.user i {
+    font-size: 1.8rem;
+}
+
+.user:before {
+    content: "";
+    width: 120px;
+    height: 10px;
+    top: 88%;
+    right: 0;
+    position: absolute;
+}
+
+.user-control {
+    right: 0;
+    top: 36px;
+    min-width: 120px;
+    padding: 16px 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    display: none !important;
+}
+
+.user:hover .user-control{
+    display: flex !important;
+}
+
+.user-control a {
+    padding: 8px 8px;
+    border-radius: 4px;
+}
+
+.user-control a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.cart:hover, .user:hover {
+    cursor: pointer;
+}
