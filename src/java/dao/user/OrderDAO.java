@@ -13,13 +13,12 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Admin
+ * @author DELL
  */
-public class UserDAO {
-
+public class OrderDAO {
     private Connection conn;
     private Statement statement;
-    public UserDAO(Connection conn) {
+    public OrderDAO(Connection conn) {
         try {
             this.conn = conn;
             this.statement =this.conn.createStatement();
@@ -27,5 +26,4 @@ public class UserDAO {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 }

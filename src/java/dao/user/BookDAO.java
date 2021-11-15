@@ -13,13 +13,12 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Admin
+ * @author DELL
  */
-public class UserDAO {
-
+public class BookDAO {
     private Connection conn;
     private Statement statement;
-    public UserDAO(Connection conn) {
+    public BookDAO(Connection conn) {
         try {
             this.conn = conn;
             this.statement =this.conn.createStatement();
