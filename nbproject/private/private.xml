@@ -3,48 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/clothes/Clothes.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/shoes/ShoesOrigin.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/clothes/ClothesItem.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/ElectronicsDAO.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/BookDAOImpl.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/ElectronicDAOImpl.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/order/Cart.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/shoes/ShoesItem.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/electrnoics/Mobilephone.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/electrnoics/ElectronicsItem.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/ShoesDAO.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/ConDB.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/ClothesDAOImpl.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/order/Shipment.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/book/Book.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/ClothesDAO.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/BookDAO.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/OrderDAOImpl.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/book/BookItem.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/ShoesDAOImpl.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/controller/HomeController.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/controller/PaymentController.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/book/Author.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/book/Publisher.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/electrnoics/TV.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/order/Order.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/OrderDAO.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/UserDAO.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/shoes/Shoes.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/controller/ItemController.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/controller/CartController.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/user/User.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/electrnoics/ElectronicOrigin.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/user/Account.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/shoes/ShoesDesign.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/controller/UserController.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/dao/user/UserDAOImpl.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/clothes/ClothesOrigin.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/order/Payment.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/clothes/ClothesDesign.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/electrnoics/Electronics.java</file>
-            <file>file:/C:/Users/DELL/Documents/PTTTKHT/pttk-g11-ecommerce-web/src/java/model/electrnoics/Laptop.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/css/checkout.css</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/components/header.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/payment.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/css/cart.css</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/cart.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/item-detail.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/HomeController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/home.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/PaymentController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/list-item.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/nbproject/build-impl.xml</file>
         </group>
     </open-files>
 </project-private>
