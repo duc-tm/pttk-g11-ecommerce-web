@@ -26,11 +26,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CartController</servlet-name>
-        <url-pattern>/user/cart</url-pattern>
+        <url-pattern>/cart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PaymentController</servlet-name>
-        <url-pattern>/user/pay</url-pattern>
+        <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ItemController</servlet-name>

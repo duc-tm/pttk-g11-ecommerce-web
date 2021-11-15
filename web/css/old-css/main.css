@@ -291,3 +291,35 @@
     margin-bottom: 32px;
     padding-left: 0;
 }
+
+.footer-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 1.2rem;
+}
+
+.footer-pagination .prev-page-btn, .footer-pagination .next-page-btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 1px 14px;
+}
+
+.footer-pagination .pagination-list a {
+    margin-right: 8px;
+    display: inline-block;
+    text-decoration: none;
+    padding: 1px 15px;
+    color: var(--text-color);
+    border-radius: 2px;
+}
+
+.footer-pagination .still-more-page {
+    cursor: default;
+}
+
+.footer-pagination .pagination-list a.active {
+    color: var(--white-color);
+    background-color: var(--primary-color);
+}

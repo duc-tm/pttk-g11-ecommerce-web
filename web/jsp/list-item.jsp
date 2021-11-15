@@ -108,13 +108,12 @@
                                     <div class="col-md-2">
                                         <a class="home-product__item" href="#">
                                             <div class="home-product__item-img"
-                                                 style="background-image: url(https://i.pinimg.com/originals/6b/bd/dc/6bbddca7cf4622061a7bd1ddbce99943.jpg);">
+                                                 style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
                                             </div>
-                                            <h4 class="home-product__item-name">Set dưỡng trắng Woho đông y hoàng cung Gong Jinh
-                                                Yang</h4>
+                                            <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
                                             <div class="home-product__item-price">
-                                                <span class="home-product__item-price--old">12.300.000đ</span>
-                                                <span class="home-product__item-price--current">11.999.000đ</span>
+                                                <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
                                             </div>
                                             <div class="home-product__item-origin">
                                                 <span class="home-product__item-brand">Woho</span>
@@ -125,6 +124,21 @@
 
                                 </div>
                             </div>
+
+                            <div class="footer-pagination mt-5">
+                                <button class="prev-page-btn">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <div class="pagination-list">
+                                    <a href="?page=1">1</a>
+                                    <a href="?page=2">2</a>
+                                    <a href="?page=3">3</a>
+                                    <a class="still-more-page">...</a>
+                                </div>
+                                <button class="next-page-btn">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -134,8 +148,9 @@
 
             <jsp:include page="components/footer.jsp"></jsp:include>
 
-        </div>
+            </div>
 
+            <script src="${pageContext.request.contextPath}/js/pagination.js"></script>
     </body>
 
 </html>

@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">Shopyy</a>
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/home">Shopyy</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -28,7 +28,9 @@
                 <i class="fas fa-search position-absolute"></i>
             </div>
             <div class="cart fs-3">
-                <i class="bi-cart-fill me-1 text-white"></i>
+                <a href="${pageContext.request.contextPath}/cart">
+                    <i class="bi-cart-fill me-1 text-white"></i>
+                </a>
             </div>
             <div class="user position-relative">
                 <i class="far fa-user-circle text-white"></i>

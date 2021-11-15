@@ -37,7 +37,7 @@
 
 .user:before {
     content: "";
-    width: 120px;
+    width: 150%;
     height: 10px;
     top: 88%;
     right: 0;

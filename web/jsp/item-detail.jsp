@@ -75,13 +75,7 @@
                                         <div class="text-muted text-capitalize">Số Lượng</div>
                                     </div>
                                     <div class="col-10 content d-flex align-items-center">
-                                        <div class="item-info__quantity-select">
-                                            <div class="number" id="item-counter">
-                                                <span class="minus">-</span>
-                                                <input type="text" value="1" id="item-counter-input" />
-                                                <span class="plus">+</span>
-                                            </div>
-                                        </div>
+                                    <jsp:include page="components/counter.jsp"></jsp:include>
                                         <div class="item-info__quantity-available ms-3 text-muted">
                                             5982 sản phẩm có sẵn
                                         </div>
@@ -181,7 +175,7 @@
                 <div class="similar-item">
                     <h5 class="similar-item__title fw-normal text-uppercase">Sản phẩm tương tự</h5>
                     <div class="similar-item-list">
-                        
+
                     </div>
                 </div>
             </div>
