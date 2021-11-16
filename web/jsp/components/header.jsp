@@ -33,11 +33,13 @@
                 </a>
             </div>
             <div class="user position-relative">
-                <i class="far fa-user-circle text-white"></i>
+                <a href="${pageContext.request.contextPath}/user" class="d-block">
+                    <i class="far fa-user-circle text-white"></i>
+                </a>
                 <div class="user-control position-absolute d-flex flex-column shadow-sm">
                     <a href="" class="text-decoration-none text-secondary" data-bs-toggle="modal" data-bs-target="#register-modal" >Đăng ký</a>
                     <a href="" class="text-decoration-none text-primary" data-bs-toggle="modal" data-bs-target="#login-modal">Đăng nhập</a>
-                </div>       
+                </div>     
             </div>
         </div>
     </div>

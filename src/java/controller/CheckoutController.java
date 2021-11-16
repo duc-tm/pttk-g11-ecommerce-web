@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class PaymentController extends HttpServlet {
+public class CheckoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,8 +30,15 @@ public class PaymentController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/payment.jsp");
-        rd.forward(request, response);
+        String path = request.getPathInfo();
+
+        if (path == null) {
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/checkout.jsp");
+            rd.forward(request, response);
+        } else if (path.equalsIgnoreCase("/success")) {
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/checkout-success.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

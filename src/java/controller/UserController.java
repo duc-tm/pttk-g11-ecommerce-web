@@ -30,8 +30,12 @@ public class UserController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/user-profile.jsp");
-        rd.forward(request, response);
+        String path = request.getPathInfo();
+
+        if (path == null) {
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/user.jsp");
+            rd.forward(request, response);
+        }
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

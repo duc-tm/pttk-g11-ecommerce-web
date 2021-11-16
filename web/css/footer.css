@@ -9,6 +9,12 @@ and open the template in the editor.
 */
 .footer {
     background-color: rgb(245, 245, 245);
+    padding-left: 100px;
+    padding-right: 100px;
+}
+.footer a {
+    margin-bottom: 6px;
+    display: block;
 }
 
 .footer-policy {

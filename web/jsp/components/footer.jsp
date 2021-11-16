@@ -5,40 +5,48 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="mt-5 p-4 footer">
-    <div class="row row-cols-3">
-        <div class="col-3"></div>
-        <div class="col-3">
-            <h3>Sản phẩm</h3>
-            <div><a href="" class="text-black text-decoration-none">Giày</a></div>
-            <div><a href="" class="text-black text-decoration-none">Quần áo</a></div>
-            <div><a href="" class="text-black text-decoration-none">Sách</a></div>
-            <div><a href="" class="text-black text-decoration-none">Đồ điện tử</a></div>
-        </div>
-        <div class="col-3">
-            <h3>Hỗ trợ</h3>
-            <div><a href="" class="text-black text-decoration-none">Đóng góp</a></div>
-            <div><a href="" class="text-black text-decoration-none">Phản hồi về sản phẩm</a></div>
-            <div><a href="" class="text-black text-decoration-none">Gợi ý</a></div>
-        </div>
-        <div class="col-3">
-            <h3>Liên hệ</h3>
-            <div><a href="" class="text-black text-decoration-none">Gmail</a></div>
-            <div><a href="" class="text-black text-decoration-none">Hotline</a></div>
-            <div><a href="" class="text-black text-decoration-none">Facebook</a></div>
-        </div>
-    </div>
-    <hr>
-    <div class="container footer-policy">
+<div class="mt-5 py-4 footer">
+    <div class="container">
         <div class="row">
             <div class="col-3">
-                <a href="">
-                    CHÍNH SÁCH BẢO MẬT
-                </a>                        
+                <h4 class="mb-3">Về Shopyy</h4>
+                <a href="" class="text-black text-decoration-none">Giới thiệu về Shopyy</a>
+                <a href="" class="text-black text-decoration-none">Tuyển dụng</a>
+                <a href="" class="text-black text-decoration-none">Điều khoản Shopyy</a>
             </div>
-            <div class="col-3"><a href="">QUY CHẾ HOẠT ĐỘNG</a></div>
-            <div class="col-3"><a href="">CHÍNH SÁCH VẬN CHUYỂN</a></div>
-            <div class="col-3"><a href="">CHÍNH SÁCH TRẢ HÀNG VÀ HOÀN TIỀN</a></div>
-        </div>                
+            <div class="col-3">
+                <h4 class="mb-3">Sản phẩm</h4>
+                <a href="" class="text-black text-decoration-none">Giày</a>
+                <a href="" class="text-black text-decoration-none">Thời trang</a>
+                <a href="" class="text-black text-decoration-none">Sách</a>
+                <a href="" class="text-black text-decoration-none">Đồ điện tử</a>
+            </div>
+            <div class="col-3">
+                <h4 class="mb-3">Hỗ trợ</h4>
+                <a href="" class="text-black text-decoration-none">Đóng góp</a>
+                <a href="" class="text-black text-decoration-none">Phản hồi về sản phẩm</a>
+                <a href="" class="text-black text-decoration-none">Gợi ý</a>
+            </div>
+            <div class="col-3">
+                <h4 class="mb-3">Liên hệ</h4>
+                <a href="" class="text-black text-decoration-none">Hotline</a>
+                <a href="" class="text-black text-decoration-none">Facebook</a>
+            </div>
+        </div>
+        
+        <hr class="text-muted">
+        
+        <div class="container footer-policy">
+            <div class="row">
+                <div class="col-3">
+                    <a href="">
+                        CHÍNH SÁCH BẢO MẬT
+                    </a>                        
+                </div>
+                <div class="col-3"><a href="">QUY CHẾ HOẠT ĐỘNG</a></div>
+                <div class="col-3"><a href="">CHÍNH SÁCH VẬN CHUYỂN</a></div>
+                <div class="col-3"><a href="">CHÍNH SÁCH TRẢ HÀNG VÀ HOÀN TIỀN</a></div>
+            </div>                
+        </div>
     </div>
 </div>

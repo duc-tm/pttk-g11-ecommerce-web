@@ -24,6 +24,7 @@
         <link href="${pageContext.request.contextPath}/css/auth-modals.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/css/footer.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/css/item.css" rel="stylesheet" />
 
         <link href="${pageContext.request.contextPath}/css/home.css" rel="stylesheet" />
 
@@ -39,71 +40,49 @@
 
 
             <!-- Intro -->
-            <div class="container p-5">
+            <div class="container p-5 pt-0">
                 <div class="row row-cols-3 mt-5">
 
                     <!-- Left component -->
-                    <div class="col-2 bg-light">
+                    <div class="col-2 bg-light shadow-sm">
                         <div class="row row-cols-1 bg-white">
                             <div class="col pt-3">
                                 <div class="row-cols-1 text-center">
-                                    <p class="h6 ">Sản phẩm khuyến mãi</p>
+                                    <h6 class="text-capitalize">Sản phẩm khuyến mãi</h6>
                                 </div>
-                                <hr>
-                                <div class="row-cols-1 mt-5 g-3">
-                                    <div class="card h-100 mb-3">
-                                        <div class="badge bg-light position-absolute text-danger"
-                                             style="top: 0.5rem; right: 0.5rem">
-                                            Sale</div>
-                                        <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="text-center">
-                                                <h5 class="fw-bolder"> Product</h5>
-                                                <span class="text-muted text-decoration-line-through">1000vnd</span>
-                                                10000vnd
+                                <hr class="text-muted"/>
+                                <div class="row-cols-1 g-3">
+                                    <div class="mb-3">
+                                        <a class="home-product__item" href="#">
+                                            <div class="home-product__item-img"
+                                                 style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
                                             </div>
-                                        </div>
-
-                                        <div class="text-center mb-4">
-                                            <a href="" class="btn btn-outline-dark"> Buy</a>
-                                        </div>
-
+                                            <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                            <div class="home-product__item-price">
+                                                <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                            </div>
+                                            <div class="home-product__item-origin">
+                                                <span class="home-product__item-brand">Woho</span>
+                                                <span class="home-product__item-country">Nhật bản</span>
+                                            </div>
+                                        </a>
                                     </div>
-                                    <div class="card h-100 mb-3">
-                                        <div class="badge bg-light position-absolute text-danger"
-                                             style="top: 0.5rem; right: 0.5rem">
-                                            Sale</div>
-                                        <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="text-center">
-                                                <h5 class="fw-bolder"> Product</h5>
-                                                <span class="text-muted text-decoration-line-through">1000vnd</span>
-                                                10000vnd
+                                    <div class="mb-3">
+                                        <a class="home-product__item" href="#">
+                                            <div class="home-product__item-img"
+                                                 style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
                                             </div>
-                                        </div>
-
-                                        <div class="text-center mb-4">
-                                            <a href="" class="btn btn-outline-dark"> Buy</a>
-                                        </div>
-
-                                    </div>
-                                    <div class="card h-100 mb-3">
-                                        <div class="badge bg-light position-absolute text-danger"
-                                             style="top: 0.5rem; right: 0.5rem">
-                                            Sale</div>
-                                        <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" class="card-img-top">
-                                        <div class="card-body">
-                                            <div class="text-center">
-                                                <h5 class="fw-bolder"> Product</h5>
-                                                <span class="text-muted text-decoration-line-through">1000vnd</span>
-                                                10000vnd
+                                            <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                            <div class="home-product__item-price">
+                                                <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
                                             </div>
-                                        </div>
-
-                                        <div class="text-center mb-4">
-                                            <a href="" class="btn btn-outline-dark"> Buy</a>
-                                        </div>
-
+                                            <div class="home-product__item-origin">
+                                                <span class="home-product__item-brand">Woho</span>
+                                                <span class="home-product__item-country">Nhật bản</span>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -114,10 +93,10 @@
 
 
                     <!-- Middle component -->
-                    <div class="col-8 bg-light p-5">
+                    <div class="col-8 bg-light px-5">
 
                         <!-- Slider -->
-                        <div class="row row-cols-1 bg-white mb-4">
+                        <div class="row row-cols-1 bg-white mb-4 py-2 shadow-sm">
 
                             <div id="demo" class="carousel slide" data-bs-ride="carousel">
 
@@ -158,60 +137,65 @@
                         </div>
 
                         <!-- Danh mục hàng -->
-                        <div class="row row-cols-1 bg-white mt-5">
-                            <div class="col pb-4">
-                                <div class="row py-3 ">
-                                    <div class="text-center text-black">
-                                        <h4>Danh mục mua hàng</h4>
-                                    </div>
+                        <div class="row row-cols-1 bg-white mt-5 shadow-sm">
+                            <div class="col py-3">
+                                <div class="text-center text-uppercase">
+                                    <h4 class="mb-0">Danh mục</h4>
                                 </div>
-                                <hr>
+                                <hr class="text-muted"/>
                                 <div class="px-3 row row-cols-4">
                                     <div class="col-3 text-start">
-                                        <div>
-                                            <img src="" alt="">
+                                        <div class="category-list">
                                             <h5 class="">
-                                                <div><a href="" class="text-black text-decoration-none">Quần áo</a></div>
+                                                <a href="" class="text-black text-decoration-none">
+                                                    <img src="https://cf.shopee.vn/file/75ea42f9eca124e9cb3cde744c060e4d_tn" alt="fashion">
+                                                    Thời trang
+                                                </a>
                                             </h5>
-                                            <div><a href="" class="text-black text-decoration-none">Quần áo nam</a></div>
-                                            <div><a href="" class="text-black text-decoration-none">Quần áo nữ</a></div>
-                                            <div><a href="" class="text-black text-decoration-none">Quần áo trẻ em</a></div>
-                                            <div><a href="" class="text-black text-decoration-none">Đồ uniex</a></div>
+                                            <a href="" class="text-black text-decoration-none">Thời trang nam</a>
+                                            <a href="" class="text-black text-decoration-none">Thời trang nữ</a>
+                                            <a href="" class="text-black text-decoration-none">Thời trang trẻ em</a>
                                         </div>
                                     </div>
                                     <div class="col-3 text-start">
-                                        <div>
-                                            <img src="" alt="">
+                                        <div class="category-list">
                                             <h5 class="">
-                                                <div><a href="" class="text-black text-decoration-none">Giày</a></div>
+                                                <a href="" class="text-black text-decoration-none">
+                                                    <img src="https://cf.shopee.vn/file/74ca517e1fa74dc4d974e5d03c3139de_tn" alt="shoes">
+                                                    Giày
+                                                </a>
                                             </h5>
-                                            <div><a href="" class="text-black text-decoration-none">Giày thể thao</a></div>
-                                            <div><a href="" class="text-black text-decoration-none">Giày lười</a></div>
-                                            <div><a href="" class="text-black text-decoration-none">Giày da</a></div>
+                                            <a href="" class="text-black text-decoration-none">Giày thể thao</a>
+                                            <a href="" class="text-black text-decoration-none">Giày lười</a>
+                                            <a href="" class="text-black text-decoration-none">Giày da</a>
                                         </div>
                                     </div>
                                     <div class="col-3 text-start">
-                                        <div>
-                                            <img src="" alt="">
+                                        <div class="category-list">
                                             <h5 class="">
-                                                <div><a href="" class="text-black text-decoration-none">Sách</a></div>
+                                                <a href="" class="text-black text-decoration-none">
+                                                    <img src="https://cf.shopee.vn/file/36013311815c55d303b0e6c62d6a8139_tn" alt="books">
+                                                    Sách
+                                                </a>
                                             </h5>
-                                            <div><a href="" class="text-black text-decoration-none">Tiểu thuyết</a></div>
-                                            <div><a href="" class="text-black text-decoration-none">Sách văn học</a></div>
-                                            <div><a href="" class="text-black text-decoration-none">Sách đời sống xã hội</a>
-                                            </div>
-                                            <div><a href="" class="text-black text-decoration-none">Truyện tranh</a></div>
+                                            <a href="" class="text-black text-decoration-none">Tiểu thuyết</a>
+                                            <a href="" class="text-black text-decoration-none">Sách văn học</a>
+                                            <a href="" class="text-black text-decoration-none">Sách đời sống xã hội</a>
+
+                                            <a href="" class="text-black text-decoration-none">Truyện tranh</a>
                                         </div>
                                     </div>
                                     <div class="col-3 text-start">
-                                        <div>
-                                            <img src="" alt="">
+                                        <div class="category-list">
                                             <h5 class="">
-                                                <div><a href="" class="text-black text-decoration-none">Đồ điện tử</a></div>
+                                                <a href="" class="text-black text-decoration-none">
+                                                    <img src="https://cf.shopee.vn/file/978b9e4cb61c611aaaf58664fae133c5_tn" alt="electronics">
+                                                    Đồ điện tử
+                                                </a>
                                             </h5>
-                                            <div><a href="" class="text-black text-decoration-none">Laptop</a></div>
-                                            <div><a href="" class="text-black text-decoration-none">Điện thoại</a></div>
-                                            <div><a href="" class="text-black text-decoration-none">Tivi</a></div>
+                                            <a href="" class="text-black text-decoration-none">Laptop</a>
+                                            <a href="" class="text-black text-decoration-none">Điện thoại</a>
+                                            <a href="" class="text-black text-decoration-none">Tivi</a>
                                         </div>
                                     </div>
                                 </div>
@@ -221,75 +205,45 @@
 
 
                     <!-- Right component -->
-                    <div class="col-2 bg-light">
+                    <div class="col-2 bg-light rounded shadow-sm">
                         <div class="row row-cols-1 bg-white">
                             <div class="col pt-3">
-                                <div class="row-cols-1 text-center">
-                                    <p class="h6 ">Ưu đãi</p>
+                                <div class="row-cols-1 text-center text-capitalize">
+                                    <h6>Bán chạy</h6>
                                 </div>
-                                <hr>
-                                <div class="row-cols-1 mt-5 g-3">
-                                    <div class="card h-100 mb-3">
-                                        <div><a href="" class="text-black text-decoration-none">
-                                                <div class="badge bg-light position-absolute text-danger"
-                                                     style="top: 0.5rem; right: 0.5rem">mua
-                                                    2 tặng 1
-                                                </div>
-                                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                                                     class="card-img-top">
-                                                <div class="card-body">
-                                                    <div class="text-center">
-                                                        <h5 class="fw-bolder">Mua 2 tặng 1</h5>
-                                                    </div>
-                                                </div>
-                                            </a></div>
+                                <hr class="text-muted"/>
+                                <div class="row-cols-1 g-3">
+                                    <div class="mb-3">
+                                        <a class="home-product__item" href="#">
+                                            <div class="home-product__item-img"
+                                                 style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                            </div>
+                                            <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                            <div class="home-product__item-price">
+                                                <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                            </div>
+                                            <div class="home-product__item-origin">
+                                                <span class="home-product__item-brand">Woho</span>
+                                                <span class="home-product__item-country">Nhật bản</span>
+                                            </div>
+                                        </a>
                                     </div>
-                                    <div class="card h-100 mb-3">
-                                        <div><a href="" class="text-black text-decoration-none">
-                                                <div class="badge bg-light position-absolute text-danger"
-                                                     style="top: 0.5rem; right: 0.5rem">
-                                                    Free ship
-                                                </div>
-                                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                                                     class="card-img-top">
-                                                <div class="card-body">
-                                                    <div class="text-center">
-                                                        <h5 class="fw-bolder">mua trên 3 món</h5>
-                                                    </div>
-                                                </div>
-                                            </a></div>
-                                    </div>
-                                    <div class="card h-100 mb-3">
-                                        <div><a href="" class="text-black text-decoration-none">
-                                                <div class="badge bg-light position-absolute text-danger"
-                                                     style="top: 0.5rem; right: 0.5rem">
-                                                    Limited
-                                                </div>
-                                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                                                     class="card-img-top">
-                                                <div class="card-body">
-                                                    <div class="text-center">
-                                                        <h5 class="fw-bolder">Hàng giới hạn</h5>
-
-                                                    </div>
-                                                </div>
-                                            </a></div>
-                                    </div>
-                                    <div class="card h-100 mb-3">
-                                        <div><a href="" class="text-black text-decoration-none">
-                                                <div class="badge bg-light position-absolute text-danger"
-                                                     style="top: 0.5rem; right: 0.5rem">
-                                                    Limited
-                                                </div>
-                                                <img src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                                                     class="card-img-top">
-                                                <div class="card-body">
-                                                    <div class="text-center">
-                                                        <h5 class="fw-bolder">Second hand</h5>
-
-                                                    </div>
-                                                </div>
-                                            </a></div>
+                                    <div class="mb-3">
+                                        <a class="home-product__item" href="#">
+                                            <div class="home-product__item-img"
+                                                 style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                            </div>
+                                            <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                            <div class="home-product__item-price">
+                                                <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                            </div>
+                                            <div class="home-product__item-origin">
+                                                <span class="home-product__item-brand">Woho</span>
+                                                <span class="home-product__item-country">Nhật bản</span>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -298,181 +252,52 @@
 
                 </div>
             </div>
-            <div>
-                <div>
-                    <img src="/img/Banner_Clothing.jpg" alt="">
+
+            <!--banner sale-->
+            <div class="container mb-5">
+                <div class="banner-sale px-4">
+                    <img src="https://www.magiamgiaonline.com/wp-content/uploads/2019/03/m%C3%A3-gi%E1%BA%A3m-gi%C3%A1-banner.jpeg" alt="">
+                    <img src="http://thegioidohoacom.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2019/01/10040532/201807120816_banner-bai-viet-ctkm-hung-tuy-1511235823.jpg" alt="">
                 </div>
+            </div>
 
-                <!-- Slider Best Seller -->
+            <!-- Slider Best Seller -->
 
-                <div>
-                    <div class="p-5 m-5">
+            <div class="container px-5">
+                <div class="bg-white best-seller py-2 rounded shadow-sm">
+                    <div class="d-flex align-items-center justify-content-between text-capitalize mt-2 mb-3 px-4">
+                        <h4 class="mb-0 fw-normal">Best Seller</h4>
+                        <a href="" class="best-seller__view-all-link">
+                            Xem tất cả
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                    <hr class="text-muted" />
 
-                        <div class="text-center mb-3 pb-3">
-                            <h2>Best Seller</h2>
-                        </div>
-                        <hr>
+                    <div id="best-seller-carousel" class="carousel slide ps-3" data-bs-ride="carousel">
 
-                        <div id="best-seller" class="carousel slide" data-bs-ride="carousel">
-
-                            <!-- Indicators/dots -->
-                            <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#best-seller" data-bs-slide-to="0"
-                                        class="active"></button>
-                                <button type="button" data-bs-target="#best-seller" data-bs-slide-to="1"></button>
-                                <button type="button" data-bs-target="#best-seller" data-bs-slide-to="2"></button>
-                            </div>
-
-                            <!-- The slideshow/carousel -->
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="row row-cols-4 g-5 bg-light">
-                                        <div class="col-3 p-3">
-                                            <div><a href="" class="text-black text-decoration-none">
-                                                    <div>
-                                                        <img src="/img/pic1.jpg" class="w-100 h-100">
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <h5>Baseball cal</h5>
-                                                        <div>
-                                                            <p>Pink</p>
-                                                        </div>
-                                                        <span class="text-muted text-decoration-line-through">1000</span>
-                                                        10000
-                                                    </div>
-                                                </a></div>
-
-                                        </div>
-                                        <div class="col-3 p-3">
-                                            <div><a href="" class="text-black text-decoration-none">
-                                                    <div>
-                                                        <img src="/img/pic4.jpg" class="w-100 h-100">
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <h5>Vintas new Military</h5>
-                                                        <div>
-                                                            <p>Capulet Olive</p>
-                                                        </div>
-                                                        <span class="text-muted text-decoration-line-through">1000</span>
-                                                        10000
-                                                    </div>
-                                                </a></div>
-
-                                        </div>
-                                        <div class="col-3 p-3">
-                                            <div><a href="" class="text-black text-decoration-none">
-                                                    <div>
-                                                        <img src="/img/pic3.jpg" class="w-100 h-100">
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <h5>Basic Tee</h5>
-                                                        <div>
-                                                            <p>White Asparagus</p>
-                                                        </div>
-                                                        <span class="text-muted text-decoration-line-through">1000</span>
-                                                        10000
-                                                    </div>
-                                                </a></div>
-
-                                        </div>
-                                        <div class="col-3 p-3">
-                                            <a href="" class="text-black text-decoration-none">
-                                                <div>
-                                                    <img src="/img/pic2.jpg" class="w-100 h-100">
-                                                </div>
-                                                <div class="text-center">
-                                                    <h5>Bassas bumper Gum</h5>
-                                                    <div>
-                                                        <p>OffWhite/Gum</p>
-                                                    </div>
-                                                    <span class="text-muted text-decoration-line-through">1000</span>
-                                                    10000
-                                                </div>
-                                            </a>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="row row-cols-4 g-5 bg-light">
-                                        <div class="col-3 p-3">
-                                            <div><a href="" class="text-black text-decoration-none">
-                                                    <div>
-                                                        <img src="/img/pic2-1.jpg" class="w-100 h-100">
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <h5>Bassas new simple life</h5>
-                                                        <div>
-                                                            <p>White</p>
-                                                        </div>
-                                                        <span class="text-muted text-decoration-line-through">1000</span>
-                                                        10000
-                                                    </div>
-                                                </a></div>
-
-                                        </div>
-                                        <div class="col-3 p-3">
-                                            <div><a href="" class="text-black text-decoration-none">
-                                                    <div>
-                                                        <img src="/img/pic2-2.jpg" class="w-100 h-100">
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <h5>Basas mono black -Slip on</h5>
-                                                        <div>
-                                                            <p>Black</p>
-                                                        </div>
-                                                        <span class="text-muted text-decoration-line-through">1000</span>
-                                                        10000
-                                                    </div>
-                                                </a></div>
-
-                                        </div>
-                                        <div class="col-3 p-3">
-                                            <div><a href="" class="text-black text-decoration-none">
-                                                    <div>
-                                                        <img src="/img/pic2-3.jpg" class="w-100 h-100">
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <h5>Bassas new Familiar</h5>
-                                                        <div>
-                                                            <p>Light grey</p>
-                                                        </div>
-                                                        <span class="text-muted text-decoration-line-through">1000</span>
-                                                        10000
-                                                    </div>
-                                                </a></div>
-
-                                        </div>
-                                        <div class="col-3 p-3">
-                                            <div><a href="" class="text-black text-decoration-none">
-                                                    <div>
-                                                        <img src="/img/pic2-4.jpg" class="w-100 h-100">
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <h5>Basas mono black -Low top</h5>
-                                                        <div>
-                                                            <p>Black</p>
-                                                        </div>
-                                                        <span class="text-muted text-decoration-line-through">1000</span>
-                                                        10000
-                                                    </div>
-                                                </a></div>
-
-                                        </div>
+                        <!-- The slideshow/carousel -->
+                        <div class="carousel-inner custom-carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row row-cols-4 g-5">
+                                    <div class="col-3">
+                                        <a href="" class="best-seller__item">
+                                            <div class="best-seller__badge bg-danger text-white">HOT</div>
+                                            <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
+                                            <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
+                                            <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Left and right controls/icons -->
-                            <button class="carousel-control-prev" type="button" data-bs-target="#best-seller"
-                                    data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#best-seller"
-                                    data-bs-slide="next">
-                                <span class="carousel-control-next-icon"></span>
-                            </button>
                         </div>
+
+                        <!-- Right controls/icons -->
+                        <button class="carousel-control-next" type="button" data-bs-target="#best-seller"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
                     </div>
                 </div>
             </div>

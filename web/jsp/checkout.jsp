@@ -35,11 +35,11 @@
             <!-- payment -->
             <div class="container my-5 p-3">
                 <br>
-                <div class="ps-3">
+                <div class="ps-3 text-capitalize">
                     <h3>Thanh toán</h3>
                 </div>
                 <hr>
-                <div class="row row-cols-3">
+                <div class="row row-cols-3 checkout-progress">
                     <div class="col-3"></div>
                     <div class="col-6">
                         <div class="position-relative">

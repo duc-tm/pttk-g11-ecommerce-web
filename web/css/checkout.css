@@ -8,6 +8,10 @@ and open the template in the editor.
     Author     : Admin
 */
 
+.checkout-progress {
+    margin-top: 100px;
+}
+
 .shipment-info {
     margin-top: 10px;
 }
