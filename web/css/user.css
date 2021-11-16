@@ -49,6 +49,11 @@ and open the template in the editor.
     font-size: 1.2rem;
 }
 
+.user-profile__info-list-left {
+    padding-right: 5%;
+    border-right: 0.0625rem solid #e4e4e4;
+}
+
 .user-profile__info-item {
     margin-bottom: 30px;
 }
@@ -59,10 +64,33 @@ and open the template in the editor.
     text-transform: capitalize;
 }
 
+.input-edit-control {
+    background-color: transparent;
+    text-decoration: underline;
+    color: var(--primary-color);
+    border: none;
+    outline: none;
+    min-width: 74px;
+    font-size: 0.9rem;
+    text-align: right;
+}
+
 .form-check-label {
     color: #000;
 }
     
 .form-check-input {
     margin-right: 2px;
+}
+
+.user-profile__avatar-control img {
+    max-width: 100px;
+}
+
+#avatar-chooser-input {
+    display: none;
+}
+
+.avatar-choose-constraints {
+    font-size: 0.8125rem;
 }

@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -86,67 +87,107 @@
 
                             <div class="user-profile__content">
                                 <form action="" method="POST">
-                                    <ul class="user-profile__info-list list-unstyled">
-                                        <li class="user-profile__info-item text-muted row align-items-center">
-                                            <label class="user-profile__info-label form-label col-2" for="username">
-                                                Tên Đăng Nhập
-                                            </label>
-                                            <div class="user-profile__info-input col-10 text-black" id="username">minhhungwp</div>
-                                        </li>
-                                        <li class="user-profile__info-item text-muted row align-items-center">
-                                            <label class="user-profile__info-label form-label col-2" for="fullname">
-                                                Tên
-                                            </label>
-                                            <div class="col-10">
-                                                <input type="text" class="user-profile__info-input form-control" id="fullname" value="Minh Hung">
-                                            </div>
-                                        </li>
-                                        <li class="user-profile__info-item text-muted row align-items-center">
-                                            <label class="user-profile__info-label form-label col-2" for="email">
-                                                Email
-                                            </label>
-                                            <div class="col-10">
-                                                <input type="text" class="user-profile__info-input form-control form-control-plaintext" id="email" value="minhhungwp12@gmail.com">
-                                            </div>
-                                        </li>
-                                        <li class="user-profile__info-item text-muted row align-items-center">
-                                            <label class="user-profile__info-label form-label col-2" for="email">
-                                                Số Điện Thoại
-                                            </label>
-                                            <div class="col-10">
-                                                <input type="text" class="user-profile__info-input form-control form-control-plaintext" id="email" value="0123456789">
-                                            </div>
-                                        </li>
-                                        <li class="user-profile__info-item text-muted row align-items-center">
-                                            <label class="user-profile__info-label form-label col-2" for="email">
-                                                Giới tính
-                                            </label>
-                                            <div class="col-10 d-flex align-items-center">
-                                                <div class="form-group me-3">
-                                                    <input class="form-check-input" type="radio" value="male" id="gender-male" name="gender" checked>
-                                                    <label class="form-check-label" for="gender-male">Nam</label>
+                                    <ul class="user-profile__info-list list-unstyled row">
+                                        <div class="col-8 user-profile__info-list-left">
+                                            <li class="user-profile__info-item text-muted row align-items-center">
+                                                <label class="user-profile__info-label form-label col-4" for="username">
+                                                    Tên Đăng Nhập
+                                                </label>
+                                                <div class="user-profile__info-input col-8 text-black" id="username">minhhungwp</div>
+                                            </li>
+                                            <li class="user-profile__info-item text-muted row align-items-center">
+                                                <label class="user-profile__info-label form-label col-4" for="fullname">
+                                                    Tên
+                                                </label>
+                                                <div class="col-8">
+                                                    <input type="text" class="user-profile__info-input form-control" id="fullname" value="Minh Hung">
                                                 </div>
-                                                <div class="form-group me-3">
-                                                    <input class="form-check-input" type="radio" value="female" id="gender-female" name="gender" checked>
-                                                    <label class="form-check-label" for="gender-female">Nữ</label>
+                                            </li>
+                                            <li class="user-profile__info-item text-muted row align-items-center">
+                                                <label class="user-profile__info-label form-label col-4" for="email">
+                                                    Email
+                                                </label>
+                                                <div class="col-8 d-flex">
+                                                    <input type="text" class="user-profile__info-input form-control form-control-plaintext" id="email" value="minhhungwp12@gmail.com">
+                                                    <button class="input-edit-control" type="button">Thay đổi</button>
                                                 </div>
-                                                <div class="form-group">
-                                                    <input class="form-check-input" type="radio" value="other" id="gender-other" name="gender" checked>
-                                                    <label class="form-check-label" for="gender-other">Khác</label>
+                                            </li>
+                                            <li class="user-profile__info-item text-muted row align-items-center">
+                                                <label class="user-profile__info-label form-label col-4" for="email">
+                                                    Số Điện Thoại
+                                                </label>
+                                                <div class="col-8 d-flex">
+                                                    <input type="text" class="user-profile__info-input form-control form-control-plaintext" id="email" value="0123456789">
+                                                    <button class="input-edit-control" type="button">Thêm</button>
                                                 </div>
+                                            </li>
+                                            <li class="user-profile__info-item text-muted row align-items-center">
+                                                <label class="user-profile__info-label form-label col-4" for="email">
+                                                    Giới tính
+                                                </label>
+                                                <div class="col-8 d-flex align-items-center">
+                                                    <div class="form-group me-3">
+                                                        <input class="form-check-input" type="radio" value="male" id="gender-male" name="gender" checked>
+                                                        <label class="form-check-label" for="gender-male">Nam</label>
+                                                    </div>
+                                                    <div class="form-group me-3">
+                                                        <input class="form-check-input" type="radio" value="female" id="gender-female" name="gender" checked>
+                                                        <label class="form-check-label" for="gender-female">Nữ</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input class="form-check-input" type="radio" value="other" id="gender-other" name="gender" checked>
+                                                        <label class="form-check-label" for="gender-other">Khác</label>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="user-profile__info-item text-muted row align-items-center">
+                                                <label class="user-profile__info-label form-label col-4" for="email">
+                                                    Ngày sinh
+                                                </label>
+                                                <div class="col-8 d-flex">
+                                                    <select class="form-select me-2" id="form-select-day">
+                                                        <option value="1" selected>1</option>
+                                                    <c:forEach var = "i" begin = "2" end = "31">
+                                                        <option value="<c:out value = "${i}"/>"><c:out value = "${i}"/></option>
+                                                    </c:forEach>
+                                                </select>
+                                                <select class="form-select me-2" id="form-select-month">
+                                                    <option value="1" selected>Tháng 1</option>
+                                                    <c:forEach var = "i" begin = "2" end = "12">
+                                                        <option value="<c:out value = "${i}"/>">Tháng <c:out value = "${i}"/></option>
+                                                    </c:forEach>
+                                                </select>
+                                                <select class="form-select" id="form-select-year">
+                                                    <option value="1" selected>2021</option>
+                                                    <c:forEach var = "i" begin = "1910" end = "2021">
+                                                        <option value="<c:out value = "${i}"/>"><c:out value = "${i}"/></option>
+                                                    </c:forEach>
+                                                </select>
                                             </div>
                                         </li>
-                                    </ul>
-
-                                    <div class="text-end">
-                                        <button class="btn btn-primary ms-auto" type="submit">Lưu</button>
                                     </div>
-                                </form>
-                            </div>
+                                    <div class="col-4">
+                                        <div class="user-profile__avatar-control text-center d-flex flex-column align-items-center">
+                                            <img src="https://cf.shopee.vn/file/1d74524ec09542f944ad95a2a6fd111d_tn" alt="user avatar" class="img-fluid rounded-circle mb-3">
+                                            <input type="file" id="avatar-chooser-input" name="avatar">
+                                            <label for="avatar-chooser-input" class="btn btn-outline-secondary">Chọn Ảnh</label>
+                                            <div class="avatar-choose-constraints text-muted mt-2">
+                                                <div>Dụng lượng file tối đa 1 MB</div>
+                                                <div>Định dạng:.JPEG, .PNG</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+
+                                <div class="text-end">
+                                    <button class="btn btn-primary ms-auto" type="submit">Lưu</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         <jsp:include page="components/footer.jsp"></jsp:include>
 
     </body>
