@@ -37,39 +37,6 @@
                     <h3 class="text-primary">Giỏ hàng của tôi</h3>
                 </div>
                 <hr>
-                <div class="row row-cols-3">
-                    <div class="col-3"></div>
-                    <div class="col-6">
-                        <div class="position-relative">
-                            <div class="progress" style="height: 2px;">
-                                <div class="progress-bar progress-bar-animated" style="width: 33%; height: 2px;"></div>
-                            </div>
-                            <div class="position-absolute text-center align-content-center" style="left: 16%; bottom: -8px;">
-                                <div><i class="bi-cart-fill me-1 text-primary"></i></div>
-                                <div>
-                                    <p class="text-primary mb-2">Giỏ hàng</p>
-                                </div>
-                                <div><span class="badge bg-primary text-white ms-1 rounded-pill my-0">1</span></div>
-                            </div>
-                            <div class="position-absolute text-center align-content-center" style="left: 45%; bottom: -8px;">
-                                <div><i class="bi-currency-dollar me-1 text-secondary"></i></div>
-                                <div>
-                                    <p class="text-secondary mb-1">Thanh toán</p>
-                                </div>
-                                <div><span class="badge bg-secondary text-white ms-1 rounded-pill my-0">1</span></div>
-                            </div>
-                            <div class="position-absolute text-center align-content-center" style="right: 16%; bottom: -8px;">
-                                <div><i class="bi-check-circle me-1 text-secondary"></i></div>
-                                <div>
-                                    <p class="text-secondary mb-1">Hoàn tất</p>
-                                </div>
-                                <div><span class="badge bg-secondary text-white ms-1 rounded-pill my-0">1</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3"></div>
-                </div>
-                <br><br>
                 <div class="row mt-5 p-0">
                     <div>
                         <table class="table table-borderless shadow-sm">

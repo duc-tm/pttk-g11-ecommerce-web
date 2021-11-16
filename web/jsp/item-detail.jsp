@@ -24,6 +24,7 @@
         <link href="${pageContext.request.contextPath}/css/auth-modals.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/css/footer.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/css/item.css" rel="stylesheet" />
 
         <link href="${pageContext.request.contextPath}/css/item-detail.css" rel="stylesheet" />
 
@@ -172,11 +173,227 @@
                         </div>
                     </div>
                 </div>
-                <div class="similar-item">
-                    <h5 class="similar-item__title fw-normal text-uppercase">Sản phẩm tương tự</h5>
-                    <div class="similar-item-list">
+                <div class="similar-item mx-5 mt-5">
+                    <div class="row">
+                        <div class="col-10">
+                            <h5 class="similar-item__title fw-normal text-uppercase text-muted">Sản phẩm tương tự</h5>
+                            <div class="similar-item-list">
+                                <div id="similar-item-carousel" class="carousel slide ps-3" data-bs-ride="carousel">
 
+                                    <!-- The slideshow/carousel -->
+                                    <div class="carousel-inner custom-carousel-inner">
+                                        <div class="carousel-item active">
+                                            <div class="row row-cols-4 g-3">
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div class="row row-cols-4 g-3">
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-2">
+                                                    <a class="home-product__item" href="#">
+                                                        <div class="home-product__item-img"
+                                                             style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                        </div>
+                                                        <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                                        <div class="home-product__item-price">
+                                                            <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
+                                                            <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
+                                                        </div>
+                                                        <div class="home-product__item-origin">
+                                                            <span class="home-product__item-brand">Woho</span>
+                                                            <span class="home-product__item-country">Nhật bản</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Right controls/icons -->
+                                    <button class="carousel-control-next" type="button" data-bs-target="#similar-item-carousel"
+                                            data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
             <!-- Footer -->
