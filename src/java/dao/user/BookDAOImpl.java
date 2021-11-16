@@ -5,10 +5,20 @@
  */
 package dao.user;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author DELL
  */
-public interface BookDAOImpl {
+public class BookDAOImpl {
+    private Connection conn;
+    public BookDAOImpl() {
+        conn =ConDB.getJDBCCOnection();
+    }
+    
 }

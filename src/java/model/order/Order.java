@@ -17,7 +17,7 @@ public class Order {
 
     public Order() {
     }
-
+   
     public Order(String id, Date createdDate) {
         this.id = id;
         this.createdDate = createdDate;

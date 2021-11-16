@@ -9,6 +9,6 @@ package dao.user;
  *
  * @author DELL
  */
-public interface ShoesDAO {
+public interface ElectronicDAO {
     
 }

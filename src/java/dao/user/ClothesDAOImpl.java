@@ -5,10 +5,19 @@
  */
 package dao.user;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author DELL
  */
-public interface ClothesDAOImpl {
-    
+public class ClothesDAOImpl {
+    private Connection conn;
+    public ClothesDAOImpl() {
+        conn =ConDB.getJDBCCOnection();
+    }
 }

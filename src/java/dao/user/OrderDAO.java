@@ -5,25 +5,16 @@
  */
 package dao.user;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
  * @author DELL
  */
-public class OrderDAO {
-    private Connection conn;
-    private Statement statement;
-    public OrderDAO(Connection conn) {
-        try {
-            this.conn = conn;
-            this.statement =this.conn.createStatement();
-        } catch (SQLException ex) {
-            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+public interface OrderDAO <T> {
+    int createOrder(int userID,String type,float cost,Date createdDate,String status,float amount);
+    int updateOrder(int orderID,String type,float cost,Date createdDate,String status,float amount);
+    int deleteOrder(int orderID);
+    T getUser(int userID);
 }

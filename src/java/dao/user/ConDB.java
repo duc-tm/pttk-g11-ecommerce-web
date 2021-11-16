@@ -30,4 +30,9 @@ public class ConDB {
         }
         return null;
     }
+//    public static void main(String[] args) {
+//        Connection conn =getJDBCCOnection();
+//        if(conn != null)    System.out.println("thanh cong");
+//        else System.out.println("that bai");
+//    }
 }

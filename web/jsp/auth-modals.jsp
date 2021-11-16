@@ -30,7 +30,7 @@
 
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger mx-5">Đăng nhập</button>
+                <button type="button" class="btn btn-primary mx-5">Đăng nhập</button>
             </div>
 
         </div>
@@ -52,7 +52,7 @@
             <div class="modal-body">
                 <form action="" class="register-form"  id="register-form">
                     <div class="my-3">
-                        <input type="text" name="username" id="regiser-username" class="form-control"
+                        <input type="email" name="username" id="regiser-username" class="form-control"
                                placeholder="Email">
                     </div>
                     <div class="my-3">

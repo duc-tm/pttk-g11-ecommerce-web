@@ -15,9 +15,9 @@ import java.util.logging.Logger;
  *
  * @author DELL
  */
-public class ElectronicsDAO {
+public class ElectronicsDAOImpl {
     private Connection conn;
-    public ElectronicsDAO() {
+    public ElectronicsDAOImpl() {
         conn =ConDB.getJDBCCOnection();
     }
 }
