@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -42,7 +43,7 @@
                         <table class="table table-borderless shadow-sm">
                             <thead style="background-color: rgb(245, 245, 245);">
                                 <tr>
-                                    <th class="text-center"><input type="checkbox" name="" id="" class="form-check-input select-item"></th>
+                                    <th class="text-center"><input type="checkbox" name="" id="select-all-checkbox" class="form-check-input select-item"></th>
                                     <th>Sản phẩm</th>
                                     <th>Đơn Giá</th>
                                     <th>Số lượng</th>
@@ -51,7 +52,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="align-content-lg-between center">
+                            <c:forEach var = "i" begin = "1" end = "5">
+                                <tr class="align-content-lg-between center item" itemId="<c:out value="${i}"/>">
                                     <td class="text-center"><input type="checkbox" name="" id="" class="form-check-input"></td>
                                     <td>
                                         <a href="" class="item-general-info">
@@ -65,46 +67,30 @@
                                     </td>
                                     <td><div class="item-price">10000</div></td>
                                     <td>                                    
-                                    <jsp:include page="components/counter.jsp"></jsp:include>
-                                    </td>
-                                    <td>Thành tiền</td>
-                                    <td class="text-center"><i class="bi-trash-fill text-danger delete-item-btn"></i></td>
+                                        <jsp:include page="components/counter.jsp"></jsp:include>
+                                        </td>
+                                        <td>Thành tiền</td>
+                                        <td class="text-center"><i class="bi-trash-fill text-danger delete-item-btn" for="<c:out value="${i}"/>"></i></td>
                                 </tr>
-                                <tr class="align-content-lg-between center">
-                                    <td class="text-center"><input type="checkbox" name="" id="" class="form-check-input"></td>
-                                    <td>
-                                        <a href="" class="item-general-info">
-                                            <div class="item-img">
-                                                <img src="https://cf.shopee.vn/file/36368bf1379e8a1c664db03927622869_tn" alt="" class="img-fluid">
-                                            </div>
-                                            <div class="item-name">
-                                                Áo tdun nữ
-                                            </div>                               
-                                        </a>
-                                    </td>
-                                    <td><div class="item-price">10000</div></td>
-                                    <td>                                    
-                                    <jsp:include page="components/counter.jsp"></jsp:include>
-                                    </td>
-                                    <td>Thành tiền</td>
-                                    <td class="text-center"><i class="bi-trash-fill text-danger delete-item-btn"></i></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class=" d-flex flex-column">
-                    <div class="total-bill">
-                        <div class="total-bill__title">Tổng thanh toán:</div>
-                        <div class="total-bill__cost ms-2">20000</div>
-                    </div>
-                    <button class="btn btn-primary mt-3" id="pay-now">Thanh toán</button>
+                            </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!-- Footer -->
+            <div class=" d-flex flex-column">
+                <div class="total-bill">
+                    <div class="total-bill__title">Tổng thanh toán:</div>
+                    <div class="total-bill__cost ms-2">20000</div>
+                </div>
+                <button class="btn btn-primary mt-3" id="pay-now">Thanh toán</button>
+            </div>
+        </div>
+        <!-- Footer -->
         <jsp:include page="components/footer.jsp"></jsp:include>
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
             <script src="${pageContext.request.contextPath}/js/counter.js"></script>
+        <script src="${pageContext.request.contextPath}/js/cart.js"></script>
+
     </body>
 </html>

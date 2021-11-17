@@ -109,7 +109,8 @@
                                                 </label>
                                                 <div class="col-8 d-flex">
                                                     <input type="text" class="user-profile__info-input form-control form-control-plaintext" id="email" value="minhhungwp12@gmail.com">
-                                                    <button class="input-edit-control" type="button">Thay đổi</button>
+                                                    <input type="checkbox" class="d-none" id="email-input-toggler">
+                                                    <label class="input-edit-control" for="email-input-toggler">Thay đổi</label>
                                                 </div>
                                             </li>
                                             <li class="user-profile__info-item text-muted row align-items-center">
@@ -117,8 +118,9 @@
                                                     Số Điện Thoại
                                                 </label>
                                                 <div class="col-8 d-flex">
-                                                    <input type="text" class="user-profile__info-input form-control form-control-plaintext" id="email" value="0123456789">
-                                                    <button class="input-edit-control" type="button">Thêm</button>
+                                                    <input type="text" class="user-profile__info-input form-control form-control-plaintext" id="phonenumber" value="0123456789">
+                                                    <input type="checkbox" class="d-none" id="phonenumber-input-toggler">
+                                                    <label class="input-edit-control" for="phonenumber-input-toggler">Thay đổi</label>
                                                 </div>
                                             </li>
                                             <li class="user-profile__info-item text-muted row align-items-center">
@@ -168,8 +170,8 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="user-profile__avatar-control text-center d-flex flex-column align-items-center">
-                                            <img src="https://cf.shopee.vn/file/1d74524ec09542f944ad95a2a6fd111d_tn" alt="user avatar" class="img-fluid rounded-circle mb-3">
-                                            <input type="file" id="avatar-chooser-input" name="avatar">
+                                            <img src="https://cf.shopee.vn/file/1d74524ec09542f944ad95a2a6fd111d_tn" alt="user avatar" class="rounded-circle mb-3" id="user-avatar-preview">
+                                            <input type="file" id="avatar-chooser-input" name="avatar" accept=".png,.jpg">
                                             <label for="avatar-chooser-input" class="btn btn-outline-secondary">Chọn Ảnh</label>
                                             <div class="avatar-choose-constraints text-muted mt-2">
                                                 <div>Dụng lượng file tối đa 1 MB</div>
@@ -179,8 +181,10 @@
                                     </div>
                                 </ul>
 
+                                <hr class="text-muted"/>
+                                
                                 <div class="text-end">
-                                    <button class="btn btn-primary ms-auto" type="submit">Lưu</button>
+                                    <button class="btn btn-primary ms-auto px-4" type="submit">Lưu</button>
                                 </div>
                             </form>
                         </div>
@@ -190,5 +194,18 @@
         </div>
         <jsp:include page="components/footer.jsp"></jsp:include>
 
+            <script src="${pageContext.request.contextPath}/js/user.js"></script>
+        <!--toggle input-->
+        <script>
+            togglerElement('email', 'email-input-toggler', 'form-control-plaintext', null, 'Thay đổi', 'Hủy');
+            togglerElement('phonenumber', 'phonenumber-input-toggler', 'form-control-plaintext', null, 'Thay đổi', 'Hủy');
+        </script>
+
+        <script src="${pageContext.request.contextPath}/js/image-previewer.js"></script>
+        <script src="${pageContext.request.contextPath}/js/file-validator.js"></script>
+        <!--image preview-->
+        <script>
+            imagePreviewer('avatar-chooser-input', 'user-avatar-preview', customFileValidator, [1]);
+        </script>
     </body>
 </html>

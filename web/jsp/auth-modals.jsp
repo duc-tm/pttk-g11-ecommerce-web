@@ -17,20 +17,25 @@
 
             <div class="modal-body">
                 <form action="" class="login-form mx-3" id="login-form">
-                    <div class="my-3">
+                    <div class="mt-3 mb-4">
                         <input type="text" name="username" id="login-username" class="form-control"
                                placeholder="Email">
                     </div>
-                    <div class="my-3">
+                    <div class="form-group position-relative">
                         <input type="password" name="password" id="login-password" class="form-control"
                                placeholder="Mật khẩu">
+                        <input type="checkbox" id="show-password-checkbox" class="d-none">
+                        <label for="show-password-checkbox" class="show-password-control position-absolute">
+                            <i class="far fa-eye-slash hide-password-icon"></i>
+                        </label>
                     </div>
+                    <a href="${pageContext.request.contextPath}/forgot-password" class="forgot-password-link mt-2 d-inline-block">Quên mật khẩu</a>
                 </form>
             </div>
 
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary mx-5">Đăng nhập</button>
+            <div class="modal-footer mx-3">
+                <button type="button" class="btn btn-primary">Đăng nhập</button>
             </div>
 
         </div>
@@ -73,8 +78,8 @@
             </div>
 
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary">Đăng ký</button>
+            <div class="modal-footer mx-3">
+                <button type="button" class="btn btn-primary">Đăng ký</button>
             </div>
 
         </div>

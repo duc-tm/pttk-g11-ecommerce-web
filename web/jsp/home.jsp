@@ -397,5 +397,9 @@
             <!-- Footer -->
         <jsp:include page="components/footer.jsp"></jsp:include>
 
+            <script src="${pageContext.request.contextPath}/js/toggle-element.js"></script>
+        <script>
+            elementToggler('login-password','show-password-checkbox', 'fa-eye-slash', 'fa-eye');
+        </script>
     </body>
 </html>

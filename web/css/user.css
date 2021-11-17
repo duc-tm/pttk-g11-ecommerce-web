@@ -72,13 +72,19 @@ and open the template in the editor.
     outline: none;
     min-width: 74px;
     font-size: 0.9rem;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.input-edit-control:hover {
+    cursor: pointer;
 }
 
 .form-check-label {
     color: #000;
 }
-    
+
 .form-check-input {
     margin-right: 2px;
 }
@@ -87,10 +93,20 @@ and open the template in the editor.
     max-width: 100px;
 }
 
+#user-avatar-preview {
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+}
+
 #avatar-chooser-input {
     display: none;
 }
 
 .avatar-choose-constraints {
     font-size: 0.8125rem;
+}
+
+.input-edit-control {
+    user-select: none;
 }
