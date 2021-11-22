@@ -10,20 +10,20 @@ package model.order;
  * @author Admin
  */
 public class Shipment {
-    private String id;
+    private int id;
     private String type;
     private double cost;
 
     public Shipment() {
     }
 
-    public Shipment(String id, String type, double cost) {
+    public Shipment(int id, String type, double cost) {
         this.id = id;
         this.type = type;
         this.cost = cost;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -35,7 +35,7 @@ public class Shipment {
         this.cost = cost;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

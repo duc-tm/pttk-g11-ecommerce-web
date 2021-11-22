@@ -5,66 +5,18 @@
  */
 package model.book;
 
+import model.Item.Item;
+
 /**
  *
  * @author DELL
  */
-public class BookItem {
-    private String id;
-    private String barcode;
-    private float price;
-    private float discount;
-    private String sellingStatus;
-
+public class BookItem extends Item{
     public BookItem() {
     }
 
-    public BookItem(String id, String barcode, float price, float discount, String sellingStatus) {
-        this.id = id;
-        this.barcode = barcode;
-        this.price = price;
-        this.discount = discount;
-        this.sellingStatus = sellingStatus;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public float getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(float discount) {
-        this.discount = discount;
-    }
-
-    public String getSellingStatus() {
-        return sellingStatus;
-    }
-
-    public void setSellingStatus(String sellingStatus) {
-        this.sellingStatus = sellingStatus;
+    public BookItem(int ID, String Name, String Description, Float Price, Float Discount, String SellingStatus, String Image, String Category) {
+        super(ID, Name, Description, Price, Discount, SellingStatus, Image, Category);
     }
     
 }

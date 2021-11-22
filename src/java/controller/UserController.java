@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.user.UserDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -12,31 +13,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.user.User;
 
 /**
  *
  * @author Admin
  */
 public class UserController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String path = request.getPathInfo();
-
-        if (path == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/jsp/user.jsp");
-            rd.forward(request, response);
-        }
-    }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -50,7 +34,27 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String route = request.getPathInfo();
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            response.sendRedirect("/g11/home");
+            return;
+        }
+
+        if (route.equalsIgnoreCase("/account/profile")) {
+            User user = getUserInfo((int) session.getAttribute("userId"));
+
+//            send to logout route to destroy session if user not exist
+            if (user == null) {
+                response.sendRedirect("/g11/auth/logout");
+                return;
+            }
+
+            request.setAttribute("user", user);
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/user-profile.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**
@@ -64,7 +68,12 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+    }
+
+    public User getUserInfo(int userId) {
+        User user = new UserDAOImpl().getUserById(userId);
+        return user;
     }
 
     /**

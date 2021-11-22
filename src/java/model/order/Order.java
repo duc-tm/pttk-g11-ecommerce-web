@@ -12,18 +12,18 @@ import java.util.Date;
  * @author Admin
  */
 public class Order {
-    private String id;
+    private int id;
     private Date createdDate;
 
     public Order() {
     }
    
-    public Order(String id, Date createdDate) {
+    public Order(int id, Date createdDate) {
         this.id = id;
         this.createdDate = createdDate;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -31,7 +31,7 @@ public class Order {
         this.createdDate = createdDate;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

@@ -10,42 +10,44 @@ package model.order;
  * @author Admin
  */
 public class Payment {
-    private String id;
-    private String type;
-    private boolean status;
+    private int id;
+    private String amount;
+    private float status;
 
     public Payment() {
     }
 
-    public Payment(String id, String type, boolean status) {
+    public Payment(int id, String amount, float status) {
         this.id = id;
-        this.type = type;
+        this.amount = amount;
         this.status = status;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public String getType() {
-        return type;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public boolean isStatus() {
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public float getStatus() {
         return status;
     }
+
+    public void setStatus(float status) {
+        this.status = status;
+    }
+
+    
     
     
 }

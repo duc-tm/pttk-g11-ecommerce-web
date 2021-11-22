@@ -12,17 +12,27 @@ import java.util.Date;
  * @author DELL
  */
 public class ShoesOrigin {
+    private int id;
     private String companyName;
     private String address;
-    private Date dateOfManfacture;
+    private Date dateOfManufacture;
 
     public ShoesOrigin() {
     }
 
-    public ShoesOrigin(String companyName, String address, Date dateOfManfacture) {
+    public ShoesOrigin(int id,String companyName, String address, Date dateOfManufacture) {
+        this.id=id;
         this.companyName = companyName;
         this.address = address;
-        this.dateOfManfacture = dateOfManfacture;
+        this.dateOfManufacture = dateOfManufacture;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCompanyName() {
@@ -41,12 +51,12 @@ public class ShoesOrigin {
         this.address = address;
     }
 
-    public Date getDateOfManfacture() {
-        return dateOfManfacture;
+    public Date getDateOfManufacture() {
+        return dateOfManufacture;
     }
 
-    public void setDateOfManfacture(Date dateOfManfacture) {
-        this.dateOfManfacture = dateOfManfacture;
+    public void setDateOfManufacture(Date dateOfManufacture) {
+        this.dateOfManufacture = dateOfManufacture;
     }
     
 }

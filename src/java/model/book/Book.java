@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -12,55 +12,36 @@ import java.util.Date;
  * @author DELL
  */
 public class Book {
-    private String id;
-    private String IBSN;
+    private int id;
     private String title;
-    private String sumary;
+    private String summary;
     private Date publicationDate;
     private int numberOfPage;
-    private int quantityOfGood;
+    private int RemainingQuantity;
+    private boolean Status;
     private float cost;
-    private String language;
-    private String color;
+    
 
     public Book() {
     }
 
-    public Book(String id, String IBSN, String title, String sumary, Date publicationDate, int numberOfPage, int quantityOfGood, float cost, String language, String color) {
+    public Book(int id, String title, String summary, Date publicationDate, int numberOfPage, int RemainingQuantity, boolean Status, float cost) {
         this.id = id;
-        this.IBSN = IBSN;
         this.title = title;
-        this.sumary = sumary;
+        this.summary = summary;
         this.publicationDate = publicationDate;
         this.numberOfPage = numberOfPage;
-        this.quantityOfGood = quantityOfGood;
+        this.RemainingQuantity = RemainingQuantity;
+        this.Status = Status;
         this.cost = cost;
-        this.language = language;
-        this.color = color;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public String getIBSN() {
-        return IBSN;
-    }
-
-    public void setIBSN(String IBSN) {
-        this.IBSN = IBSN;
     }
 
     public String getTitle() {
@@ -71,12 +52,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getLanguage() {
-        return language;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public Date getPublicationDate() {
@@ -87,8 +68,6 @@ public class Book {
         this.publicationDate = publicationDate;
     }
 
-    
-
     public int getNumberOfPage() {
         return numberOfPage;
     }
@@ -97,20 +76,20 @@ public class Book {
         this.numberOfPage = numberOfPage;
     }
 
-    public String getSumary() {
-        return sumary;
+    public int getRemainingQuantity() {
+        return RemainingQuantity;
     }
 
-    public void setSumary(String sumary) {
-        this.sumary = sumary;
+    public void setRemainingQuantity(int RemainingQuantity) {
+        this.RemainingQuantity = RemainingQuantity;
     }
 
-    public int getQuantityOfGood() {
-        return quantityOfGood;
+    public boolean getStatus() {
+        return Status;
     }
 
-    public void setQuantityOfGood(int quantityOfGood) {
-        this.quantityOfGood = quantityOfGood;
+    public void setStatus(boolean Status) {
+        this.Status = Status;
     }
 
     public float getCost() {
@@ -120,5 +99,7 @@ public class Book {
     public void setCost(float cost) {
         this.cost = cost;
     }
+
+   
     
 }

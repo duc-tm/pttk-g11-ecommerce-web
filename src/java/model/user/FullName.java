@@ -11,6 +11,7 @@ package model.user;
  */
 public class FullName {
 
+    private int id;
     private String firstName;
     private String midName;
     private String lastName;
@@ -18,7 +19,7 @@ public class FullName {
     public FullName() {
     }
 
-    public FullName(String firstName, String midName, String lastName) {
+    public FullName(int id, String firstName, String midName, String lastName) {
         this.firstName = firstName;
         this.midName = midName;
         this.lastName = lastName;
@@ -48,4 +49,13 @@ public class FullName {
         return lastName;
     }
 
+    public String standardizeName(String name) {
+        return (name != null ? name + " " : "");
+    }
+
+    @Override
+    public String toString() {
+        String fullNameString = standardizeName(firstName) + standardizeName(midName) + standardizeName(lastName);
+        return fullNameString.trim();
+    }
 }

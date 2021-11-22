@@ -5,30 +5,26 @@
  */
 package model.clothes;
 
+import model.Item.Item;
+
 /**
  *
  * @author DELL
  */
-public class ClothesItem {
-    private String id;
+public class ClothesItem extends Item{
+
     private String color;
     private String size;
-    private float price;
-    private String barcode;
-    private float discount;
-    private String sellingStatus;
+    
 
-    public ClothesItem() {
-    }
-
-    public ClothesItem(String id, String color, String size, float price, String barcode, float discount, String sellingStatus) {
-        this.id = id;
+    public ClothesItem(String color, String size, int ID, String Description, Float Price, Float Discount, String SellingStatus, String Image, String Category, String Name) {
+        super(ID, Name, Description, Price, Discount, SellingStatus, Image, Category);
         this.color = color;
         this.size = size;
-        this.price = price;
-        this.barcode = barcode;
-        this.discount = discount;
-        this.sellingStatus = sellingStatus;
+    }
+
+    public ClothesItem() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getColor() {
@@ -39,14 +35,6 @@ public class ClothesItem {
         this.color = color;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getSize() {
         return size;
     }
@@ -55,36 +43,6 @@ public class ClothesItem {
         this.size = size;
     }
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
-
-    public float getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(float discount) {
-        this.discount = discount;
-    }
-
-    public String getSellingStatus() {
-        return sellingStatus;
-    }
-
-    public void setSellingStatus(String sellingStatus) {
-        this.sellingStatus = sellingStatus;
-    }
     
+
 }

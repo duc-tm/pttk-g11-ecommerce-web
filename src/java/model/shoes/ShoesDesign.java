@@ -10,6 +10,7 @@ package model.shoes;
  * @author DELL
  */
 public class ShoesDesign {
+    private int id;
     private String material;
     private String style;
     private String model;
@@ -20,13 +21,22 @@ public class ShoesDesign {
     public ShoesDesign() {
     }
 
-    public ShoesDesign(String material, String style, String model, String gender, int age, String type) {
+    public ShoesDesign(int id,String material, String style, String model, String gender, int age, String type) {
+        this.id=id;
         this.material = material;
         this.style = style;
         this.model = model;
         this.gender = gender;
         this.age = age;
         this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMaterial() {
@@ -61,7 +71,7 @@ public class ShoesDesign {
         this.gender = gender;
     }
 
-    public int getAge() {
+    public int  getAge() {
         return age;
     }
 

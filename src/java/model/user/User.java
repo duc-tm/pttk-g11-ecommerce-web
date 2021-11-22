@@ -14,39 +14,43 @@ import model.user.Account;
  * @author Admin
  */
 public class User {
-    private String id;
-    private FullName fullName;
+
+    private int id;
+ 
     private String phone;
     private String mail;
+    private FullName fullName;
     private Address address;
     private Account account;
 
     public User() {
     }
 
-    public User(String id, FullName fullName, String phone, String mail, Address address, Account account) {
+    public User(int id, String phone, String mail) {
         this.id = id;
-        this.fullName = fullName;
         this.phone = phone;
         this.mail = mail;
+    }
+
+    public User(int id, String phone, String mail, FullName fullName, Address address, Account account) {
+        this.id = id;
+        this.phone = phone;
+        this.mail = mail;
+        this.fullName = fullName;
         this.address = address;
         this.account = account;
     }
 
-    public void setId(String id) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
     public void setFullName(FullName fullName) {
         this.fullName = fullName;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
     }
 
     public void setAddress(Address address) {
@@ -57,20 +61,8 @@ public class User {
         this.account = account;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public FullName getFullName() {
         return fullName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getMail() {
-        return mail;
     }
 
     public Address getAddress() {
@@ -80,6 +72,21 @@ public class User {
     public Account getAccount() {
         return account;
     }
-    
-    
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
 }

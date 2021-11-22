@@ -10,6 +10,7 @@ package model.user;
  * @author Admin
  */
 public class Address {
+    private int id;
     private String houseNumber;
     private String street;
     private String district;
@@ -18,11 +19,20 @@ public class Address {
     public Address() {
     }
 
-    public Address(String houseNumber, String street, String district, String city) {
+    public Address(int id,String houseNumber, String street, String district, String city) {
+        this.id=id;
         this.houseNumber = houseNumber;
         this.street = street;
         this.district = district;
         this.city = city;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setHouseNumber(String houseNumber) {

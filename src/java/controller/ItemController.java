@@ -5,13 +5,19 @@
  */
 package controller;
 
+import dao.book.BookDAOImpl;
+import dao.item.ItemDAO;
+import dao.item.ItemDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Item.Item;
+import model.book.BookItem;
 
 /**
  *
@@ -19,28 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ItemController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String route = request.getPathInfo();
-        
-        if (route != null && route.equalsIgnoreCase("/list")) {
-            RequestDispatcher rd = request.getRequestDispatcher("/jsp/list-item.jsp");
-            rd.forward(request, response);
-        } else {
-            RequestDispatcher rd = request.getRequestDispatcher("/jsp/item-detail.jsp");
-            rd.forward(request, response);
-        }
-
-    }
+    private final int limitItemPerPage = 15;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -54,7 +39,39 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String route = request.getPathInfo();
+
+        if (route == null) {
+            String page = request.getParameter("page");
+            String category = request.getParameter("category");
+            int pageNumber = getPageNumber(page);
+
+            List<Item> listItem = null;
+            if (category == null) {
+                listItem = getItems(pageNumber);
+            } else {
+                System.out.println(category);
+                listItem = getItemsByCategory(pageNumber, category);
+            }
+
+            request.setAttribute("listItem", listItem);
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/list-item.jsp");
+            rd.forward(request, response);
+        } else {
+            int itemId = 0;
+            
+            try {
+                itemId = Integer.parseInt(route);
+            } catch (NumberFormatException e) {
+                System.err.println(e);
+                response.sendRedirect(request.getContextPath() + "/not-found");
+                return;
+            }
+
+            getItemDetail(itemId);
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/item-detail.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**
@@ -68,7 +85,7 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 
     /**
@@ -81,4 +98,43 @@ public class ItemController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private List<Item> getItems(int page) {
+        int from = page * limitItemPerPage + limitItemPerPage;
+        List<Item> listItem = new ItemDAOImpl().getNewItems(limitItemPerPage, from);
+        return listItem;
+    }
+
+    private List<Item> getItemsByCategory(int page, String category) {
+        int from = page * limitItemPerPage + limitItemPerPage;
+        List<Item> listItem = new ItemDAOImpl().getNewItemsByCategory(limitItemPerPage, from, category);
+        return listItem;
+    }
+
+    private int getPageNumber(String page) {
+        if (page != null) {
+            return Integer.parseInt(page);
+        }
+
+        return 0;
+    }
+    
+    private BookItem getBookItem(int bookItemId) {
+        return new BookDAOImpl().getBookIT(bookItemId);
+    }
+
+    protected void shoeControl() {
+
+    }
+
+    protected void electronicControl() {
+
+    }
+
+    protected void bookControl() {
+
+    }
+
+    protected void clothesControl() {
+
+    }
 }

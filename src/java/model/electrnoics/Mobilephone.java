@@ -9,7 +9,7 @@ package model.electrnoics;
  *
  * @author DELL
  */
-public class Mobilephone {
+public class Mobilephone extends Electronics{
     private String screen;
     private String RAM;
     private String storage;

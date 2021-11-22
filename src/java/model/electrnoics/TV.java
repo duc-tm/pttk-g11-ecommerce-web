@@ -9,7 +9,7 @@ package model.electrnoics;
  *
  * @author DELL
  */
-public class TV {
+public class TV extends Electronics{
     private String screen;
     private String RAM;
     private String storage;

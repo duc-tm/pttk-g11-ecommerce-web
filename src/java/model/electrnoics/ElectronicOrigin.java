@@ -12,6 +12,7 @@ import java.util.Date;
  * @author DELL
  */
 public class ElectronicOrigin {
+    private int id;
     private String companyName;
     private String address;
     private Date dateOfManufacture;
@@ -20,11 +21,20 @@ public class ElectronicOrigin {
     public ElectronicOrigin() {
     }
 
-    public ElectronicOrigin(String companyName, String address, Date dateOfManufacture, String brand) {
+    public ElectronicOrigin(int id,String companyName, String address, Date dateOfManufacture, String brand) {
+        this.id=id;
         this.companyName = companyName;
         this.address = address;
         this.dateOfManufacture = dateOfManufacture;
         this.brand = brand;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCompanyName() {

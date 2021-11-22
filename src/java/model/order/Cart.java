@@ -10,19 +10,27 @@ package model.order;
  * @author Admin
  */
 public class Cart {
-    private int totalQuantity;
+    private int id;
+    private int Quantity;
     private double totalPrice;
 
-    public Cart() {
-    }
-
-    public Cart(int totalQuantity, double totalPrice) {
-        this.totalQuantity = totalQuantity;
+   public Cart(){
+       
+   }
+    public Cart(int id,int Quantity, double totalPrice) {
+        this.id=id;
+        this.Quantity = Quantity;
         this.totalPrice = totalPrice;
+    }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setTotalQuantity(int totalQuantity) {
-        this.totalQuantity = totalQuantity;
+        this.Quantity = totalQuantity;
     }
 
     public void setTotalPrice(double totalPrice) {
@@ -30,7 +38,7 @@ public class Cart {
     }
 
     public int getTotalQuantity() {
-        return totalQuantity;
+        return Quantity;
     }
 
     public double getTotalPrice() {

@@ -10,32 +10,28 @@ package model.shoes;
  * @author DELL
  */
 public class Shoes {
-    private String id;
+    private int id;
     private String name;
-    private String description;
-    private int quantityOfGoods;
+    private int RemainingQuantity;
     private float cost;
     private String version;
-    private String image;
 
     public Shoes() {
     }
 
-    public Shoes(String id, String name, String description, int quantityOfGoods, float cost, String version, String image) {
+    public Shoes(int id, String name, int RemainingQuantity, float cost, String version) {
         this.id = id;
         this.name = name;
-        this.description = description;
-        this.quantityOfGoods = quantityOfGoods;
+        this.RemainingQuantity = RemainingQuantity;
         this.cost = cost;
         this.version = version;
-        this.image = image;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -47,20 +43,12 @@ public class Shoes {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public int getRemainingQuantity() {
+        return RemainingQuantity;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getQuantityOfGoods() {
-        return quantityOfGoods;
-    }
-
-    public void setQuantityOfGoods(int quantityOfGoods) {
-        this.quantityOfGoods = quantityOfGoods;
+    public void setRemainingQuantity(int RemainingQuantity) {
+        this.RemainingQuantity = RemainingQuantity;
     }
 
     public float getCost() {
@@ -79,12 +67,6 @@ public class Shoes {
         this.version = version;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
+    
     
 }

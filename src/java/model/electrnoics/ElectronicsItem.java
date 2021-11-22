@@ -5,38 +5,25 @@
  */
 package model.electrnoics;
 
+import model.Item.Item;
+
 /**
  *
  * @author DELL
  */
-public class ElectronicsItem {
-    private String id;
+public class ElectronicsItem extends Item {
+
     private String color;
-    private float price;
-    private String barcode;
-    private float discount;
-    private String sellingStatus;
     private int Insuarance;
 
-    public ElectronicsItem() {
-    }
-
-    public ElectronicsItem(String id, String color, float price, String barcode, float discount, String sellingStatus, int Insuarance) {
-        this.id = id;
+    public ElectronicsItem(String color, int Insuarance, int ID, String Description, Float Price, Float Discount, String SellingStatus, String Image, String Category, String Name) {
+        super(ID, Name, Description, Price, Discount, SellingStatus, Image, Category);
         this.color = color;
-        this.price = price;
-        this.barcode = barcode;
-        this.discount = discount;
-        this.sellingStatus = sellingStatus;
         this.Insuarance = Insuarance;
     }
 
-    public String getId() {
-        return id;
-    }
+    public ElectronicsItem() {
 
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getColor() {
@@ -47,38 +34,6 @@ public class ElectronicsItem {
         this.color = color;
     }
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public String getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
-
-    public float getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(float discount) {
-        this.discount = discount;
-    }
-
-    public String getSellingStatus() {
-        return sellingStatus;
-    }
-
-    public void setSellingStatus(String sellingStatus) {
-        this.sellingStatus = sellingStatus;
-    }
-
     public int getInsuarance() {
         return Insuarance;
     }
@@ -86,5 +41,5 @@ public class ElectronicsItem {
     public void setInsuarance(int Insuarance) {
         this.Insuarance = Insuarance;
     }
-    
+
 }

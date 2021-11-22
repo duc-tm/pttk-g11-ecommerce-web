@@ -10,6 +10,7 @@ package model.book;
  * @author DELL
  */
 public class Author {
+    private int id;
     private String name;
     private String biography;
     private String email;
@@ -18,11 +19,20 @@ public class Author {
     public Author() {
     }
 
-    public Author(String name, String biography, String email, String address) {
+    public Author(int id,String name, String biography, String email, String address) {
+        this.id=id;
         this.name = name;
         this.biography = biography;
         this.email = email;
         this.address = address;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

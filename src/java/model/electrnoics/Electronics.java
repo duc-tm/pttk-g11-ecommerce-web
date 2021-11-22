@@ -10,36 +10,34 @@ package model.electrnoics;
  * @author DELL
  */
 public class Electronics {
-    private String id;
+    private int id;
     private String name;
     private String type;
-    private String description;
-    private int quantityOfGoods;
-    private float cost;
     private String version;
+    private float cost;
+    private int RemainingQuantity;
     private String size;
     private String weight;
 
     public Electronics() {
     }
 
-    public Electronics(String id, String name, String type, String description, int quantityOfGoods, float cost, String version, String size, String weight) {
+    public Electronics(int id, String name, String type, String version, float cost, int RemainingQuantity, String size, String weight) {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.description = description;
-        this.quantityOfGoods = quantityOfGoods;
-        this.cost = cost;
         this.version = version;
+        this.cost = cost;
+        this.RemainingQuantity = RemainingQuantity;
         this.size = size;
         this.weight = weight;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -59,20 +57,12 @@ public class Electronics {
         this.type = type;
     }
 
-    public String getDescription() {
-        return description;
+    public String getVersion() {
+        return version;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getQuantityOfGoods() {
-        return quantityOfGoods;
-    }
-
-    public void setQuantityOfGoods(int quantityOfGoods) {
-        this.quantityOfGoods = quantityOfGoods;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public float getCost() {
@@ -83,12 +73,12 @@ public class Electronics {
         this.cost = cost;
     }
 
-    public String getVersion() {
-        return version;
+    public int getRemainingQuantity() {
+        return RemainingQuantity;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public void setRemainingQuantity(int RemainingQuantity) {
+        this.RemainingQuantity = RemainingQuantity;
     }
 
     public String getSize() {
@@ -106,5 +96,6 @@ public class Electronics {
     public void setWeight(String weight) {
         this.weight = weight;
     }
-    
+
+   
 }
