@@ -4,11 +4,13 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <div class="item-info__quantity-select">
-    <div class="number" id="item-counter">
+    <div class="number item-counter" class="" id="<c:out value="${param.id}"/>">
         <span class="minus">-</span>
-        <input type="text" value="1" id="item-counter-input" />
+        <input type="text" value="1"/>
         <span class="plus">+</span>
     </div>
 </div>

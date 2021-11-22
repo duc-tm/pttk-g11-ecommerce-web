@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "custom" uri = "../WEB-INF/custom-tag.tld"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -48,13 +49,13 @@
                                     <th>Đơn Giá</th>
                                     <th>Số lượng</th>
                                     <th>Số tiền</th>
-                                    <th>Thao Tác</th>
+                                    <th style="width: 100px;" class="text-center">Thao Tác</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <c:forEach var = "i" begin = "1" end = "5">
                                 <tr class="align-content-lg-between center item" itemId="<c:out value="${i}"/>">
-                                    <td class="text-center"><input type="checkbox" name="" id="" class="form-check-input"></td>
+                                    <td class="text-center"><input type="checkbox" name="" id="" class="form-check-input item-selector"></td>
                                     <td>
                                         <a href="" class="item-general-info">
                                             <div class="item-img">
@@ -65,11 +66,16 @@
                                             </div>                               
                                         </a>
                                     </td>
-                                    <td><div class="item-price">10000</div></td>
+                                    <td><div class="item-unit-price"><custom:currencyFormat amount="10000" currencyFormat="vi" /></div></td>
                                     <td>                                    
-                                        <jsp:include page="components/counter.jsp"></jsp:include>
+                                        <jsp:include page="components/counter.jsp">
+                                            <jsp:param name="id" value="item-counter-${i}"/>
+                                        </jsp:include>
                                         </td>
-                                        <td>Thành tiền</td>
+                                        <td class="item-total-price">
+                                            <input type="hidden" value="10000">
+                                            <custom:currencyFormat amount="10000" currencyFormat="vi" />
+                                        </td>
                                         <td class="text-center"><i class="bi-trash-fill text-danger delete-item-btn" for="<c:out value="${i}"/>"></i></td>
                                 </tr>
                             </c:forEach>
@@ -80,7 +86,9 @@
             <div class=" d-flex flex-column">
                 <div class="total-bill">
                     <div class="total-bill__title">Tổng thanh toán:</div>
-                    <div class="total-bill__cost ms-2">20000</div>
+                    <div class="total-bill__cost ms-2" id="bill-container">
+                        <custom:currencyFormat amount="20000" currencyFormat="vi" />
+                    </div>
                 </div>
                 <button class="btn btn-primary mt-3" id="pay-now">Thanh toán</button>
             </div>

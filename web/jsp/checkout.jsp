@@ -80,7 +80,7 @@
                             <div class="py-1 px-3">
                                 <div class="pb-1"><p>THÔNG TIN THANH TOÁN</p></div>
                                 <div class="shipment-info mt-0">Người nhận</div>
-                                <div class="shipment-info">Điện thoại</div>
+                                <div class="shipment-info">Số Điện thoại</div>
                                 <div class="shipment-info">Địa chỉ cụ thể</div>
                                 <div class="shipment-info">Quận/Huyện</div> 
                                 <div class="shipment-info">Thành phố</div>
@@ -91,9 +91,11 @@
                                     </div>
                                     <div id="another-address-collapse" class="collapse mt-4">
                                         <form id="another-address-form">
-                                            <input type="text" id="diff-ship-type-name" placeholder="Họ và tên" class="form-control">
+                                            <input type="text" id="diff-ship-type-name" placeholder="Người nhận" class="form-control">
                                             <input type="text" id="diff-ship-type-phone" placeholder="Số điện thoại" class="form-control my-4">
-                                            <input type="text" id="diff-ship-type-add" placeholder="Họ và tên" class="form-control my-4">
+                                            <input type="text" id="diff-ship-type-add" placeholder="Địa chỉ cụ thể" class="form-control my-4">
+                                            <input type="text" id="diff-ship-type-add" placeholder="Quận/Huyện" class="form-control my-4">
+                                            <input type="text" id="diff-ship-type-add" placeholder="Thành phố" class="form-control my-4">
                                         </form>
                                     </div>
                                 </div>

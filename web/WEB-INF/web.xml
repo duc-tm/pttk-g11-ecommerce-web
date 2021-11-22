@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <welcome-file-list>
+        <welcome-file>jsp/home.jsp</welcome-file>
+    </welcome-file-list>
     <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>controller.HomeController</servlet-class>
@@ -20,6 +23,14 @@
         <servlet-name>UserController</servlet-name>
         <servlet-class>controller.UserController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NotFoundController</servlet-name>
+        <servlet-class>controller.NotFoundController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AuthController</servlet-name>
+        <servlet-class>controller.AuthController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -34,15 +45,27 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ItemController</servlet-name>
-        <url-pattern>/item/*</url-pattern>
+        <url-pattern>/product/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserController</servlet-name>
         <url-pattern>/user/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotFoundController</servlet-name>
+        <url-pattern>/not-found</url-pattern>
+    </servlet-mapping>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/not-found</location>
+    </error-page>
+    <servlet-mapping>
+        <servlet-name>AuthController</servlet-name>
+        <url-pattern>/auth/*</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            4320
         </session-timeout>
     </session-config>
 </web-app>

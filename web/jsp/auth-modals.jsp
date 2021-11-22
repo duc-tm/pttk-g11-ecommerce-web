@@ -16,26 +16,27 @@
             </div>
 
             <div class="modal-body">
-                <form action="" class="login-form mx-3" id="login-form">
+                <form action="auth/login" method="POST" class="login-form mx-3" id="login-form">
                     <div class="mt-3 mb-4">
                         <input type="text" name="username" id="login-username" class="form-control"
-                               placeholder="Email">
+                               placeholder="Tên tài khoản" required>
                     </div>
                     <div class="form-group position-relative">
                         <input type="password" name="password" id="login-password" class="form-control"
-                               placeholder="Mật khẩu">
+                               placeholder="Mật khẩu" required>
                         <input type="checkbox" id="show-password-checkbox" class="d-none">
                         <label for="show-password-checkbox" class="show-password-control position-absolute">
                             <i class="far fa-eye-slash hide-password-icon"></i>
                         </label>
                     </div>
+                    <div class="form-message text-danger fs-6"></div>
                     <a href="${pageContext.request.contextPath}/forgot-password" class="forgot-password-link mt-2 d-inline-block">Quên mật khẩu</a>
                 </form>
             </div>
 
 
             <div class="modal-footer mx-3">
-                <button type="button" class="btn btn-primary">Đăng nhập</button>
+                <button type="submit" form="login-form" class="btn btn-primary">Đăng nhập</button>
             </div>
 
         </div>
@@ -55,19 +56,20 @@
 
 
             <div class="modal-body">
-                <form action="" class="register-form"  id="register-form">
+                <form action="auth/register" method="POST" class="register-form"  id="register-form">
                     <div class="my-3">
-                        <input type="email" name="username" id="regiser-username" class="form-control"
-                               placeholder="Email">
+                        <input type="text" name="username" id="register-username" class="form-control"
+                               placeholder="Tên tài khoản" required>
                     </div>
                     <div class="my-3">
                         <input type="password" name="password" id="register-password" class="form-control"
-                               placeholder="Mật khẩu">
+                               placeholder="Mật khẩu" required>
                     </div>
                     <div class="my-3">
-                        <input type="password" name="password" id="register-password-confirm" class="form-control"
-                               placeholder="Nhập lại mật khẩu">
+                        <input type="password" name="rePassword" id="register-password-confirm" class="form-control"
+                               placeholder="Nhập lại mật khẩu" required>
                     </div>
+                    <div class="form-message text-danger fs-6"></div>
                     <div class="my-3 register-policy">
                         Bằng việc đăng kí, bạn đã đồng ý với Shopyy về 
                         <a href="">Điều khoản dịch vụ</a>
@@ -79,9 +81,11 @@
 
 
             <div class="modal-footer mx-3">
-                <button type="button" class="btn btn-primary">Đăng ký</button>
+                <button type="submit" form="register-form" class="btn btn-primary">Đăng ký</button>
             </div>
 
         </div>
     </div>
 </div>
+
+<script src="${pageContext.request.contextPath}/js/auth.js"></script>

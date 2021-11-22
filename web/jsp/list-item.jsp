@@ -4,6 +4,8 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "custom" uri = "../WEB-INF/custom-tag.tld"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,46 +107,49 @@
 
                             <div class="home-product">
                                 <div class="row">
+                                <c:forEach items="${listItem}" var="item">
                                     <div class="col-md-2">
-                                        <a class="home-product__item" href="#">
+                                        <a class="home-product__item" href="product/<c:out value="${item.ID}" />">
                                             <div class="home-product__item-img"
-                                                 style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
+                                                 style="background-image: url(<c:out value="${item.image}" />);">
                                             </div>
-                                            <h4 class="home-product__item-name">Áo Hoodie Nam Nữ Happy, Áo sweater form rộng unisex HT60</h4>
+                                            <h4 class="home-product__item-name"><c:out value="${item.name}" /></h4>
                                             <div class="home-product__item-price">
-                                                <span class="home-product__item-price--old">23.000<sup>đ</sup></span>
-                                                <span class="home-product__item-price--current">16.000<sup>đ</sup></span>
-                                            </div>
-                                            <div class="home-product__item-origin">
-                                                <span class="home-product__item-brand">Woho</span>
-                                                <span class="home-product__item-country">Nhật bản</span>
+                                                <span class="home-product__item-price--old me-1">
+                                                    <custom:currencyFormat amount="${item.price}" currencyFormat="vi"/>
+                                                </span>
+                                                <span class="home-product__item-price--current mb-2">
+                                                    <custom:currencyFormat amount="${item.price - item.price*(item.discount/100)}" currencyFormat="vi"/>
+                                                </span>
                                             </div>
                                         </a>
                                     </div>
+                                </c:forEach>
 
-                                </div>
-                            </div>
 
-                            <div class="footer-pagination mt-5">
-                                <button class="prev-page-btn">
-                                    <i class="fas fa-chevron-left"></i>
-                                </button>
-                                <div class="pagination-list">
-                                    <a href="?page=1">1</a>
-                                    <a href="?page=2">2</a>
-                                    <a href="?page=3">3</a>
-                                    <a class="still-more-page">...</a>
-                                </div>
-                                <button class="next-page-btn">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
                             </div>
                         </div>
+
+                        <div class="footer-pagination mt-5">
+                            <button class="prev-page-btn">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="pagination-list">
+                                <a href="?page=1">1</a>
+                                <a href="?page=2">2</a>
+                                <a href="?page=3">3</a>
+                                <a class="still-more-page">...</a>
+                            </div>
+                            <button class="next-page-btn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
                     </div>
-
-
-
                 </div>
+
+
+
+            </div>
 
             <jsp:include page="components/footer.jsp"></jsp:include>
 

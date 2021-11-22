@@ -24,6 +24,7 @@
         <link href="${pageContext.request.contextPath}/css/auth-modals.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/css/footer.css" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/css/carousel.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/css/item.css" rel="stylesheet" />
 
         <link href="${pageContext.request.contextPath}/css/item-detail.css" rel="stylesheet" />
@@ -178,7 +179,7 @@
                         <div class="col-10">
                             <h5 class="similar-item__title fw-normal text-uppercase text-muted">Sản phẩm tương tự</h5>
                             <div class="similar-item-list">
-                                <div id="similar-item-carousel" class="carousel slide ps-3" data-bs-ride="carousel">
+                                <div id="similar-item-carousel" class="carousel slide" data-bs-ride="carousel">
 
                                     <!-- The slideshow/carousel -->
                                     <div class="carousel-inner custom-carousel-inner">

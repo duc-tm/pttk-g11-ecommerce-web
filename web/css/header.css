@@ -38,7 +38,7 @@
 
 .user:before {
     content: "";
-    width: 150%;
+    width: 300%;
     height: 10px;
     top: 88%;
     right: 0;
@@ -48,11 +48,14 @@
 .user-control {
     right: 0;
     top: 36px;
-    min-width: 120px;
-    padding: 16px 10px;
+    min-width: 160px;
     background-color: #fff;
     border-radius: 4px;
     display: none !important;
+}
+
+.user-control ul {
+        margin: 0;
 }
 
 .user:hover .user-control{
@@ -60,11 +63,15 @@
 }
 
 .user-control a {
-    padding: 8px 8px;
+    display: block;
+    padding: 8px 16px;
     border-radius: 4px;
+    color: var(--text-color);
+    font-size: 0.9rem;
 }
 
 .user-control a:hover {
+    color: var(--primary-color);
     background-color: rgba(0, 0, 0, 0.05);
 }
 

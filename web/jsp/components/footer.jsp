@@ -16,10 +16,10 @@
             </div>
             <div class="col-3">
                 <h4 class="mb-3">Sản phẩm</h4>
-                <a href="" class="text-black text-decoration-none">Giày</a>
-                <a href="" class="text-black text-decoration-none">Thời trang</a>
-                <a href="" class="text-black text-decoration-none">Sách</a>
-                <a href="" class="text-black text-decoration-none">Đồ điện tử</a>
+                <a href="${pageContext.request.contextPath}/product/shoe" class="text-black text-decoration-none">Giày</a>
+                <a href="${pageContext.request.contextPath}/product/clothes" class="text-black text-decoration-none">Thời trang</a>
+                <a href="${pageContext.request.contextPath}/product/book" class="text-black text-decoration-none">Sách</a>
+                <a href="${pageContext.request.contextPath}/product/electronic" class="text-black text-decoration-none">Đồ điện tử</a>
             </div>
             <div class="col-3">
                 <h4 class="mb-3">Hỗ trợ</h4>

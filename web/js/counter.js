@@ -6,18 +6,23 @@
 
 
 $(document).ready(function () {
-    $('#item-counter > .minus').click(function () {
-        var $input = $(this).parent().find('input');
-        var count = parseInt($input.val()) - 1;
-        count = count < 1 ? 1 : count;
-        $input.val(count);
-        $input.change();
-        return false;
+    Array.from($('.item-counter > .minus')).forEach((ele) => {
+        ele.addEventListener('click', function () {
+            var $input = $(this).parent().find('input');
+            var count = parseInt($input.val()) - 1;
+            count = count < 1 ? 1 : count;
+            $input.val(count);
+            $input.change();
+            return false;
+        });
     });
-    $('#item-counter > .plus').click(function () {
-        var $input = $(this).parent().find('input');
-        $input.val(parseInt($input.val()) + 1);
-        $input.change();
-        return false;
+    
+    Array.from($('.item-counter > .plus')).forEach((ele) => {
+        ele.addEventListener('click', function () {
+            var $input = $(this).parent().find('input');
+            $input.val(parseInt($input.val()) + 1);
+            $input.change();
+            return false;
+        });
     });
 });

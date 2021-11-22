@@ -37,7 +37,7 @@ and open the template in the editor.
     cursor:pointer;
 }
 
-#item-counter-input{
+.item-counter > input{
     width: 50px;
     height: 100%;
     text-align: center;
