@@ -26,7 +26,7 @@
                     <div class="col-10 content d-flex align-items-center">
                         <jsp:include page="counter.jsp"></jsp:include>
                             <div class="item-info__quantity-available ms-3 text-muted">
-                            ${shoe.remainingquantity} sản phẩm có sẵn
+                            ${shoe.remainingQuantity} sản phẩm có sẵn
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-10">
                                 <p class="mb-0">
-                                    ${shoe.remainingquantity}
+                                    ${shoe.remainingQuantity}
                                 </p>
                             </div>
                         </li>

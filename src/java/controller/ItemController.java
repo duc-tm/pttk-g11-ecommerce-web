@@ -101,12 +101,13 @@ public class ItemController extends HttpServlet {
                     request.setAttribute("clothesItem", clothesDetail.getKey());
                     request.setAttribute("clothes", clothesDetail.getValue());
                     request.setAttribute("category", 2);
-
+                    System.out.println(clothesDetail.getKey().getName());
                     break;
                 case "3":
                     Pair<ShoesItem, Shoes> shoeDetail = getShoeDetail(itemId);
                     request.setAttribute("shoeItem", shoeDetail.getKey());
                     request.setAttribute("shoe", shoeDetail.getValue());
+                    System.out.println(shoeDetail.getValue().getRemainingQuantity());
                     request.setAttribute("category", 3);
 
                     break;

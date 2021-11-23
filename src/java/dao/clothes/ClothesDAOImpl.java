@@ -40,7 +40,7 @@ public class ClothesDAOImpl implements ClothesDAO {
     private final String sql7 = "Update clothesdesign SET Type=?,Material=?,Style=?,Model=?,Gender=?,Age=? where ID=?";
     private final String sql8 = "Update clothesitem SET Color=?,Size=? where ID=?";
     private final String sql14 = "Update clothesorigin SET CompanyName=?,Address=?,DateOfManufacture=? where ID=?";
-    private final String sql9 = "SELECT * FROM clothes WHERE ID=?;";
+    private final String sql9 = "SELECT clothes.* FROM clothes, clothesitem WHERE clothesitem.itemid =? AND clothesitem.clothesid = clothes.id;";
     private final String sql10 = "SELECT * FROM clothesorigin WHERE ID=?;";
     private final String sql11 = "SELECT * FROM clothesdesign WHERE ID = ?;";
     private final String sql12 = "SELECT * FROM clothesitem WHERE ClothesID=?;";
@@ -179,13 +179,14 @@ public class ClothesDAOImpl implements ClothesDAO {
             prestatement.setInt(1, ID);
             rs = prestatement.executeQuery();
             Clothes c = new Clothes();
-            c.setId(ID);
+
             if (rs.next()) {
                 c.setName(rs.getString(4));
                 c.setRemainingQuantity(rs.getInt(5));
                 c.setCost(rs.getFloat(6));
                 c.setVersion(rs.getString(7));
             }
+
             return c;
         } catch (SQLException ex) {
             Logger.getLogger(ClothesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -289,6 +290,7 @@ public class ClothesDAOImpl implements ClothesDAO {
                 ci.setImage(item.getImage());
                 ci.setCategory(item.getCategory());
             }
+            
             return ci;
         } catch (SQLException ex) {
             Logger.getLogger(ClothesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);

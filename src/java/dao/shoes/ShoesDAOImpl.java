@@ -38,7 +38,7 @@ public class ShoesDAOImpl implements ShoesDAO {
     private final String sql7 = "Update shoesdesign SET Type=?,Material=?,Style=?,Model=?,Gender=?,Age=? where ID=?";
     private final String sql8 = "Update shoesitem SET Color=?,Size=? where ID=?";
     private final String sql9 = "Update shoesorigin SET CompanyName=?,Address=?,DateOfManfacture=? where ID=?";
-    private final String sql10 = "SELECT * FROM shoes WHERE ID=?;";
+    private final String sql10 = "SELECT shoes.* FROM shoes, shoesitem WHERE shoesitem.itemid=? AND shoesitem.shoesid = shoes.id;";
     private final String sql11 = "SELECT * FROM shoesorigin WHERE ID=?;";
     private final String sql12 = "SELECT * FROM shoesdesign WHERE ID = ?;";
     private final String sql13 = "SELECT * FROM shoesitem WHERE ShoesID=?;";
@@ -179,6 +179,7 @@ public class ShoesDAOImpl implements ShoesDAO {
                 s.setCost(rs.getFloat(6));
                 s.setVersion(rs.getString(7));
             }
+ 
             return s;
         } catch (SQLException ex) {
             Logger.getLogger(ShoesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -259,6 +260,7 @@ public class ShoesDAOImpl implements ShoesDAO {
             prestatement.setInt(1, ID);
             rs = prestatement.executeQuery();
             ShoesItem si = new ShoesItem();
+            si.setID(ID);
             int tmp = 0;
             if (rs.next()) {
                 si.setColor(rs.getString(1));
@@ -278,8 +280,10 @@ public class ShoesDAOImpl implements ShoesDAO {
                     si.setSellingStatus(rs.getString(5));
                     si.setImage(rs.getString(6));
                     si.setCategory(rs.getString(7));
+                    si.setName(rs.getString("name"));
                 }
             }
+
             return si;
         } catch (SQLException ex) {
             Logger.getLogger(ShoesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
