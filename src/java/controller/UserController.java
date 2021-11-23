@@ -77,6 +77,7 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String route = request.getPathInfo();
         HttpSession session = request.getSession(false);
 

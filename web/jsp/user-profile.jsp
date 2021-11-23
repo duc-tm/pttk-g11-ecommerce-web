@@ -147,7 +147,7 @@
                                                 Địa chỉ cụ thể
                                             </label>
                                             <div class="col-8 d-flex">
-                                                <input type="text" class="user-profile__info-input form-control" id="detail-address" name="detailaddress" value="<c:out value="${user.mail}" />">
+                                                <input type="text" class="user-profile__info-input form-control" id="detail-address" name="detailaddress" value="<c:out value="${user.address.addressDetail}" />">
                                             </div>
                                         </li>
                                         <li class="user-profile__info-item text-muted row align-items-center">
@@ -155,7 +155,7 @@
                                                 Quận huyện/Phường xã
                                             </label>
                                             <div class="col-8 d-flex">
-                                                <input type="text" class="user-profile__info-input form-control" id="district" name="district" value="<c:out value="${user.mail}" />">
+                                                <input type="text" class="user-profile__info-input form-control" id="district" name="district" value="<c:out value="${user.address.district}" />">
                                             </div>
                                         </li>
                                         <li class="user-profile__info-item text-muted row align-items-center">
@@ -163,7 +163,7 @@
                                                 Tỉnh/Thành phố
                                             </label>
                                             <div class="col-8 d-flex">
-                                                <input type="text" class="user-profile__info-input form-control" id="city" name="city" value="<c:out value="${user.mail}" />">
+                                                <input type="text" class="user-profile__info-input form-control" id="city" name="city" value="<c:out value="${user.address.city}" />">
                                             </div>
                                         </li>
                                     </div>

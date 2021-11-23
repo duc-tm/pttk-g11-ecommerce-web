@@ -44,7 +44,7 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
     private final String GET_USER_BY_USERID_SQL = "SELECT * FROM user, account, fullname, address "
             + "WHERE user.id = ? AND user.id = account.userid AND user.id = fullname.userid AND user.id = address.userid";
 
-    private final String UPDATE_USER_SQL = "UPDATE user SET phone = IFNULL(?, phone), mail = IFNULL(?, mail) WHERE id = ?";
+    private final String UPDATE_USER_SQL = "UPDATE user SET phone = IFNULL(?, phone), mail = IFNULL(?, mail), gender = IFNULL(?, gender) WHERE id = ?";
     private final String UPDATE_ADDRESS_SQL = "UPDATE address SET addressdetail = IFNULL(?, addressdetail), "
             + "district=IFNULL(?, district), "
             + "city=IFNULL(?, city)"
@@ -224,7 +224,8 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
         try (PreparedStatement prestatement = conn.prepareStatement(UPDATE_USER_SQL)) {
             prestatement.setString(1, user.getPhone());
             prestatement.setString(2, user.getMail());
-            prestatement.setInt(3, user.getId());
+            prestatement.setString(3, user.getGender());
+            prestatement.setInt(4, user.getId());
 
             rowAffected = prestatement.executeUpdate();
 
