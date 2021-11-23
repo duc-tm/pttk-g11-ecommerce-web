@@ -42,7 +42,7 @@
                     <div class="col-10 content d-flex align-items-center">
                         <div class="item-info__type-select">
                             <div class="item-info__type">
-                                <input type="radio" name="type" value="${clothesItem.size}" id="type-1">
+                                <input type="radio" name="type" value="${clothesItem.size}" id="type-1" checked>
                                 <label for="type-1">${clothesItem.size}<i class="fas fa-check"></i></label>
                             </div>
                         </div>

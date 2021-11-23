@@ -1,6 +1,6 @@
 <%-- 
-    Document   : not-found
-    Created on : Nov 18, 2021, 12:49:24 PM
+    Document   : internal-server-error
+    Created on : Nov 23, 2021, 12:23:32 PM
     Author     : Admin
 --%>
 
@@ -19,18 +19,17 @@
         <link href="${pageContext.request.contextPath}/css/header.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/css/footer.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/css/checkout.css" rel="stylesheet" />
-
-        <title></title>
+        <title>Internal Server Error</title>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
         <jsp:include page="components/header.jsp"></jsp:include>
 
             <div class="container text-center mt-5">
-                <img class="img-fluid" alt="page not found" src="https://bizflyportal.mediacdn.vn/bizflyportal/459/347/2020/06/02/17/37/70515910726734841.jpg">
+                <img class="img-fluid" alt="page not found" src="http://freeminecraftserverhosting.com/wp-content/uploads/2021/05/loi-503.png">
             </div>
-            <h3 class="text-center">Trang bạn tìm kiếm không tồn tại</h3>
-
+            <h3 class="text-center">Opps! Có lỗi ở máy chủ, vui lòng thử lại sau</h3>
+            
         <jsp:include page="components/footer.jsp"></jsp:include>
 
     </body>

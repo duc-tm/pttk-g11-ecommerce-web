@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.order.Cart;
-import model.user.User;
 
 /**
  *
@@ -36,7 +35,12 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String route = request.getPathInfo();
+
+        if (route == null) {
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/cart.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**
@@ -53,22 +57,22 @@ public class CartController extends HttpServlet {
         String route = request.getPathInfo();
         String itemId = request.getParameter("itemid");
         String itemQuantity = request.getParameter("quantity");
-        
+
         if (route != null && route.equalsIgnoreCase("/add-to-cart")) {
             HttpSession session = request.getSession(false);
-            
+
             if (session == null) {
                 response.sendRedirect("/g11/home");
                 return;
             }
-            
+
             Integer userId = (Integer) session.getAttribute("userId");
-            
+
             if (userId == null) {
                 response.sendRedirect("/g11/auth/logout");
                 return;
             }
-            
+
             int rowAffected = addItemToCart(itemId, userId, itemQuantity);
             if (rowAffected <= 0) {
                 sendResponse(response, "503;");
@@ -77,31 +81,30 @@ public class CartController extends HttpServlet {
             }
         }
     }
-    
+
 //    private Cart getCartInfo() {
 //        
 //    }
-//    
     private int addItemToCart(String itemId, int userId, String itemQuantity) {
         Integer itemIdNumber = Integer.parseInt(itemId);
         Integer itemQuantityNumber = Integer.parseInt(itemQuantity);
         int rowAffected = 0;
-        
+
         CartDAO cartDAO = new CartDAOImpl();
-        
+
         Cart cart = cartDAO.getCartByUserID(userId);
         if (cart != null) {
             rowAffected = cartDAO.addItemInCartByItemID(itemQuantityNumber, cart.getId(), itemIdNumber);
             return rowAffected;
         }
-        
+
         return rowAffected;
     }
-    
+
     private void sendResponse(HttpServletResponse response, String responseData) throws IOException {
         response.setHeader("Content-Type", "text/plain");
         response.setCharacterEncoding("UTF-8");
-        
+
         PrintWriter writer = response.getWriter();
         writer.write(responseData);
         writer.close();

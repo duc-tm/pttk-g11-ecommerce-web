@@ -59,14 +59,23 @@ public class CartDAOImpl implements CartDAO {
     public int createCartByUserID(int ID) {
         ResultSet rs;
         PreparedStatement prestatement;
+        int cartId = 0;
+
         try {
-            prestatement = conn.prepareStatement(CREATE_CART_BY_USERID);
+            prestatement = conn.prepareStatement(CREATE_CART_BY_USERID, Statement.RETURN_GENERATED_KEYS);
             prestatement.setInt(1, ID);
             int rowcount = prestatement.executeUpdate();
-            return rowcount;
+
+            if (rowcount > 0) {
+                rs = prestatement.getGeneratedKeys();
+                if (rs.next()) {
+                    cartId = rs.getInt(1);
+                }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CartDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
+        } finally {
+            return cartId;
         }
     }
 

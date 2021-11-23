@@ -25,7 +25,7 @@
     </servlet>
     <servlet>
         <servlet-name>NotFoundController</servlet-name>
-        <servlet-class>controller.NotFoundController</servlet-class>
+        <servlet-class>controller.ErrorController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AuthController</servlet-name>
@@ -41,7 +41,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CartController</servlet-name>
-        <url-pattern>/cart</url-pattern>
+        <url-pattern>/cart/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CheckoutController</servlet-name>
@@ -57,11 +57,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>NotFoundController</servlet-name>
-        <url-pattern>/not-found</url-pattern>
+        <url-pattern>/error/*</url-pattern>
     </servlet-mapping>
     <error-page>
         <error-code>404</error-code>
-        <location>/not-found</location>
+        <location>/error/not-found</location>
+    </error-page>
+    <error-page>
+        <error-code>503</error-code>
+        <location>/error/server-error</location>
     </error-page>
     <servlet-mapping>
         <servlet-name>AuthController</servlet-name>

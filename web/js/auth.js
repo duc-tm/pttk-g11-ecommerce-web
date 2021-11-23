@@ -15,7 +15,7 @@
         formData.append('username', username);
         formData.append('password', password);
 
-        const response = await fetch('auth/login',
+        const response = await fetch('http://localhost:8080/g11/auth/login',
                 {
                     method: "POST",
                     contentType: "application/x-www-form-urlencoded",
@@ -53,7 +53,7 @@
         formData.append('username', username);
         formData.append('password', password);
 
-        const response = await fetch('auth/register',
+        const response = await fetch('http://localhost:8080/g11/auth/register',
                 {
                     method: "POST",
                     contentType: "application/x-www-form-urlencoded",

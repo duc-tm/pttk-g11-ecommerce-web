@@ -156,6 +156,7 @@
             </div>
 
             <script src="${pageContext.request.contextPath}/js/pagination.js"></script>
+        <script src="${pageContext.request.contextPath}/js/search-control.js"></script>
     </body>
 
 </html>

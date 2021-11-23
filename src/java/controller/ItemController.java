@@ -49,24 +49,30 @@ public class ItemController extends HttpServlet {
             throws ServletException, IOException {
         String route = request.getPathInfo();
 
+//        path = "/product/" -> get product list
         if (route == null) {
             String page = request.getParameter("page");
             String category = request.getParameter("category");
+            String searchQuery = request.getParameter("q");
+
             int pageNumber = getPageNumber(page);
 
             List<Item> listItem = null;
             if (category == null) {
-                listItem = getItems(pageNumber);
+                listItem = getItems(pageNumber, searchQuery);
             } else {
-                listItem = getItemsByCategory(pageNumber, category);
+                listItem = getItemsByCategory(pageNumber, category, searchQuery);
             }
 
             request.setAttribute("listItem", listItem);
             RequestDispatcher rd = request.getRequestDispatcher("/jsp/list-item.jsp");
             rd.forward(request, response);
+
         } else {
+
             int itemId = 0;
 
+//            item id not number -> not found
             try {
                 itemId = Integer.parseInt(route.substring(1));
             } catch (NumberFormatException e) {
@@ -75,12 +81,14 @@ public class ItemController extends HttpServlet {
                 return;
             }
 
+//            category null -> not found
             String itemCategory = getItemCategory(itemId);
-            if(itemCategory == null) {
+            if (itemCategory == null) {
                 response.sendRedirect(request.getContextPath() + "/not-found");
                 return;
             }
-            
+
+//            call correspoding method for get item detail
             switch (itemCategory) {
                 case "1":
                     Pair<BookItem, Book> bookDetail = getBookDetail(itemId);
@@ -142,15 +150,15 @@ public class ItemController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private List<Item> getItems(int page) {
+    private List<Item> getItems(int page, String searchQuery) {
         int from = page * limitItemPerPage + limitItemPerPage;
-        List<Item> listItem = new ItemDAOImpl().getNewItems(limitItemPerPage, from);
+        List<Item> listItem = new ItemDAOImpl().getNewItems(limitItemPerPage, from, searchQuery);
         return listItem;
     }
 
-    private List<Item> getItemsByCategory(int page, String category) {
+    private List<Item> getItemsByCategory(int page, String category, String searchQuery) {
         int from = page * limitItemPerPage + limitItemPerPage;
-        List<Item> listItem = new ItemDAOImpl().getNewItemsByCategory(limitItemPerPage, from, category);
+        List<Item> listItem = new ItemDAOImpl().getNewItemsByCategory(limitItemPerPage, from, category, searchQuery);
         return listItem;
     }
 

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class NotFoundController extends HttpServlet {
+public class ErrorController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,8 +30,15 @@ public class NotFoundController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/not-found.jsp");
-        rd.forward(request, response);
+        String route = request.getPathInfo();
+
+        if (route == null || route.equalsIgnoreCase("/not-found")) {
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/not-found.jsp");
+            rd.forward(request, response);
+        } else if (route.equalsIgnoreCase("server-error")) {
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/internal-server-error.jsp");
+            rd.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -29,7 +29,9 @@ public class ItemDAOImpl implements ItemDAO {
     private final String sql2 = "Update item SET Description=?,Price=?,Discount=?,SellingStatus=?,Image=?,Category=? where ID=?";
     private final String sql3 = "SELECT * FROM item WHERE ID = ?;";
     private final String GET_NEW_ITEMS_LIMIT_SQL = "SELECT * FROM item WHERE id < ? ORDER BY id DESC LIMIT ?";
+    private final String GET_ITEMS_FILTER_BY_NAME_SQL = "SELECT * FROM item WHERE id < ? AND name LIKE ? ORDER BY id DESC LIMIT ?";
     private final String GET_NEW_ITEMS_LIMIT_BY_CATEGORY_SQL = "SELECT * FROM item WHERE id <= ? AND category = ? ORDER BY id DESC LIMIT ?";
+    private final String GET_ITEMS_FILTER_BY_CATEGORY_AND_NAME_SQL = "SELECT * FROM item WHERE id <= ? AND category = ? AND name LIKE ? ORDER BY id DESC LIMIT ?";
     private final String GET_ITEM_CATEGORY_SQL = "SELECT category FROM item WHERE id = ?";
 
     public ItemDAOImpl() {
@@ -100,12 +102,22 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public List<Item> getNewItems(int limit, int from) {
+    public List<Item> getNewItems(int limit, int from, String itemName) {
         List<Item> listItem = new ArrayList<>();
 
-        try (PreparedStatement ps = conn.prepareStatement(GET_NEW_ITEMS_LIMIT_SQL)) {
-            ps.setInt(1, limit);
-            ps.setInt(2, from);
+        try {
+            PreparedStatement ps;
+
+            if (itemName == null) {
+                ps = conn.prepareStatement(GET_NEW_ITEMS_LIMIT_SQL);
+                ps.setInt(1, from);
+                ps.setInt(2, limit);
+            } else {
+                ps = conn.prepareStatement(GET_ITEMS_FILTER_BY_NAME_SQL);
+                ps.setInt(1, from);
+                ps.setString(2, "%" + itemName + "%");
+                ps.setInt(3, limit);
+            }
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -122,13 +134,24 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public List<Item> getNewItemsByCategory(int limit, int from, String category) {
+    public List<Item> getNewItemsByCategory(int limit, int from, String category, String itemName) {
         List<Item> listItem = new ArrayList<>();
 
-        try (PreparedStatement ps = conn.prepareStatement(GET_NEW_ITEMS_LIMIT_BY_CATEGORY_SQL)) {
-            ps.setInt(1, from);
-            ps.setString(2, category);
-            ps.setInt(3, limit);
+        try {
+            PreparedStatement ps;
+
+            if (itemName == null) {
+                ps = conn.prepareStatement(GET_NEW_ITEMS_LIMIT_BY_CATEGORY_SQL);
+                ps.setInt(1, from);
+                ps.setString(2, category);
+                ps.setInt(3, limit);
+            } else {
+                ps = conn.prepareStatement(GET_ITEMS_FILTER_BY_CATEGORY_AND_NAME_SQL);
+                ps.setInt(1, from);
+                ps.setString(2, category);
+                ps.setString(3, "%" + itemName + "%");
+                ps.setInt(4, limit);
+            }
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -145,7 +168,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public String getItemCategory(int itemId)  {
+    public String getItemCategory(int itemId) {
         String category = null;
 
         try (PreparedStatement ps = conn.prepareStatement(GET_ITEM_CATEGORY_SQL)) {

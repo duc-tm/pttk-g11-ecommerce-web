@@ -14,7 +14,7 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link" href="product">Các mặt hàng</a></li>
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/product">Các mặt hàng</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">Hot</a>
@@ -26,7 +26,7 @@
             </ul>
             <div class="search me-5 position-relative" style="width: 35%;">
                 <input type="text" placeholder="Tìm kiếm mặt hàng" class="form-control pe-5" id="search-input">
-                <i class="fas fa-search position-absolute"></i>
+                <i class="fas fa-search position-absolute" id="search-control-btn"></i>
             </div>
             <div class="cart fs-3">
                 <a href="${pageContext.request.contextPath}/cart">
