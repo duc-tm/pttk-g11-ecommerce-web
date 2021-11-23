@@ -43,7 +43,7 @@ public class ClothesDAOImpl implements ClothesDAO {
     private final String sql9 = "SELECT clothes.* FROM clothes, clothesitem WHERE clothesitem.itemid =? AND clothesitem.clothesid = clothes.id;";
     private final String sql10 = "SELECT * FROM clothesorigin WHERE ID=?;";
     private final String sql11 = "SELECT * FROM clothesdesign WHERE ID = ?;";
-    private final String sql12 = "SELECT * FROM clothesitem WHERE ClothesID=?;";
+    private final String sql12 = "SELECT * FROM clothesitem WHERE itemid=?;";
     private final String sql13 = "SELECT * FROM item Where ID = ?;";
 
     public ClothesDAOImpl() {

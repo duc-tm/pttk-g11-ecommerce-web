@@ -37,7 +37,7 @@ public class BookDAOImpl implements BookDAO {
     private final String sql3 = "Update book SET Title=?,Summary=?,PublicationDate=?,NumberOfPage=?,RemainingQuantity=?,Status=?,Cost=?" + "where ID=?";
     private final String sql4 = "Update author SET Name=?,Biography=?,Email=?,Adress=?" + "where ID=?";
     private final String sql5 = "Update publisher SET Name=?,Adress=?" + "where ID=?";
-    private final String sql7 = "SELECT * FROM book WHERE ID=?;";
+    private final String sql7 = "SELECT book.* FROM book, bookitem WHERE bookitem.itemid=? AND bookitem.bookid = book.id;";
     private final String sql8 = "SELECT * FROM publisher where ID=?;";
     private final String sql9 = "Select author.name,author.Biography,author.Email,author.address\n"
             + "from((book_author\n"

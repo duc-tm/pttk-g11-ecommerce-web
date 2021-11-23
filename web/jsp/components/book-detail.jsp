@@ -31,20 +31,6 @@
                     </div>
                 </div>
 
-                <div class="row mt-4">
-                    <div class="col-2 label d-flex align-items-center">
-                        <div class="text-muted text-capitalize">Size</div>
-                    </div>
-                    <div class="col-10 content d-flex align-items-center">
-                        <div class="item-info__type-select">
-                            <div class="item-info__type">
-                                <input type="radio" name="type" value="${bookItem.size}" id="type-1">
-                                <label for="type-1">${bookItem.size}<i class="fas fa-check"></i></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="item-control mt-5">
                     <button type="button" class="btn btn-outline-primary text-capitalize me-2" id="add-to-cart">
                         <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng

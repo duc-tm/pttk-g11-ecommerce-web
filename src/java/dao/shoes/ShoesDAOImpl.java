@@ -41,7 +41,7 @@ public class ShoesDAOImpl implements ShoesDAO {
     private final String sql10 = "SELECT shoes.* FROM shoes, shoesitem WHERE shoesitem.itemid=? AND shoesitem.shoesid = shoes.id;";
     private final String sql11 = "SELECT * FROM shoesorigin WHERE ID=?;";
     private final String sql12 = "SELECT * FROM shoesdesign WHERE ID = ?;";
-    private final String sql13 = "SELECT * FROM shoesitem WHERE ShoesID=?;";
+    private final String sql13 = "SELECT * FROM shoesitem WHERE itemid=?;";
     private final String sql14 = "SELECT * FROM item Where ID = ?;";
 
     public ShoesDAOImpl() {
@@ -179,7 +179,7 @@ public class ShoesDAOImpl implements ShoesDAO {
                 s.setCost(rs.getFloat(6));
                 s.setVersion(rs.getString(7));
             }
- 
+
             return s;
         } catch (SQLException ex) {
             Logger.getLogger(ShoesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -269,19 +269,17 @@ public class ShoesDAOImpl implements ShoesDAO {
             }
 
             prestatement1 = conn.prepareStatement(sql14);
-            prestatement1.setInt(1, tmp);
+            prestatement1.setInt(1, ID);
             rs = prestatement1.executeQuery();
 
             if (rs.next()) {
-                while (rs.next()) {
-                    si.setDescription(rs.getString(2));
-                    si.setPrice(rs.getFloat(3));
-                    si.setDiscount(rs.getFloat(4));
-                    si.setSellingStatus(rs.getString(5));
-                    si.setImage(rs.getString(6));
-                    si.setCategory(rs.getString(7));
-                    si.setName(rs.getString("name"));
-                }
+                si.setDescription(rs.getString(2));
+                si.setPrice(rs.getFloat(3));
+                si.setDiscount(rs.getFloat(4));
+                si.setSellingStatus(rs.getString(5));
+                si.setImage(rs.getString(6));
+                si.setCategory(rs.getString(7));
+                si.setName(rs.getString("name"));
             }
 
             return si;
