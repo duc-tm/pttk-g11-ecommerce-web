@@ -37,7 +37,7 @@
                 <div class="row">
                     <div class="col-2">
                         <div class="user__general-info">
-                            <img class="user__avatar rounded-circle" src="https://cf.shopee.vn/file/1d74524ec09542f944ad95a2a6fd111d_tn" alt="user avatar">
+                            <img class="user__avatar rounded-circle" src="<c:out value="${(user.avatar eq null) ? 'https://cf.shopee.vn/file/1d74524ec09542f944ad95a2a6fd111d_tn' : user.avatar }" />" alt="user avatar">
                             <div class="d-flex flex-column ms-3">
                                 <div class="user__name mb-1"><c:out value="${user.account.username}" /></div>
                             <div class="user__edit-profile-ctrl text-capitalize text-muted">
@@ -129,15 +129,15 @@
                                             </label>
                                             <div class="col-8 d-flex align-items-center">
                                                 <div class="form-group me-3">
-                                                    <input class="form-check-input" type="radio" value="male" id="gender-male" name="gender">
+                                                    <input class="form-check-input" type="radio" value="male" id="gender-male" name="gender"  <c:if test="${user.gender eq 'male'}">checked</c:if>>
                                                     <label class="form-check-label" for="gender-male">Nam</label>
                                                 </div>
                                                 <div class="form-group me-3">
-                                                    <input class="form-check-input" type="radio" value="female" id="gender-female" name="gender">
+                                                    <input class="form-check-input" type="radio" value="female" id="gender-female" name="gender"  <c:if test="${user.gender eq 'female'}">checked</c:if>>
                                                     <label class="form-check-label" for="gender-female">Nữ</label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input class="form-check-input" type="radio" value="other" id="gender-other" name="gender" checked>
+                                                    <input class="form-check-input" type="radio" value="other" id="gender-other" name="gender" <c:if test="${user.gender eq 'other'}">checked</c:if> >
                                                     <label class="form-check-label" for="gender-other">Khác</label>
                                                 </div>
                                             </div>
@@ -170,7 +170,7 @@
 
                                     <div class="col-4">
                                         <div class="user-profile__avatar-control text-center d-flex flex-column align-items-center">
-                                            <img src="https://cf.shopee.vn/file/1d74524ec09542f944ad95a2a6fd111d_tn" alt="user avatar" class="rounded-circle mb-3" id="user-avatar-preview">
+                                            <img src="<c:out value="${(user.avatar eq null) ? 'https://cf.shopee.vn/file/1d74524ec09542f944ad95a2a6fd111d_tn' : user.avatar }" />" alt="user avatar" class="rounded-circle mb-3" id="user-avatar-preview">
                                             <input type="file" id="avatar-chooser-input" name="avatar" accept=".png,.jpg">
                                             <label for="avatar-chooser-input" class="btn btn-outline-secondary">Chọn Ảnh</label>
                                             <div class="avatar-choose-constraints text-muted mt-2">

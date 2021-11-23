@@ -47,9 +47,9 @@
                             
                         <c:otherwise>
                             <ul class="list-unstyled">
-                                <li><a href="user/account/profile" class="text-decoration-none text-capitalize">Tài khoản của tôi</a></li>
-                                <li><a href="user/order" class="text-decoration-none text-capitalize">Đơn mua</a></li>
-                                <li><a href="auth/logout" class="text-decoration-none text-capitalize">Đăng xuất</a></li>
+                                <li><a href="${pageContext.request.contextPath}/user/account/profile" class="text-decoration-none text-capitalize">Tài khoản của tôi</a></li>
+                                <li><a href="${pageContext.request.contextPath}/user/order" class="text-decoration-none text-capitalize">Đơn mua</a></li>
+                                <li><a href="${pageContext.request.contextPath}/auth/logout" class="text-decoration-none text-capitalize">Đăng xuất</a></li>
                             </ul>
                         </c:otherwise>
                             

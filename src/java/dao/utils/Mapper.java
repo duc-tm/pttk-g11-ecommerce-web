@@ -49,11 +49,13 @@ public class Mapper {
         int userId = rs.getInt("user.id");
         String phoneNumber = rs.getString("user.phone");
         String email = rs.getString("user.mail");
+        String gender = rs.getString("user.gender");
+        String avatar = rs.getString("user.avatar");
         FullName fullName = mapFullName(rs);
         Address address = mapAddress(rs);
         Account account = mapAccount(rs);
 
-        return new User(userId, phoneNumber, email, fullName, address, account);
+        return new User(userId, phoneNumber, email, gender, avatar, fullName, address, account);
     }
 
     public static Item mapItem(ResultSet rs) throws SQLException {

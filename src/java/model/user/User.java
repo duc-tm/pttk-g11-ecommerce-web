@@ -19,6 +19,8 @@ public class User {
  
     private String phone;
     private String mail;
+    private String gender;
+    private String avatar;
     private FullName fullName;
     private Address address;
     private Account account;
@@ -32,13 +34,31 @@ public class User {
         this.mail = mail;
     }
 
-    public User(int id, String phone, String mail, FullName fullName, Address address, Account account) {
+    public User(int id, String phone, String mail, String gender, String avatar, FullName fullName, Address address, Account account) {
         this.id = id;
         this.phone = phone;
         this.mail = mail;
+        this.gender = gender;
+        this.avatar = avatar;
         this.fullName = fullName;
         this.address = address;
         this.account = account;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getAvatar() {
+        return avatar;
     }
 
     public int getId() {

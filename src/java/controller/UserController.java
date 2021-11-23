@@ -95,12 +95,13 @@ public class UserController extends HttpServlet {
         if (route.equals("/update")) {
             String fullName = request.getParameter("fullname");
             String email = request.getParameter("email");
+            String gender = request.getParameter("gender");
             String phoneNumber = request.getParameter("phonenumber");
             String detailAddress = request.getParameter("detailaddress");
             String district = request.getParameter("district");
             String city = request.getParameter("city");
 
-            updateUserInfo(userId, fullName, email, phoneNumber, new Address(detailAddress, district, city));
+            updateUserInfo(userId, fullName, email, gender, phoneNumber, new Address(detailAddress, district, city));
             response.sendRedirect("/g11/user/account/profile");
         }
     }
@@ -110,9 +111,9 @@ public class UserController extends HttpServlet {
         return user;
     }
 
-    private int updateUserInfo(int userId, String fullNameStr, String email, String phoneNumber, Address address) {
+    private int updateUserInfo(int userId, String fullNameStr, String email, String gender, String phoneNumber, Address address) {
         FullName fullName = (fullNameStr == null ? null : new FullName(fullNameStr));
-        return new UserDAOImpl().updateCustomer(new User(userId, phoneNumber, email, fullName, address, null));
+        return new UserDAOImpl().updateCustomer(new User(userId, phoneNumber, email, gender, null, fullName, address, null));
     }
 
     private void sendToLogout(HttpServletResponse response) throws IOException {
