@@ -8,6 +8,8 @@ package dao.book;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
+import javafx.util.Pair;
 import model.book.Author;
 import model.book.Book;
 import model.book.BookItem;
@@ -28,4 +30,5 @@ public interface BookDAO {
     Publisher getBookPUB(int id);
     ArrayList<Author> getBookAU(int id);
     BookItem getBookIT(int id); 
+    Pair<BookItem, Book>getBookAllStt(int id);
 }

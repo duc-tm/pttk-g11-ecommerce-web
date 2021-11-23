@@ -9,7 +9,8 @@ package model.electrnoics;
  *
  * @author DELL
  */
-public class Laptop extends Electronics{
+public class Laptop extends Electronics {
+
     private String monitor;
     private String RAM;
     private String card;
@@ -20,7 +21,8 @@ public class Laptop extends Electronics{
     private String touchpad;
     private String chip;
     private String operatingSystem;
-  
+    private ElectronicOrigin eo;
+
     public Laptop() {
     }
 
@@ -115,6 +117,14 @@ public class Laptop extends Electronics{
 
     public void setOperatingSystem(String operatingSystem) {
         this.operatingSystem = operatingSystem;
+    }
+
+    public ElectronicOrigin getEo() {
+        return eo;
+    }
+
+    public void setEo(ElectronicOrigin eo) {
+        this.eo = eo;
     }
 
 }

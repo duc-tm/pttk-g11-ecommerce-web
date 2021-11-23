@@ -5,6 +5,8 @@
  */
 package dao.electronics;
 
+import java.util.Map;
+import javafx.util.Pair;
 import model.electrnoics.ElectronicOrigin;
 import model.electrnoics.Electronics;
 import model.electrnoics.ElectronicsItem;
@@ -29,4 +31,7 @@ public interface ElectronicDAO {
     Mobilephone getMobilephone(int id); 
     TV getTV(int id);
     ElectronicOrigin getElectronicORG(int id);
+    Pair<ElectronicsItem, Laptop> getLaptopAllStt(int ID);
+    Pair<ElectronicsItem, Mobilephone> getMobileAllStt(int ID);
+    Pair<ElectronicsItem, TV> getTVAllStt(int ID);
 }

@@ -59,7 +59,7 @@ function checkBillUpdate(updatedItem, checkboxChecked) {
             const itemId = itemElement.getAttribute('itemId');
             
 //            disable more event
-            Object.assign(element.parentElement.style,
+            Object.assign(this.parentElement.style,
                     {
                         pointerEvents: 'none',
                         opacity: '0.4'

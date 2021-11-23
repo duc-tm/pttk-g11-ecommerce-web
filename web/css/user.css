@@ -64,6 +64,10 @@ and open the template in the editor.
     text-transform: capitalize;
 }
 
+#phonenumber, #email {
+    background-color: transparent;
+}
+
 .input-edit-control {
     background-color: transparent;
     text-decoration: underline;

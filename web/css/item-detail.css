@@ -7,6 +7,10 @@ and open the template in the editor.
     Created on : Nov 13, 2021, 10:58:44 AM
     Author     : Admin
 */
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
 
 .item-control .btn {
     min-width: 180px;
@@ -92,6 +96,10 @@ and open the template in the editor.
 .return-guarantee__amount {
     font-size: 0.85rem;
     line-height: 0.85;
+}
+
+.item-detail-desc__content p {
+    line-height: 1.875rem;
 }
 
 .top-selling-title {

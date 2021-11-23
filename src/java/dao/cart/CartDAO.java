@@ -6,11 +6,16 @@
 package dao.cart;
 
 import java.util.Date;
+import model.order.Cart;
 
 /**
  *
  * @author DELL
  */
 public interface CartDAO {
-//    int addBookitem(int bookid);
+   public Cart getCartByUserID(int ID);
+   public int createCartByUserID(int ID);
+   public int deleteItemInCartByItemID(int ID);
+   public int addItemInCartByItemID(int quantity,int cartID,int itemID);
+   public int updateItemAmountByItemID(int quantity,int ID);
 }

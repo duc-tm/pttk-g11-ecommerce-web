@@ -6,18 +6,26 @@
 package controller;
 
 import dao.book.BookDAOImpl;
-import dao.item.ItemDAO;
+import dao.clothes.ClothesDAOImpl;
 import dao.item.ItemDAOImpl;
+import dao.shoes.ShoesDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
+import javafx.util.Pair;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Item.Item;
+import model.book.Book;
 import model.book.BookItem;
+import model.clothes.Clothes;
+import model.clothes.ClothesItem;
+import model.electrnoics.Electronics;
+import model.electrnoics.ElectronicsItem;
+import model.shoes.Shoes;
+import model.shoes.ShoesItem;
 
 /**
  *
@@ -50,7 +58,6 @@ public class ItemController extends HttpServlet {
             if (category == null) {
                 listItem = getItems(pageNumber);
             } else {
-                System.out.println(category);
                 listItem = getItemsByCategory(pageNumber, category);
             }
 
@@ -59,16 +66,53 @@ public class ItemController extends HttpServlet {
             rd.forward(request, response);
         } else {
             int itemId = 0;
-            
+
             try {
-                itemId = Integer.parseInt(route);
+                itemId = Integer.parseInt(route.substring(1));
             } catch (NumberFormatException e) {
                 System.err.println(e);
                 response.sendRedirect(request.getContextPath() + "/not-found");
                 return;
             }
 
-            getItemDetail(itemId);
+            String itemCategory = getItemCategory(itemId);
+            if(itemCategory == null) {
+                response.sendRedirect(request.getContextPath() + "/not-found");
+                return;
+            }
+            
+            switch (itemCategory) {
+                case "1":
+                    Pair<BookItem, Book> bookDetail = getBookDetail(itemId);
+                    request.setAttribute("bookItem", bookDetail.getKey());
+                    request.setAttribute("book", bookDetail.getValue());
+                    request.setAttribute("category", 1);
+                    break;
+                case "2":
+                    Pair<ClothesItem, Clothes> clothesDetail = getClothesDetail(itemId);
+                    request.setAttribute("clothesItem", clothesDetail.getKey());
+                    request.setAttribute("clothes", clothesDetail.getValue());
+                    request.setAttribute("category", 2);
+
+                    break;
+                case "3":
+                    Pair<ShoesItem, Shoes> shoeDetail = getShoeDetail(itemId);
+                    request.setAttribute("shoeItem", shoeDetail.getKey());
+                    request.setAttribute("shoe", shoeDetail.getValue());
+                    request.setAttribute("category", 3);
+
+                    break;
+                case "4":
+                    Pair<ElectronicsItem, Electronics> electronicDetail = getElectronicDetail(itemId);
+                    request.setAttribute("electronicItem", electronicDetail.getKey());
+                    request.setAttribute("electronic", electronicDetail.getValue());
+                    request.setAttribute("category", 4);
+
+                    break;
+                default:
+                    return;
+            }
+
             RequestDispatcher rd = request.getRequestDispatcher("/jsp/item-detail.jsp");
             rd.forward(request, response);
         }
@@ -117,24 +161,29 @@ public class ItemController extends HttpServlet {
 
         return 0;
     }
-    
+
     private BookItem getBookItem(int bookItemId) {
         return new BookDAOImpl().getBookIT(bookItemId);
     }
 
-    protected void shoeControl() {
-
+    private String getItemCategory(int itemId) {
+        return new ItemDAOImpl().getItemCategory(itemId);
     }
 
-    protected void electronicControl() {
-
+    protected Pair<BookItem, Book> getBookDetail(int itemId) {
+        return new BookDAOImpl().getBookAllStt(itemId);
     }
 
-    protected void bookControl() {
-
+    protected Pair<ElectronicsItem, Electronics> getElectronicDetail(int itemId) {
+//        return new ElectronicDAOImpl().get
+        return null;
     }
 
-    protected void clothesControl() {
+    protected Pair<ShoesItem, Shoes> getShoeDetail(int itemId) {
+        return new ShoesDAOImpl().getShoesAllStt(itemId);
+    }
 
+    protected Pair<ClothesItem, Clothes> getClothesDetail(int itemId) {
+        return new ClothesDAOImpl().getClothesAllStt(itemId);
     }
 }

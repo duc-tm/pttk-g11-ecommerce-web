@@ -38,8 +38,6 @@ public class CustomCurrencyFormatterTag extends SimpleTagSupport {
         long currentAmount = (long) amount;
 
         if (currencyFormat.equalsIgnoreCase("vi") || currencyFormat == null) {
-            System.out.println(amount % 1000);
-
             long baseDivider = 1000;
             long divider = baseDivider;
 

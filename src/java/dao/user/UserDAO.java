@@ -22,7 +22,7 @@ public interface UserDAO <T>{
     User getUserById(int id);
     User createUserAccount(Account account);
     int getUserID(String phone,String mail);
-    int updateCustomer(int id,String phone,String mail,String numberhouse,String street,String distinct,String city,String firstname,String midname,String lastname);
+    int updateCustomer(User user);
     T viewOrder(int orderID);
     ArrayList<T> getAllOrder(int UserID);
 }

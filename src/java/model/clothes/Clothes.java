@@ -10,12 +10,14 @@ package model.clothes;
  * @author DELL
  */
 public class Clothes {
+
     private int id;
     private String name;
     private int RemainingQuantity;
     private float cost;
     private String version;
-
+    private ClothesDesign cd;
+    private ClothesOrigin co;
 
     public Clothes() {
     }
@@ -66,6 +68,22 @@ public class Clothes {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public ClothesDesign getCd() {
+        return cd;
+    }
+
+    public void setCd(ClothesDesign cd) {
+        this.cd = cd;
+    }
+
+    public ClothesOrigin getCo() {
+        return co;
+    }
+
+    public void setCo(ClothesOrigin co) {
+        this.co = co;
     }
 
 }

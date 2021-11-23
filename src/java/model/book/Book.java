@@ -5,6 +5,7 @@
  */
 package model.book;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -20,8 +21,8 @@ public class Book {
     private int RemainingQuantity;
     private boolean Status;
     private float cost;
-    
-
+    private Publisher pub;
+    private ArrayList<Author> aut;
     public Book() {
     }
 
@@ -100,6 +101,21 @@ public class Book {
         this.cost = cost;
     }
 
-   
-    
+    public Publisher getPub() {
+        return pub;
+    }
+
+    public void setPub(Publisher pub) {
+        this.pub = pub;
+    }
+
+    public ArrayList<Author> getAut() {
+        return aut;
+    }
+
+    public void setAut(ArrayList<Author> aut) {
+        this.aut = aut;
+    }
+
+
 }

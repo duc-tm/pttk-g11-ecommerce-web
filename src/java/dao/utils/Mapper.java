@@ -21,12 +21,11 @@ public class Mapper {
 
     public static Address mapAddress(ResultSet rs) throws SQLException {
         int id = rs.getInt("address.id");
-        String houseNumber = rs.getString("address.numberhouse");
-        String street = rs.getString("address.street");
+        String addressDetail = rs.getString("address.addressdetail");
         String district = rs.getString("address.district");
         String city = rs.getString("address.city");
 
-        return new Address(id, houseNumber, street, district, city);
+        return new Address(id, addressDetail, district, city);
     }
 
     public static FullName mapFullName(ResultSet rs) throws SQLException {
@@ -56,7 +55,7 @@ public class Mapper {
 
         return new User(userId, phoneNumber, email, fullName, address, account);
     }
-    
+
     public static Item mapItem(ResultSet rs) throws SQLException {
         int id = rs.getInt("item.id");
         String name = rs.getString("item.name");
@@ -66,7 +65,7 @@ public class Mapper {
         String sellingStatus = rs.getString("item.sellingstatus");
         String image = rs.getString("item.image");
         String category = rs.getString("item.category");
-        
+
         return new Item(id, name, description, price, discount, sellingStatus, image, category);
     }
 }

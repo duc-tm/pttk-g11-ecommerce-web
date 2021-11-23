@@ -44,6 +44,16 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
     private final String GET_USER_BY_USERID_SQL = "SELECT * FROM user, account, fullname, address "
             + "WHERE user.id = ? AND user.id = account.userid AND user.id = fullname.userid AND user.id = address.userid";
 
+    private final String UPDATE_USER_SQL = "UPDATE user SET phone = IFNULL(?, phone), mail = IFNULL(?, mail) WHERE id = ?";
+    private final String UPDATE_ADDRESS_SQL = "UPDATE address SET addressdetail = IFNULL(?, addressdetail), "
+            + "district=IFNULL(?, district), "
+            + "city=IFNULL(?, city)"
+            + " WHERE userid = ?";
+    private final String UPDATE_FULLNAME_SQL = "UPDATE fullname SET firstname = IFNULL(?, firstname), "
+            + "midname=IFNULL(?, midname), "
+            + "lastname=IFNULL(?, lastname) "
+            + "WHERE userid=?";
+
     public UserDAOImpl() {
         conn = ConDB.getJDBCCOnection();
     }
@@ -207,42 +217,64 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
     }
 
     @Override
-    public int updateCustomer(int id, String phone, String mail, String numberhouse, String street, String distinct, String city, String firstname, String midname, String lastname) {
-//        String sql1 = "Update user\n"
-//                + "set Phone=?,mail=?\n"
-//                + "where id=?";
-//        String sql2 = "Update address\n"
-//                + "set Numberhouse=?,street=?,Distincts=?,city=?"
-//                + "where Userid=?";
-//        String sql3 = "Update fullname\n"
-//                + "set firstname=?,midname=?,lastname=?\n"
-//                + "where Userid=?";
-//        
-//        try {
-//            prestatement = conn.prepareStatement(sql1);
-//            prestatement.setString(1, phone);
-//            prestatement.setString(2, mail);
-//            prestatement.setInt(3, id);
-//            int rowcount1 = prestatement.executeUpdate();
-//            prestatement1 = conn.prepareStatement(sql2);
-//            prestatement1.setString(1, numberhouse);
-//            prestatement1.setString(2, street);
-//            prestatement1.setString(3, distinct);
-//            prestatement1.setString(4, city);
-//            prestatement1.setInt(5, id);
-//            int rowcount2 = prestatement1.executeUpdate();
-//            prestatement2 = conn.prepareStatement(sql3);
-//            prestatement2.setString(1, firstname);
-//            prestatement2.setString(2, midname);
-//            prestatement2.setString(3, lastname);
-//            prestatement2.setInt(4, id);
-//            int rowcount3 = prestatement2.executeUpdate();
-//            return rowcount3;
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            return 0;
-//        }
-        return 0;
+    public int updateCustomer(User user) {
+
+        int rowAffected = 0;
+
+        try (PreparedStatement prestatement = conn.prepareStatement(UPDATE_USER_SQL)) {
+            prestatement.setString(1, user.getPhone());
+            prestatement.setString(2, user.getMail());
+            prestatement.setInt(3, user.getId());
+
+            rowAffected = prestatement.executeUpdate();
+
+            rowAffected += updateFullName(user.getFullName(), user.getId());
+            rowAffected += updateAddress(user.getAddress(), user.getId());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            return rowAffected;
+        }
+    }
+
+    public int updateFullName(FullName fullName, int userId) {
+        int rowAffected = 0;
+        if (fullName == null) {
+            return rowAffected;
+        }
+
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE_FULLNAME_SQL)) {
+            ps.setString(1, fullName.getFirstName());
+            ps.setString(2, fullName.getMidName());
+            ps.setString(3, fullName.getLastName());
+            ps.setInt(4, userId);
+
+            rowAffected = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return rowAffected;
+        }
+    }
+
+    public int updateAddress(Address address, int userId) {
+        int rowAffected = 0;
+        if (address == null) {
+            return rowAffected;
+        }
+
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE_ADDRESS_SQL)) {
+            ps.setString(1, address.getAddressDetail());
+            ps.setString(2, address.getDistrict());
+            ps.setString(3, address.getCity());
+            ps.setInt(4, userId);
+
+            rowAffected = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return rowAffected;
+        }
     }
 
     @Override
@@ -277,7 +309,7 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
             if (rs.next()) {
                 user = Mapper.mapUser(rs);
             }
-            
+
             System.out.println("User null ? " + (user == null));
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);

@@ -9,13 +9,15 @@ package model.electrnoics;
  *
  * @author DELL
  */
-public class TV extends Electronics{
+public class TV extends Electronics {
+
     private String screen;
     private String RAM;
     private String storage;
     private String connectedBoard;
     private String speaker;
     private String operatingSystem;
+    private ElectronicOrigin eo;
 
     public TV() {
     }
@@ -76,5 +78,13 @@ public class TV extends Electronics{
     public void setOperatingSystem(String operatingSystem) {
         this.operatingSystem = operatingSystem;
     }
-    
+
+    public ElectronicOrigin getEo() {
+        return eo;
+    }
+
+    public void setEo(ElectronicOrigin eo) {
+        this.eo = eo;
+    }
+
 }

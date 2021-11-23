@@ -6,6 +6,8 @@
 package dao.clothes;
 
 import java.util.Date;
+import java.util.Map;
+import javafx.util.Pair;
 import model.clothes.Clothes;
 import model.clothes.ClothesDesign;
 import model.clothes.ClothesItem;
@@ -25,4 +27,5 @@ public interface ClothesDAO {
     ClothesOrigin getClothesORG(int ID);
     ClothesDesign getClothesDSG(int ID);
     ClothesItem getClothesIT(int ID);
+    Pair<ClothesItem, Clothes> getClothesAllStt(int ID);
 }

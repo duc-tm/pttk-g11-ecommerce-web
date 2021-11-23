@@ -180,8 +180,7 @@ public class OrderDAOImpl implements OrderDAO {
             ArrayList<Cart> list = new ArrayList<>();
             while (rs.next()) {
                 Cart c = new Cart();
-                c.setTotalQuantity(rs.getInt(3));
-                c.setTotalPrice(rs.getDouble(4));
+                c.setTotalPrice(rs.getFloat(4));
                 list.add(c);
             }
             return list;

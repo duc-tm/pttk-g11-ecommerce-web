@@ -11,11 +11,10 @@ import model.Item.Item;
  *
  * @author DELL
  */
-public class ClothesItem extends Item{
+public class ClothesItem extends Item {
 
     private String color;
     private String size;
-    
 
     public ClothesItem(String color, String size, int ID, String Description, Float Price, Float Discount, String SellingStatus, String Image, String Category, String Name) {
         super(ID, Name, Description, Price, Discount, SellingStatus, Image, Category);
@@ -24,7 +23,7 @@ public class ClothesItem extends Item{
     }
 
     public ClothesItem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     public String getColor() {
@@ -42,7 +41,5 @@ public class ClothesItem extends Item{
     public void setSize(String size) {
         this.size = size;
     }
-
-    
 
 }

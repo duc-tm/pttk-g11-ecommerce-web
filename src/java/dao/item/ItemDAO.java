@@ -21,6 +21,8 @@ public interface ItemDAO {
     Item getItem(int id);
 
     List<Item> getNewItems(int limit, int from);
-    
+
     List<Item> getNewItemsByCategory(int limit, int from, String category);
+
+    String getItemCategory(int itemId);
 }

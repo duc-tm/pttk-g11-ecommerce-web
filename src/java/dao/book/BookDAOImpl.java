@@ -14,8 +14,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 import model.Item.Item;
 import model.book.Author;
 import model.book.Book;
@@ -230,9 +233,18 @@ public class BookDAOImpl implements BookDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
+        } finally {
             return bi;
         }
+    }
+
+    @Override
+    public Pair<BookItem, Book> getBookAllStt(int id) {
+        Book b = getBook(id);
+        b.setPub(getBookPUB(id));
+        b.setAut(getBookAU(id));
+        Pair<BookItem, Book> tmp = new Pair(getBookIT(id), b);
+        return tmp;
     }
 
 }

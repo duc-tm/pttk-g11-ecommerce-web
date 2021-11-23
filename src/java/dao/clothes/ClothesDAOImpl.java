@@ -13,8 +13,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 import model.Item.Item;
 import model.clothes.Clothes;
 import model.clothes.ClothesDesign;
@@ -26,7 +29,7 @@ import model.clothes.ClothesOrigin;
  * @author DELL
  */
 public class ClothesDAOImpl implements ClothesDAO {
-    
+
     private final Connection conn;
     private final String sql1 = "Select ClothesDesignID from shopbanhang.clothes Where ID=? ;";
     private final String sql2 = "Select ClothesOriginID from shopbanhang.clothes Where ID=? ;";
@@ -42,11 +45,11 @@ public class ClothesDAOImpl implements ClothesDAO {
     private final String sql11 = "SELECT * FROM clothesdesign WHERE ID = ?;";
     private final String sql12 = "SELECT * FROM clothesitem WHERE ClothesID=?;";
     private final String sql13 = "SELECT * FROM item Where ID = ?;";
-    
+
     public ClothesDAOImpl() {
         conn = ConDB.getJDBCCOnection();
     }
-    
+
     @Override
     public int deleteCLothes(int ID) {
         ResultSet rs;
@@ -70,29 +73,29 @@ public class ClothesDAOImpl implements ClothesDAO {
             while (rs.next()) {
                 ClothesOriginID = rs.getInt(1);
             }
-            
+
             PreparedStatement prestatement2 = conn.prepareStatement(sql5);
             prestatement2.setInt(1, ID);
             int rowDeleted3 = prestatement2.executeUpdate();
-            
+
             PreparedStatement prestatement3 = conn.prepareStatement(sql3);
             prestatement3.setInt(1, ClothesDesignID);
             int rowDeleted = prestatement3.executeUpdate();
-            
+
             PreparedStatement prestatement4 = conn.prepareStatement(sql4);
             prestatement4.setInt(1, ClothesOriginID);
             int rowDeleted1 = prestatement4.executeUpdate();
-            
+
             return rowDeleted3;
         } catch (SQLException ex) {
             Logger.getLogger(ClothesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
         }
     }
-    
+
     @Override
     public int UpdateClothes(Clothes clothes) {
-        
+
         try {
             PreparedStatement prestatement = conn.prepareStatement(sql6);
             prestatement = conn.prepareStatement(sql6);
@@ -108,10 +111,10 @@ public class ClothesDAOImpl implements ClothesDAO {
             return -1;
         }
     }
-    
+
     @Override
     public int UpdateCLothesDesign(ClothesDesign clothesDesign) {
-        
+
         try {
             PreparedStatement prestatement1 = conn.prepareStatement(sql7);
             prestatement1 = conn.prepareStatement(sql7);
@@ -128,12 +131,12 @@ public class ClothesDAOImpl implements ClothesDAO {
             Logger.getLogger(ClothesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
-        
+
     }
-    
+
     @Override
     public int UpdateCLothesItem(ClothesItem clothesItem) {
-        
+
         try {
             PreparedStatement prestatement2 = conn.prepareStatement(sql8);
             prestatement2 = conn.prepareStatement(sql8);
@@ -147,10 +150,10 @@ public class ClothesDAOImpl implements ClothesDAO {
             return -1;
         }
     }
-    
+
     @Override
     public int UpdateCLothesOrigin(ClothesOrigin clothesOrigin) {
-        
+
         try {
             PreparedStatement prestatement3 = conn.prepareStatement(sql14);
             prestatement3 = conn.prepareStatement(sql14);
@@ -164,9 +167,9 @@ public class ClothesDAOImpl implements ClothesDAO {
             Logger.getLogger(ClothesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
-        
+
     }
-    
+
     @Override
     public Clothes getClothes(int ID) {
         PreparedStatement prestatement;
@@ -176,6 +179,7 @@ public class ClothesDAOImpl implements ClothesDAO {
             prestatement.setInt(1, ID);
             rs = prestatement.executeQuery();
             Clothes c = new Clothes();
+            c.setId(ID);
             if (rs.next()) {
                 c.setName(rs.getString(4));
                 c.setRemainingQuantity(rs.getInt(5));
@@ -188,7 +192,7 @@ public class ClothesDAOImpl implements ClothesDAO {
             return null;
         }
     }
-    
+
     @Override
     public ClothesOrigin getClothesORG(int ID) {
         PreparedStatement prestatement;
@@ -202,7 +206,7 @@ public class ClothesDAOImpl implements ClothesDAO {
             if (rs.next()) {
                 tmp = rs.getInt(3);
             }
-            
+
             prestatement1 = conn.prepareStatement(sql10);
             prestatement1.setInt(1, tmp);
             rs = prestatement1.executeQuery();
@@ -218,7 +222,7 @@ public class ClothesDAOImpl implements ClothesDAO {
             return null;
         }
     }
-    
+
     @Override
     public ClothesDesign getClothesDSG(int ID) {
         PreparedStatement prestatement;
@@ -232,7 +236,7 @@ public class ClothesDAOImpl implements ClothesDAO {
             if (rs.next()) {
                 tmp = rs.getInt(2);
             }
-            
+
             prestatement1 = conn.prepareStatement(sql11);
             prestatement1.setInt(1, tmp);
             rs = prestatement1.executeQuery();
@@ -251,7 +255,7 @@ public class ClothesDAOImpl implements ClothesDAO {
             return null;
         }
     }
-    
+
     @Override
     public ClothesItem getClothesIT(int ID) {
         PreparedStatement prestatement;
@@ -262,20 +266,21 @@ public class ClothesDAOImpl implements ClothesDAO {
             prestatement.setInt(1, ID);
             rs = prestatement.executeQuery();
             ClothesItem ci = new ClothesItem();
+            ci.setID(ID);
             int tmp = 0;
             if (rs.next()) {
                 ci.setColor(rs.getString(1));
                 ci.setSize(rs.getString(2));
                 tmp = rs.getInt(3);
             }
-            
+
             prestatement1 = conn.prepareStatement(sql13);
             prestatement1.setInt(1, tmp);
             rs = prestatement1.executeQuery();
-            
+
             if (rs.next()) {
                 Item item = Mapper.mapItem(rs);
-                
+
                 ci.setName(item.getName());
                 ci.setDescription(item.getDescription());
                 ci.setPrice(item.getPrice());
@@ -289,5 +294,14 @@ public class ClothesDAOImpl implements ClothesDAO {
             Logger.getLogger(ClothesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+
+    @Override
+    public Pair<ClothesItem, Clothes> getClothesAllStt(int ID) {
+        Clothes c = getClothes(ID);
+        c.setCd(getClothesDSG(ID));
+        c.setCo(getClothesORG(ID));
+        Pair<ClothesItem, Clothes> tmp = new Pair(getClothesIT(ID), c);
+        return tmp;
     }
 }

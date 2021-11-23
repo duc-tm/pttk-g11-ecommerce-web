@@ -18,7 +18,6 @@ public class Electronics {
     private int RemainingQuantity;
     private String size;
     private String weight;
-
     public Electronics() {
     }
 

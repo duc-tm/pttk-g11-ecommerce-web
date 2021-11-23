@@ -11,8 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 import model.shoes.Shoes;
 import model.shoes.ShoesDesign;
 import model.shoes.ShoesItem;
@@ -35,11 +38,11 @@ public class ShoesDAOImpl implements ShoesDAO {
     private final String sql7 = "Update shoesdesign SET Type=?,Material=?,Style=?,Model=?,Gender=?,Age=? where ID=?";
     private final String sql8 = "Update shoesitem SET Color=?,Size=? where ID=?";
     private final String sql9 = "Update shoesorigin SET CompanyName=?,Address=?,DateOfManfacture=? where ID=?";
-    private final String sql10= "SELECT * FROM shoes WHERE ID=?;";
-    private final String sql11= "SELECT * FROM shoesorigin WHERE ID=?;";
-    private final String sql12= "SELECT * FROM shoesdesign WHERE ID = ?;";
-    private final String sql13= "SELECT * FROM shoesitem WHERE ShoesID=?;";
-    private final String sql14= "SELECT * FROM item Where ID = ?;";
+    private final String sql10 = "SELECT * FROM shoes WHERE ID=?;";
+    private final String sql11 = "SELECT * FROM shoesorigin WHERE ID=?;";
+    private final String sql12 = "SELECT * FROM shoesdesign WHERE ID = ?;";
+    private final String sql13 = "SELECT * FROM shoesitem WHERE ShoesID=?;";
+    private final String sql14 = "SELECT * FROM item Where ID = ?;";
 
     public ShoesDAOImpl() {
         conn = ConDB.getJDBCCOnection();
@@ -162,15 +165,15 @@ public class ShoesDAOImpl implements ShoesDAO {
     }
 
     @Override
-    public Shoes getClothes(int ID) {
+    public Shoes getShoes(int ID) {
         PreparedStatement prestatement;
         ResultSet rs;
         try {
             prestatement = conn.prepareStatement(sql10);
             prestatement.setInt(1, ID);
             rs = prestatement.executeQuery();
-            Shoes s= new Shoes();
-            if(rs.next()){
+            Shoes s = new Shoes();
+            if (rs.next()) {
                 s.setName(rs.getString(4));
                 s.setRemainingQuantity(rs.getInt(5));
                 s.setCost(rs.getFloat(6));
@@ -180,28 +183,28 @@ public class ShoesDAOImpl implements ShoesDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ShoesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        } 
+        }
     }
 
     @Override
-    public ShoesOrigin getClothesORG(int ID) {
+    public ShoesOrigin getShoesORG(int ID) {
         PreparedStatement prestatement;
-       PreparedStatement prestatement1;
+        PreparedStatement prestatement1;
         ResultSet rs;
         try {
             prestatement = conn.prepareStatement(sql10);
             prestatement.setInt(1, ID);
             rs = prestatement.executeQuery();
-            int tmp=0;
-            if(rs.next()){
-                tmp=rs.getInt(3);
+            int tmp = 0;
+            if (rs.next()) {
+                tmp = rs.getInt(3);
             }
-            
+
             prestatement1 = conn.prepareStatement(sql11);
             prestatement1.setInt(1, tmp);
             rs = prestatement1.executeQuery();
-            ShoesOrigin so= new ShoesOrigin();
-            if(rs.next()){
+            ShoesOrigin so = new ShoesOrigin();
+            if (rs.next()) {
                 so.setCompanyName(rs.getString(2));
                 so.setAddress(rs.getString(3));
                 so.setDateOfManufacture(rs.getDate(4));
@@ -210,28 +213,28 @@ public class ShoesDAOImpl implements ShoesDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ShoesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        } 
+        }
     }
 
     @Override
-    public ShoesDesign getClothesDSG(int ID) {
-       PreparedStatement prestatement;
+    public ShoesDesign getShoesDSG(int ID) {
+        PreparedStatement prestatement;
         PreparedStatement prestatement1;
         ResultSet rs;
         try {
             prestatement = conn.prepareStatement(sql10);
             prestatement.setInt(1, ID);
             rs = prestatement.executeQuery();
-            int tmp=0;
-            if(rs.next()){
-                tmp=rs.getInt(2);
+            int tmp = 0;
+            if (rs.next()) {
+                tmp = rs.getInt(2);
             }
-            
+
             prestatement1 = conn.prepareStatement(sql12);
             prestatement1.setInt(1, tmp);
             rs = prestatement1.executeQuery();
-            ShoesDesign sd= new ShoesDesign();
-            if(rs.next()){
+            ShoesDesign sd = new ShoesDesign();
+            if (rs.next()) {
                 sd.setType(rs.getString(2));
                 sd.setMaterial(rs.getString(3));
                 sd.setStyle(rs.getString(4));
@@ -243,11 +246,11 @@ public class ShoesDAOImpl implements ShoesDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ShoesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        } 
+        }
     }
 
     @Override
-    public ShoesItem getClothesIT(int ID) {
+    public ShoesItem getShoesIT(int ID) {
         PreparedStatement prestatement;
         PreparedStatement prestatement1;
         ResultSet rs;
@@ -255,32 +258,41 @@ public class ShoesDAOImpl implements ShoesDAO {
             prestatement = conn.prepareStatement(sql13);
             prestatement.setInt(1, ID);
             rs = prestatement.executeQuery();
-            ShoesItem si= new ShoesItem();
-            int tmp=0;
-            if(rs.next()){
+            ShoesItem si = new ShoesItem();
+            int tmp = 0;
+            if (rs.next()) {
                 si.setColor(rs.getString(1));
                 si.setSize(rs.getString(2));
-                tmp=rs.getInt(3);
+                tmp = rs.getInt(3);
             }
-            
+
             prestatement1 = conn.prepareStatement(sql14);
             prestatement1.setInt(1, tmp);
             rs = prestatement1.executeQuery();
-            
-            if(rs.next()){
-                while(rs.next()){
-                si.setDescription(rs.getString(2));
-                si.setPrice(rs.getFloat(3));
-                si.setDiscount(rs.getFloat(4));
-                si.setSellingStatus(rs.getString(5));
-                si.setImage(rs.getString(6));
-                si.setCategory(rs.getString(7));
-            }
+
+            if (rs.next()) {
+                while (rs.next()) {
+                    si.setDescription(rs.getString(2));
+                    si.setPrice(rs.getFloat(3));
+                    si.setDiscount(rs.getFloat(4));
+                    si.setSellingStatus(rs.getString(5));
+                    si.setImage(rs.getString(6));
+                    si.setCategory(rs.getString(7));
+                }
             }
             return si;
         } catch (SQLException ex) {
             Logger.getLogger(ShoesDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
-        } 
+        }
+    }
+
+    @Override
+    public Pair<ShoesItem, Shoes> getShoesAllStt(int ID) {
+        Shoes s = getShoes(ID);
+        s.setSd(getShoesDSG(ID));
+        s.setSo(getShoesORG(ID));
+        Pair<ShoesItem, Shoes> tmp = new Pair(getShoesIT(ID), s);
+        return tmp;
     }
 }

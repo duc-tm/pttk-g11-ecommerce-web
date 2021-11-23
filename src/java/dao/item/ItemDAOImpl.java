@@ -30,6 +30,7 @@ public class ItemDAOImpl implements ItemDAO {
     private final String sql3 = "SELECT * FROM item WHERE ID = ?;";
     private final String GET_NEW_ITEMS_LIMIT_SQL = "SELECT * FROM item WHERE id < ? ORDER BY id DESC LIMIT ?";
     private final String GET_NEW_ITEMS_LIMIT_BY_CATEGORY_SQL = "SELECT * FROM item WHERE id <= ? AND category = ? ORDER BY id DESC LIMIT ?";
+    private final String GET_ITEM_CATEGORY_SQL = "SELECT category FROM item WHERE id = ?";
 
     public ItemDAOImpl() {
         conn = ConDB.getJDBCCOnection();
@@ -140,6 +141,24 @@ public class ItemDAOImpl implements ItemDAO {
             Logger.getLogger(ItemDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             return listItem;
+        }
+    }
+
+    @Override
+    public String getItemCategory(int itemId)  {
+        String category = null;
+
+        try (PreparedStatement ps = conn.prepareStatement(GET_ITEM_CATEGORY_SQL)) {
+            ps.setInt(1, itemId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                category = rs.getString("category");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return category;
         }
     }
 }

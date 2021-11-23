@@ -9,7 +9,8 @@ package model.electrnoics;
  *
  * @author DELL
  */
-public class Mobilephone extends Electronics{
+public class Mobilephone extends Electronics {
+
     private String screen;
     private String RAM;
     private String storage;
@@ -17,6 +18,7 @@ public class Mobilephone extends Electronics{
     private String forwardCamera;
     private String backwardCamera;
     private String operatingSystem;
+    private ElectronicOrigin eo;
 
     public Mobilephone() {
     }
@@ -86,5 +88,13 @@ public class Mobilephone extends Electronics{
     public void setOperatingSystem(String operatingSystem) {
         this.operatingSystem = operatingSystem;
     }
-    
+
+    public ElectronicOrigin getEo() {
+        return eo;
+    }
+
+    public void setEo(ElectronicOrigin eo) {
+        this.eo = eo;
+    }
+
 }

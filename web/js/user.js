@@ -12,6 +12,8 @@ function togglerElement(toggledElementId, togglerElementId, className1, classNam
     function toggleClassName(cName1, cName2, labelContent) {
         toggledElement.classList.add(cName2);
         toggledElement.classList.remove(cName1);
+        toggledElement.toggleAttribute('readonly');
+        
         labelElement.innerText = labelContent;
     }
 

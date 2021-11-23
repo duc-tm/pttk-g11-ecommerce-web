@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.user.Address;
+import model.user.FullName;
 import model.user.User;
 
 /**
@@ -42,12 +44,19 @@ public class UserController extends HttpServlet {
             return;
         }
 
-        if (route.equalsIgnoreCase("/account/profile")) {
-            User user = getUserInfo((int) session.getAttribute("userId"));
+        if (route == null || route.equals("/account/profile")) {
+            Integer userId = (Integer) session.getAttribute("userId");
+
+            if (userId == null) {
+                sendToLogout(response);
+                return;
+            }
+
+            User user = getUserInfo(userId);
 
 //            send to logout route to destroy session if user not exist
             if (user == null) {
-                response.sendRedirect("/g11/auth/logout");
+                sendToLogout(response);
                 return;
             }
 
@@ -68,12 +77,46 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String route = request.getPathInfo();
+        HttpSession session = request.getSession(false);
 
+        if (session == null) {
+            response.sendRedirect("/g11/home");
+            return;
+        }
+
+        Integer userId = (Integer) session.getAttribute("userId");
+
+        if (userId == null) {
+            sendToLogout(response);
+            return;
+        }
+
+        if (route.equals("/update")) {
+            String fullName = request.getParameter("fullname");
+            String email = request.getParameter("email");
+            String phoneNumber = request.getParameter("phonenumber");
+            String detailAddress = request.getParameter("detailaddress");
+            String district = request.getParameter("district");
+            String city = request.getParameter("city");
+
+            updateUserInfo(userId, fullName, email, phoneNumber, new Address(detailAddress, district, city));
+            response.sendRedirect("/g11/user/account/profile");
+        }
     }
 
-    public User getUserInfo(int userId) {
+    private User getUserInfo(int userId) {
         User user = new UserDAOImpl().getUserById(userId);
         return user;
+    }
+
+    private int updateUserInfo(int userId, String fullNameStr, String email, String phoneNumber, Address address) {
+        FullName fullName = (fullNameStr == null ? null : new FullName(fullNameStr));
+        return new UserDAOImpl().updateCustomer(new User(userId, phoneNumber, email, fullName, address, null));
+    }
+
+    private void sendToLogout(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/g11/auth/logout");
     }
 
     /**

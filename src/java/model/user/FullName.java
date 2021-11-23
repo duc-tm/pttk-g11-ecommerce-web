@@ -19,6 +19,9 @@ public class FullName {
     public FullName() {
     }
 
+    public FullName(String firstName) {
+        this.firstName = firstName;
+    }
     public FullName(int id, String firstName, String midName, String lastName) {
         this.firstName = firstName;
         this.midName = midName;

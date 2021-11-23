@@ -11,8 +11,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 import model.Item.Item;
 import model.electrnoics.ElectronicOrigin;
 import model.electrnoics.Electronics;
@@ -282,7 +285,7 @@ public class ElectronicDAOImpl implements ElectronicDAO {
 
             if (rs.next()) {
                 Item item = Mapper.mapItem(rs);
-                
+
                 ei.setName(item.getName());
                 ei.setDescription(item.getDescription());
                 ei.setPrice(item.getPrice());
@@ -401,6 +404,30 @@ public class ElectronicDAOImpl implements ElectronicDAO {
             Logger.getLogger(ElectronicDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+
+    @Override
+    public Pair<ElectronicsItem, Laptop> getLaptopAllStt(int ID) {
+        Laptop l = getLaptop(ID);
+        l.setEo(getElectronicORG(ID));
+        Pair<ElectronicsItem, Laptop> tmp = new Pair(getElectronicsIT(ID), l);
+        return tmp;
+    }
+
+    @Override
+    public Pair<ElectronicsItem, Mobilephone> getMobileAllStt(int ID) {
+        Mobilephone mb = getMobilephone(ID);
+        mb.setEo(getElectronicORG(ID));
+        Pair<ElectronicsItem, Mobilephone> tmp = new Pair(getElectronicsIT(ID), mb);
+        return tmp;
+    }
+
+    @Override
+    public Pair<ElectronicsItem, TV> getTVAllStt(int ID) {
+        TV t = getTV(ID);
+        t.setEo(getElectronicORG(ID));
+        Pair<ElectronicsItem, TV> tmp = new Pair(getElectronicsIT(ID), t);
+        return tmp;
     }
 
 }

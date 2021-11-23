@@ -15,87 +15,107 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import model.order.Cart;
 
 /**
  *
  * @author DELL
  */
-public class CartDAOImpl implements CartDAO{
+public class CartDAOImpl implements CartDAO {
+
     private Connection conn;
-    PreparedStatement preStatement;
-    PreparedStatement preStatement1;
-    PreparedStatement preStatement2;
-    Statement Statement;
-    Statement Statement1;
-    Statement Statement2;
-    Statement Statement3;
-    ResultSet rs;
+    private final String GET_CART_BY_USERID = "SELECT * FROM cart where UserID= ?;";
+    private final String CREATE_CART_BY_USERID = "INSERT INTO cart (UserID) VALUES (?);";
+    private final String DELETE_ITEM_IN_CART_BY_ITEMID = "DELETE FROM cart_item Where ItemID=?;";
+    private final String ADD_ITEM_IN_CART_BY_ITEMID = "INSERT INTO cart_item (Quantity, CartID, ItemID) VALUES (?, ?, ?);";
+    private final String UPDATE_ITEM_AMOUNT = "UPDATE cart_item SET Quantity = ? WHERE (itemID = ?);";
+
     public CartDAOImpl() {
-        conn =ConDB.getJDBCCOnection();
+        conn = ConDB.getJDBCCOnection();
+    }
+
+    @Override
+    public Cart getCartByUserID(int ID) {
+        ResultSet rs;
+        PreparedStatement prestatement;
+        try {
+            prestatement = conn.prepareStatement(GET_CART_BY_USERID);
+            prestatement.setInt(1, ID);
+            rs = prestatement.executeQuery();
+            Cart c = new Cart();
+            if (rs.next()) {
+                c.setId(rs.getInt(1));
+                c.setTotalPrice(rs.getFloat(4));
+            }
+            return c;
+        } catch (SQLException ex) {
+            Logger.getLogger(CartDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+
+    @Override
+    public int createCartByUserID(int ID) {
+        ResultSet rs;
+        PreparedStatement prestatement;
+        try {
+            prestatement = conn.prepareStatement(CREATE_CART_BY_USERID);
+            prestatement.setInt(1, ID);
+            int rowcount = prestatement.executeUpdate();
+            return rowcount;
+        } catch (SQLException ex) {
+            Logger.getLogger(CartDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+
+    @Override
+    public int deleteItemInCartByItemID(int ID) {
+        ResultSet rs;
+        PreparedStatement prestatement;
+        try {
+            prestatement = conn.prepareStatement(DELETE_ITEM_IN_CART_BY_ITEMID);
+            prestatement.setInt(1, ID);
+            int rowcount = prestatement.executeUpdate();
+            return rowcount;
+        } catch (SQLException ex) {
+            Logger.getLogger(CartDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+
+    @Override
+    public int addItemInCartByItemID(int quantity, int cartID, int itemID) {
+        ResultSet rs;
+        PreparedStatement prestatement;
+        try {
+            prestatement = conn.prepareStatement(ADD_ITEM_IN_CART_BY_ITEMID);
+            prestatement.setInt(1, quantity);
+            prestatement.setInt(2, cartID);
+            prestatement.setInt(3, itemID);
+            int rowcount = prestatement.executeUpdate();
+            return rowcount;
+        } catch (SQLException ex) {
+            Logger.getLogger(CartDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+
+    @Override
+    public int updateItemAmountByItemID(int quantity, int ID) {
+        ResultSet rs;
+        PreparedStatement prestatement;
+        try {
+            prestatement = conn.prepareStatement(UPDATE_ITEM_AMOUNT);
+            prestatement.setInt(1, quantity);
+            prestatement.setInt(2, ID);
+            int rowcount = prestatement.executeUpdate();
+            return rowcount;
+        } catch (SQLException ex) {
+            Logger.getLogger(CartDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
     }
 
 }
-//        String sql1="SELECT * FROM shopbanhang.book where id="+bookid+";";
-//        
-//           String sql4="Select author.name,author.Biography,author.Email,author.Address\n" +
-//"from((book_author\n" +
-//"inner join book on book.ID=book_author.BookID)\n" +
-//"inner join author on author.ID=book_author.AuthorID) \n" +
-//"where book.ID="+bookid+";";
-//          BookSTT b= new BookSTT();
-//        try {
-//            Statement= conn.createStatement();
-//            rs=Statement.executeQuery(sql1);
-//            int itemid=0;
-//            int pubid=0;
-//            if(rs.next()){
-//                pubid=rs.getInt(2);
-//                itemid=rs.getInt(3);
-//                b.setISBN(rs.getString(4));
-//                b.setTitle(rs.getString(5));
-//                b.setSumary(rs.getString(6));
-//                b.setPublicationDate(new java.sql.Date(rs.getDate(7).getTime()));
-//                b.setNumberOfPage(rs.getInt(8));
-//                b.setQuantityOfGood(rs.getInt(9));
-//                b.setStatus(rs.getBoolean(10));
-//                b.setCost(rs.getFloat(11));
-//               }
-//            String sql2="SELECT * FROM shopbanhang.publisher where id="+pubid+";";
-//            Statement1=conn.createStatement();
-//            rs=Statement1.executeQuery(sql2);
-//            if(rs.next())
-//            {
-//                b.setPnane(rs.getString(2));
-//                b.setPaddress(rs.getString(3));
-//            }
-//            String sql3="SELECT * FROM shopbanhang.bookitem where ID="+itemid+";";
-//            Statement2=conn.createStatement();
-//            rs=Statement2.executeQuery(sql3);
-//            if(rs.next())
-//            {
-//                b.setBarcode(rs.getString(2));
-//                b.setPrice(rs.getFloat(3));
-//                b.setDiscount(rs.getFloat(4));
-//                b.setSellingStatus(rs.getString(5));
-//            }
-//            Statement3=conn.createStatement();
-//            rs=Statement3.executeQuery(sql4);
-//            while(rs.next()){
-//                ArrayList<String> aname=new ArrayList<>();
-//                ArrayList<String> abio=new ArrayList<>();
-//                ArrayList<String> aemail=new ArrayList<>();
-//                ArrayList<String> aadress=new ArrayList<>();
-//                aname.add(rs.getString(1));
-//                
-//            }
-//        } 
-//        catch (SQLException ex) {
-//            Logger.getLogger(CartDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            return -1;
-//        }
-//        return 0;
-//        
-           
-   
-

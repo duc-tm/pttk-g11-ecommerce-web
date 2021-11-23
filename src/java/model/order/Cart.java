@@ -11,15 +11,13 @@ package model.order;
  */
 public class Cart {
     private int id;
-    private int Quantity;
-    private double totalPrice;
+    private float totalPrice;
 
    public Cart(){
        
    }
-    public Cart(int id,int Quantity, double totalPrice) {
+    public Cart(int id,int Quantity, float totalPrice) {
         this.id=id;
-        this.Quantity = Quantity;
         this.totalPrice = totalPrice;
     }
     public int getId() {
@@ -29,17 +27,11 @@ public class Cart {
         this.id = id;
     }
 
-    public void setTotalQuantity(int totalQuantity) {
-        this.Quantity = totalQuantity;
-    }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(float totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public int getTotalQuantity() {
-        return Quantity;
-    }
 
     public double getTotalPrice() {
         return totalPrice;

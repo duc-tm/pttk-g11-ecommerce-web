@@ -10,11 +10,14 @@ package model.shoes;
  * @author DELL
  */
 public class Shoes {
+
     private int id;
     private String name;
     private int RemainingQuantity;
     private float cost;
     private String version;
+    private ShoesDesign sd;
+    private ShoesOrigin so;
 
     public Shoes() {
     }
@@ -67,6 +70,20 @@ public class Shoes {
         this.version = version;
     }
 
-    
-    
+    public ShoesDesign getSd() {
+        return sd;
+    }
+
+    public void setSd(ShoesDesign sd) {
+        this.sd = sd;
+    }
+
+    public ShoesOrigin getSo() {
+        return so;
+    }
+
+    public void setSo(ShoesOrigin so) {
+        this.so = so;
+    }
+
 }

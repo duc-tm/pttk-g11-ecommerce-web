@@ -6,6 +6,8 @@
 package dao.shoes;
 
 
+import java.util.Map;
+import javafx.util.Pair;
 import model.shoes.Shoes;
 import model.shoes.ShoesDesign;
 import model.shoes.ShoesItem;
@@ -21,8 +23,9 @@ public interface ShoesDAO {
     int updateShoesDesign(ShoesDesign shoesDesign);
     int updateShoesItem(ShoesItem shoesItem);
     int updateShoesOrigin(ShoesOrigin shoesOrigin);
-    Shoes getClothes(int ID);
-    ShoesOrigin getClothesORG(int ID);
-    ShoesDesign getClothesDSG(int ID);
-    ShoesItem getClothesIT(int ID);
+    Shoes getShoes(int ID);
+    ShoesOrigin getShoesORG(int ID);
+    ShoesDesign getShoesDSG(int ID);
+    ShoesItem getShoesIT(int ID);
+    Pair<ShoesItem, Shoes> getShoesAllStt(int ID);
 }

@@ -3,14 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/user-profile.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/user/UserDAOImpl.java</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/utils/Mapper.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/item/ItemDAOImpl.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/electronics/ElectronicDAOImpl.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/item/ItemDAO.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/cart.jsp</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/ItemController.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/model/Item/Item.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/list-item.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/UserController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/css/user-order.css</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/OrderController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/user/UserDAO.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/user-order.jsp</file>
         </group>
     </open-files>
 </project-private>

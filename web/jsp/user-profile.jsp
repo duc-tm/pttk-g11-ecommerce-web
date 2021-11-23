@@ -60,7 +60,7 @@
                                 </a>
                             </li>
                             <li class="nav-item active">
-                                <a href=""  class="d-flex align-items-center">
+                                <a href="${pageContext.request.contextPath}/user/account/profile"  class="d-flex align-items-center">
                                     <i class="far fa-user me-2 text-primary"></i>
                                     <span>
                                         Tài khoản của tôi
@@ -68,7 +68,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="">
+                                <a href="${pageContext.request.contextPath}/user/order">
                                     <i class="fas fa-clipboard-list me-2"></i>
                                     Đơn hàng
                                 </a>
@@ -86,7 +86,7 @@
                         <hr class="text-muted"/>
 
                         <div class="user-profile__content">
-                            <form action="" method="POST">
+                            <form action="${pageContext.request.contextPath}/user/update" method="POST">
                                 <ul class="user-profile__info-list list-unstyled row">
                                     <div class="col-8 user-profile__info-list-left">
                                         <li class="user-profile__info-item text-muted row align-items-center">
@@ -100,7 +100,7 @@
                                                 Tên
                                             </label>
                                             <div class="col-8">
-                                                <input type="text" class="user-profile__info-input form-control" id="fullname" value="<c:out value="${user.fullName.toString()}" />">
+                                                <input type="text" class="user-profile__info-input form-control" id="fullname" name="fullname" value="<c:out value="${user.fullName.toString()}" />">
                                             </div>
                                         </li>
                                         <li class="user-profile__info-item text-muted row align-items-center">
@@ -108,7 +108,7 @@
                                                 Email
                                             </label>
                                             <div class="col-8 d-flex">
-                                                <input type="text" class="user-profile__info-input form-control form-control-plaintext" id="email" value="<c:out value="${user.mail}" />">
+                                                <input type="text" class="user-profile__info-input form-control form-control-plaintext" readonly id="email" name="email" value="<c:out value="${user.mail}" />">
                                                 <input type="checkbox" class="d-none" id="email-input-toggler">
                                                 <label class="input-edit-control" for="email-input-toggler">Thay đổi</label>
                                             </div>
@@ -118,7 +118,7 @@
                                                 Số Điện Thoại
                                             </label>
                                             <div class="col-8 d-flex">
-                                                <input type="text" class="user-profile__info-input form-control form-control-plaintext" id="phonenumber" value="<c:out value="${user.phone}" />">
+                                                <input type="text" class="user-profile__info-input form-control form-control-plaintext" readonly id="phonenumber" name="phonenumber" value="<c:out value="${user.phone}" />">
                                                 <input type="checkbox" class="d-none" id="phonenumber-input-toggler">
                                                 <label class="input-edit-control" for="phonenumber-input-toggler">Thay đổi</label>
                                             </div>
@@ -129,11 +129,11 @@
                                             </label>
                                             <div class="col-8 d-flex align-items-center">
                                                 <div class="form-group me-3">
-                                                    <input class="form-check-input" type="radio" value="male" id="gender-male" name="gender" checked>
+                                                    <input class="form-check-input" type="radio" value="male" id="gender-male" name="gender">
                                                     <label class="form-check-label" for="gender-male">Nam</label>
                                                 </div>
                                                 <div class="form-group me-3">
-                                                    <input class="form-check-input" type="radio" value="female" id="gender-female" name="gender" checked>
+                                                    <input class="form-check-input" type="radio" value="female" id="gender-female" name="gender">
                                                     <label class="form-check-label" for="gender-female">Nữ</label>
                                                 </div>
                                                 <div class="form-group">
@@ -142,7 +142,32 @@
                                                 </div>
                                             </div>
                                         </li>
+                                        <li class="user-profile__info-item text-muted row align-items-center">
+                                            <label class="user-profile__info-label form-label col-4" for="detail-address">
+                                                Địa chỉ cụ thể
+                                            </label>
+                                            <div class="col-8 d-flex">
+                                                <input type="text" class="user-profile__info-input form-control" id="detail-address" name="detailaddress" value="<c:out value="${user.mail}" />">
+                                            </div>
+                                        </li>
+                                        <li class="user-profile__info-item text-muted row align-items-center">
+                                            <label class="user-profile__info-label form-label col-4" for="district">
+                                                Quận huyện/Phường xã
+                                            </label>
+                                            <div class="col-8 d-flex">
+                                                <input type="text" class="user-profile__info-input form-control" id="district" name="district" value="<c:out value="${user.mail}" />">
+                                            </div>
+                                        </li>
+                                        <li class="user-profile__info-item text-muted row align-items-center">
+                                            <label class="user-profile__info-label form-label col-4" for="city">
+                                                Tỉnh/Thành phố
+                                            </label>
+                                            <div class="col-8 d-flex">
+                                                <input type="text" class="user-profile__info-input form-control" id="city" name="city" value="<c:out value="${user.mail}" />">
+                                            </div>
+                                        </li>
                                     </div>
+
                                     <div class="col-4">
                                         <div class="user-profile__avatar-control text-center d-flex flex-column align-items-center">
                                             <img src="https://cf.shopee.vn/file/1d74524ec09542f944ad95a2a6fd111d_tn" alt="user avatar" class="rounded-circle mb-3" id="user-avatar-preview">

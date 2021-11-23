@@ -10,19 +10,24 @@ package model.user;
  * @author Admin
  */
 public class Address {
+
     private int id;
-    private String houseNumber;
-    private String street;
+    private String addressDetail;
     private String district;
     private String city;
 
     public Address() {
     }
 
-    public Address(int id,String houseNumber, String street, String district, String city) {
-        this.id=id;
-        this.houseNumber = houseNumber;
-        this.street = street;
+    public Address(String addressDetail, String district, String city) {
+        this.addressDetail = addressDetail;
+        this.district = district;
+        this.city = city;
+    }
+
+    public Address(int id, String addressDetail, String district, String city) {
+        this.id = id;
+        this.addressDetail = addressDetail;
         this.district = district;
         this.city = city;
     }
@@ -35,12 +40,12 @@ public class Address {
         this.id = id;
     }
 
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
+    public String getAddressDetail() {
+        return addressDetail;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
     }
 
     public void setDistrict(String district) {
@@ -51,14 +56,6 @@ public class Address {
         this.city = city;
     }
 
-    public String getHouseNumber() {
-        return houseNumber;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
     public String getDistrict() {
         return district;
     }
@@ -66,6 +63,5 @@ public class Address {
     public String getCity() {
         return city;
     }
-    
-    
+
 }

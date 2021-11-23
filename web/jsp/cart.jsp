@@ -29,7 +29,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
-    <body>
+    <body class="bg-light">
 
         <jsp:include page="components/header.jsp"></jsp:include>
 
@@ -41,7 +41,7 @@
                 <hr>
                 <div class="row mt-5 p-0">
                     <div>
-                        <table class="table table-borderless shadow-sm">
+                        <table class="table table-borderless shadow-sm bg-white">
                             <thead style="background-color: rgb(245, 245, 245);">
                                 <tr>
                                     <th class="text-center"><input type="checkbox" name="" id="select-all-checkbox" class="form-check-input select-item"></th>
@@ -71,12 +71,12 @@
                                         <jsp:include page="components/counter.jsp">
                                             <jsp:param name="id" value="item-counter-${i}"/>
                                         </jsp:include>
-                                        </td>
-                                        <td class="item-total-price">
-                                            <input type="hidden" value="10000">
-                                            <custom:currencyFormat amount="10000" currencyFormat="vi" />
-                                        </td>
-                                        <td class="text-center"><i class="bi-trash-fill text-danger delete-item-btn" for="<c:out value="${i}"/>"></i></td>
+                                    </td>
+                                    <td class="item-total-price">
+                                        <input type="hidden" value="10000">
+                                        <custom:currencyFormat amount="10000" currencyFormat="vi" />
+                                    </td>
+                                    <td class="text-center"><i class="bi-trash-fill text-danger delete-item-btn" for="<c:out value="${i}"/>"></i></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
@@ -97,8 +97,7 @@
         <jsp:include page="components/footer.jsp"></jsp:include>
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            <script src="${pageContext.request.contextPath}/js/counter.js"></script>
-        <script src="${pageContext.request.contextPath}/js/cart.js"></script>
+            <script src="${pageContext.request.contextPath}/js/cart.js"></script>
 
     </body>
 </html>

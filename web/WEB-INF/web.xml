@@ -31,6 +31,10 @@
         <servlet-name>AuthController</servlet-name>
         <servlet-class>controller.AuthController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderController</servlet-name>
+        <servlet-class>controller.OrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -62,6 +66,10 @@
     <servlet-mapping>
         <servlet-name>AuthController</servlet-name>
         <url-pattern>/auth/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderController</servlet-name>
+        <url-pattern>/user/order/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
