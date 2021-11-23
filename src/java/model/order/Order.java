@@ -14,14 +14,18 @@ import java.util.Date;
 public class Order {
     private int id;
     private Date createdDate;
+    private int status;
 
     public Order() {
     }
-   
-    public Order(int id, Date createdDate) {
+
+    public Order(int id, Date createdDate, int status) {
         this.id = id;
         this.createdDate = createdDate;
+        this.status = status;
     }
+   
+    
 
     public void setId(int id) {
         this.id = id;
@@ -37,6 +41,14 @@ public class Order {
 
     public Date getCreatedDate() {
         return createdDate;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
     
     

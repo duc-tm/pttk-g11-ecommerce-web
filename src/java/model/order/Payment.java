@@ -11,17 +11,19 @@ package model.order;
  */
 public class Payment {
     private int id;
-    private String amount;
-    private float status;
+    private float amount;
+    private String status;
 
     public Payment() {
     }
 
-    public Payment(int id, String amount, float status) {
+    public Payment(int id, float amount, String status) {
         this.id = id;
         this.amount = amount;
         this.status = status;
     }
+
+    
 
     public int getId() {
         return id;
@@ -31,21 +33,23 @@ public class Payment {
         this.id = id;
     }
 
-    public String getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
-    public float getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(float status) {
+    public void setStatus(String status) {
         this.status = status;
     }
+
+    
 
     
     

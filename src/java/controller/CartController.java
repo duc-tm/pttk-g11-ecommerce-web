@@ -11,7 +11,6 @@ import dao.item.ItemDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 import javafx.util.Pair;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Item.Item;
 import model.order.Cart;
+import utils.ItemUtils;
 
 /**
  *
@@ -57,9 +57,11 @@ public class CartController extends HttpServlet {
             }
 
             Pair<List<Item>, List<Integer>> listItemAndQuantity = getCartItem(userId);
-
-            request.setAttribute("listItem", listItemAndQuantity.getKey());
-            request.setAttribute("listQuantity", listItemAndQuantity.getValue());
+            List<Item> listItem = listItemAndQuantity.getKey();
+            List<Integer> listQuantity = listItemAndQuantity.getValue();
+            
+            request.setAttribute("listItem", listItem);
+            request.setAttribute("listQuantity", listQuantity);
             RequestDispatcher rd = request.getRequestDispatcher("/jsp/cart.jsp");
             rd.forward(request, response);
         }

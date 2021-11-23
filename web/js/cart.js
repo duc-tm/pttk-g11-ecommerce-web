@@ -5,6 +5,7 @@
  */
 
 let currentBill = 0;
+let totalBill = 0;
 const billContainerEle = document.getElementById('bill-container');
 
 function checkBillUpdate(updatedItem, checkboxChecked) {
@@ -37,15 +38,74 @@ function checkBillUpdate(updatedItem, checkboxChecked) {
 
 //select all checkbox
 (function () {
-    const allCheckbox = Array.from(document.getElementsByClassName('form-check-input'));
+    const billContainer = document.getElementById('bill-container');
+    const totalBillInput = document.querySelector('.item-total-bill__input');
+    const allCheckbox = Array.from(document.getElementsByClassName('item-selector'));
 
+    allCheckbox.forEach((element) => {
+        element.addEventListener('change', function () {
+//            checkbox change -> update total price
+            const container = this.closest('[itemid]');
+            const price = container.querySelector('.item-total-price__input').value;
+
+            if (this.checked) {
+                const newPrice = totalBillInput.value + price;
+                totalBill = newPrice;
+
+                billContainer.innerHTML = currencyFormat(newPrice) + "<sup>đ</sub>"
+                totalBillInput.value = newPrice;
+            } else {
+                const newPrice = totalBillInput.value - price;
+                totalBill = newPrice;
+
+                billContainer.innerHTML = currencyFormat(newPrice) + "<sup>đ</sub>"
+                totalBillInput.value = newPrice;
+            }
+        });
+    })
+
+//  select all checkbox -> update total price
     document.getElementById('select-all-checkbox').addEventListener('change', function () {
         const checkboxStatus = this.checked;
 
         allCheckbox.forEach((element) => {
             element.checked = checkboxStatus;
+            element.dispatchEvent(new Event("change"))
         });
+
+        billContainer.innerHTML = currencyFormat(totalBill) + "<sup>đ</sub>";
+        totalBillInput.value = totalBill;
     });
+
+    function currencyFormat(amount) {
+        let formatted = "";
+        let currentAmount = Math.trunc(amount);
+
+        const baseDivider = 1000;
+        let divider = baseDivider;
+
+        while (Math.trunc(currentAmount / divider) > 0) {
+            const mod = currentAmount % divider;
+
+            if (mod == 0) {
+                formatted = formatted + mod + mod + mod + ".";
+            } else {
+                formatted = formatted + mod;
+                formatted = formatted.split("").reverse().join("") + ".";
+            }
+            currentAmount = Math.trunc(currentAmount / divider);
+            divider *= baseDivider;
+        }
+
+        formatted = formatted.split("").reverse().join("")
+        formatted = currentAmount + formatted;
+        return formatted;
+    }
+})();
+
+//select checkbox update total price
+(function () {
+
 })();
 
 //update item amount

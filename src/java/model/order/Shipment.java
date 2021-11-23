@@ -12,12 +12,12 @@ package model.order;
 public class Shipment {
     private int id;
     private String type;
-    private double cost;
+    private float cost;
 
     public Shipment() {
     }
 
-    public Shipment(int id, String type, double cost) {
+    public Shipment(int id, String type, float cost) {
         this.id = id;
         this.type = type;
         this.cost = cost;
@@ -31,7 +31,7 @@ public class Shipment {
         this.type = type;
     }
 
-    public void setCost(double cost) {
+    public void setCost(float cost) {
         this.cost = cost;
     }
 
@@ -43,7 +43,7 @@ public class Shipment {
         return type;
     }
 
-    public double getCost() {
+    public float getCost() {
         return cost;
     }
     

@@ -4,6 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/OrderController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/cart.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/CartController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/utils/ItemUtils.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/js/cart.js</file>
         </group>
     </open-files>
 </project-private>

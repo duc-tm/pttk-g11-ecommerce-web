@@ -55,7 +55,7 @@
                             <tbody>
                             <c:forEach items="${listItem}" var="item" varStatus="status">
                                 <tr class="align-content-lg-between center item" itemId="<c:out value="${item.ID}"/>">
-                                    <td class="text-center"><input type="checkbox" name="" id="" itemid="" class="form-check-input item-selector"></td>
+                                    <td class="text-center"><input type="checkbox" name="" id="" class="form-check-input item-selector"></td>
                                     <td>
                                         <a href="" class="item-general-info">
                                             <div class="item-img">
@@ -74,7 +74,7 @@
                                         </jsp:include>
                                     </td>
                                     <td class="item-total-price">
-                                        <input type="hidden" value="10000">
+                                        <input type="hidden" value="${(item.price - item.price*(item.discount/100))*listQuantity[status.index]}" class="item-total-price__input">
                                         <custom:currencyFormat amount="${(item.price - item.price*(item.discount/100))*listQuantity[status.index]}" currencyFormat="vi" />
                                     </td>
                                     <td class="text-center"><i class="bi-trash-fill text-danger delete-item-btn" for="<c:out value="${item.ID}"/>"></i></td>
@@ -88,7 +88,8 @@
                 <div class="total-bill">
                     <div class="total-bill__title">Tổng thanh toán:</div>
                     <div class="total-bill__cost ms-2" id="bill-container">
-                        <custom:currencyFormat amount="20000" currencyFormat="vi" />
+                        <input type="hidden" value="0" class="item-total-bill__input">
+                        <custom:currencyFormat amount="0" currencyFormat="vi" />
                     </div>
                 </div>
                 <button class="btn btn-primary mt-3" id="pay-now">Thanh toán</button>

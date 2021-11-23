@@ -9,9 +9,12 @@ import dao.cart.CartDAO;
 import dao.cart.CartDAOImpl;
 import dao.item.ItemDAO;
 import dao.item.ItemDAOImpl;
+import dao.order.OrderDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Item.Item;
 import model.order.Cart;
+import model.order.Order;
+import model.order.Payment;
+import model.order.Shipment;
 
 /**
  *
@@ -71,14 +77,22 @@ public class OrderController extends HttpServlet {
 
         if (route != null && route.equalsIgnoreCase("/create")) {
             String itemIdStr = request.getParameter("itemIdStr");
+            int rowAffected = 0;
+
             if (itemIdStr != null) {
                 Cart cart = getCart(userId);
-                int rowAffected = createOrder(itemIdStr, cart);
+                rowAffected = createOrder(itemIdStr, cart, userId);
+            }
+
+            if (rowAffected > 0) {
+                sendResponse(response, "201;");
+            } else {
+                sendResponse(response, "503;");
             }
         }
     }
 
-    private int createOrder(String itemIdStr, Cart cart) {
+    private int createOrder(String itemIdStr, Cart cart, int userId) {
         String[] itemId = itemIdStr.split(";");
         ItemDAO itemDAO = new ItemDAOImpl();
 
@@ -97,10 +111,27 @@ public class OrderController extends HttpServlet {
         CartDAO cartDAO = new CartDAOImpl();
 
         float totalPrice = 0;
-        for (Item item : listItem) {
+        int[] quantityArr = new int[listItem.size()];
+        int[] itemIdArr = new int[listItem.size()];
+
+        for (int i = 0; i < listItem.size(); i++) {
+            Item item = listItem.get(i);
             int quantity = cartDAO.getItemAmountById(cart.getId(), item.getID());
+
+            quantityArr[i] = quantity;
+            itemIdArr[i] = item.getID();
+
             totalPrice += calcItemTotalPrice(item, quantity);
         }
+
+        return new OrderDAOImpl().createOrder(userId,
+                new Order(0, Calendar.getInstance().getTime(), 1),
+                new Payment(0, 0, null),
+                new Shipment(0, null, 20000),
+                cart,
+                quantityArr,
+                itemIdArr
+        );
     }
 
     private Cart getCart(int userId) {
@@ -109,6 +140,15 @@ public class OrderController extends HttpServlet {
 
     private float calcItemTotalPrice(Item item, int quantity) {
         return (item.getPrice() - item.getPrice() * item.getDiscount()) * quantity;
+    }
+
+    private void sendResponse(HttpServletResponse response, String responseData) throws IOException {
+        response.setHeader("Content-Type", "text/plain");
+        response.setCharacterEncoding("UTF-8");
+
+        PrintWriter writer = response.getWriter();
+        writer.write(responseData);
+        writer.close();
     }
 
     /**
