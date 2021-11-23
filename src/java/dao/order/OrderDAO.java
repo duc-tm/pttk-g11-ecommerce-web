@@ -24,5 +24,5 @@ public interface OrderDAO <T> {
     ArrayList<T> getCart(int cartID);
     int addNewCart(int userID,float totalPrice);
     void addItemToCart(int quantity[],int cartID,int itemID[]);
-    void addOrderIDToCart(int ID);
+    void updateOrderIDToCart(int orderID,int cartID);
 }

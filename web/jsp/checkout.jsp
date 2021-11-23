@@ -3,7 +3,8 @@
     Created on : Nov 13, 2021, 10:00:19 AM
     Author     : Admin
 --%>
-
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "custom" uri = "../WEB-INF/custom-tag.tld"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -79,103 +80,140 @@
                             </div>
                             <div class="py-1 px-3">
                                 <div class="pb-1"><p>THÔNG TIN THANH TOÁN</p></div>
-                                <div class="shipment-info mt-0">Người nhận</div>
-                                <div class="shipment-info">Số Điện thoại</div>
-                                <div class="shipment-info">Địa chỉ cụ thể</div>
-                                <div class="shipment-info">Quận/Huyện</div> 
-                                <div class="shipment-info">Thành phố</div>
-                                <div class="mt-3">
-                                    <div>
-                                        <input type="checkbox" class="form-check-input" id="another-address-checkbox" data-bs-toggle="collapse" data-bs-target="#another-address-collapse">
-                                        <label class="form-check-label ms-3 user-select-none" for="another-address-checkbox">Chọn địa chỉ giao hàng khác</label>
+                                <div class="shipment-info mt-0 row">
+                                    <div class="col  my-auto">
+                                        <label class="form-label mb-0">Người Nhận</label>
                                     </div>
-                                    <div id="another-address-collapse" class="collapse mt-4">
-                                        <form id="another-address-form">
-                                            <input type="text" id="diff-ship-type-name" placeholder="Người nhận" class="form-control">
-                                            <input type="text" id="diff-ship-type-phone" placeholder="Số điện thoại" class="form-control my-4">
-                                            <input type="text" id="diff-ship-type-add" placeholder="Địa chỉ cụ thể" class="form-control my-4">
-                                            <input type="text" id="diff-ship-type-add" placeholder="Quận/Huyện" class="form-control my-4">
-                                            <input type="text" id="diff-ship-type-add" placeholder="Thành phố" class="form-control my-4">
-                                        </form>
-                                    </div>
+                                    <div class="col">
+                                        <input class="form-control-plaintext" readonly value="<c:out value="${user.fullName.toString()}" />" >
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-4 px-2">
-                        <div class="border" style="height: 100%;">
-                            <div class="px-2 py-2 mb-2" style="background-color: rgb(245, 245, 245);">
-                                <h6 class="m-0">2. THANH TOÁN VÀ VẬN CHUYỂN</h6>
-                            </div>
-                            <div class="py-1 px-3">
-                                <div class="pb-1"><p>VẬN CHUYỂN</p></div>
-                                <select class="form-select" id="shipment-type-select" name="shipment-type">
-                                    <option value="ghn">Giao hàng nhanh</option>
-                                    <option value="now">Now ship</option>
-                                    <option value="economy">Giao hàng tiết kiệm</option>
-                                </select>
-                                <div class="payment-type">
-                                    <div class="py-2 mt-3"><p>PHƯƠNG THỨC THANH TOÁN</p></div>
-                                    <div>
-                                        <div class="form-group mb-2">
-                                            <input type="radio" id="bank" name="payment-type" value="bank" class="me-2">
-                                            <label for="bank">Thanh toán qua ngân hàng</label>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input type="radio" id="cod" name="payment-type" value="cod" class="me-2">
-                                            <label for="cod">Thanh toán khi nhận hàng</label>
-                                        </div>
-                                    </div>
+                            <div class="shipment-info d-flex row">
+                                <div class="col  my-auto">
+                                    <label class="form-label mb-0">Số Điện thoại</label>
+                                </div>
+                                <div class="col">
+                                    <input class="form-control-plaintext" readonly value="<c:out value="${user.phone}" />" >
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-4 px-2">
-                        <div class="border pb-4" style="height: 100%;">
-                            <div class="px-2 py-2 mb-2" style="background-color: rgb(245, 245, 245);">
-                                <h6 class="m-0">3. THÔNG TIN ĐƠN HÀNG</h6>
+                            <div class="shipment-info d-flex row">
+                                <div class="col my-auto">
+                                    <label class="form-label mb-0">Địa chỉ cụ thể</label>
+                                </div>
+                                <div class="col">
+                                    <input class="form-control-plaintext" readonly value="<c:out value="${user.address.addressDetail}" />" >
+                                </div>
                             </div>
-                            <div class="px-3">
-                                <div class="d-flex my-0 align-items-center" style="justify-content: space-between;">
-                                    <div class="item-general-info">
-                                        <img class="item-img me-2" src="https://cf.shopee.vn/file/097f8e36d67e0d3f8ae9c98a952a5d9e" alt="">
-                                        <div class="item-name">Áo thun nữ</div>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="item-unit-price me-2">10.000</div>
-                                        <div class="item-quantity">x5</div>
-                                    </div>
+                            <div class="shipment-info d-flex row">
+                                <div class="col my-auto">
+                                    <label class="form-label mb-0 ">Quận/Huyện</label>
                                 </div>
-                                <hr>
-                                <div class="d-flex my-0 align-items-center" style="justify-content: space-between;">
-                                    <h6>Tổng tiền hàng</h6>
-                                    <div class="item-total-price">50.000</div>
+                                <div class="col">
+                                    <input class="form-control-plaintext" readonly value="<c:out value="${user.address.district}" />" >
                                 </div>
-                                <hr>
-                                <div class="d-flex my-0 align-items-center" style="justify-content: space-between;">
-                                    <h6>Phí vận chuyển</h6>
-                                    <div class="shipping-cost">15.000</div>  
+                            </div> 
+                            <div class="shipment-info d-flex row">
+                                <div class="col my-auto">
+                                    <label class="form-label mb-0">Thành phố</label>
                                 </div>
-                                <hr>
-                                <div class="d-flex" style="justify-content: space-between;">
-                                    <div>
-                                        <h6>Tổng thanh toán</h6>
-                                    </div>
-                                    <div class="total-bill">110.000</div>
+                                <div class="col">
+                                    <input class="form-control-plaintext" readonly value="<c:out value="${user.address.city}" />" >
                                 </div>
-                                <hr class="mb-5">
-                                <div class="text-end">
-                                    <button class="btn btn-primary pay-btn">Thanh toán</button>
+                            </div>
+                            <div class="mt-3 pe-none text-muted user-select-none">
+                                <div>
+                                    <input type="checkbox" class="form-check-input" id="another-address-checkbox" data-bs-toggle="collapse" data-bs-target="#another-address-collapse">
+                                    <label class="form-check-label ms-3 user-select-none" for="another-address-checkbox">Chọn địa chỉ giao hàng khác</label>
+                                </div>
+                                <div id="another-address-collapse" class="collapse mt-4">
+                                    <form id="another-address-form">
+                                        <input type="text" id="diff-ship-type-name" placeholder="Người nhận" class="form-control">
+                                        <input type="text" id="diff-ship-type-phone" placeholder="Số điện thoại" class="form-control my-4">
+                                        <input type="text" id="diff-ship-type-add" placeholder="Địa chỉ cụ thể" class="form-control my-4">
+                                        <input type="text" id="diff-ship-type-add" placeholder="Quận/Huyện" class="form-control my-4">
+                                        <input type="text" id="diff-ship-type-add" placeholder="Thành phố" class="form-control my-4">
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-4 px-2">
+                    <div class="border" style="height: 100%;">
+                        <div class="px-2 py-2 mb-2" style="background-color: rgb(245, 245, 245);">
+                            <h6 class="m-0">2. THANH TOÁN VÀ VẬN CHUYỂN</h6>
+                        </div>
+                        <div class="py-1 px-3">
+                            <div class="pb-1"><p>VẬN CHUYỂN</p></div>
+                            <select class="form-select" id="shipment-type-select" name="shipment-type">
+                                <option value="ghn">Giao hàng nhanh</option>
+                                <option value="now">Now ship</option>
+                                <option value="economy">Giao hàng tiết kiệm</option>
+                            </select>
+                            <div class="payment-type">
+                                <div class="py-2 mt-3"><p>PHƯƠNG THỨC THANH TOÁN</p></div>
+                                <div>
+                                    <div class="form-group mb-2">
+                                        <input type="radio" id="bank" name="payment-type" value="bank" class="me-2">
+                                        <label for="bank">Thanh toán qua ngân hàng</label>
+                                    </div>
 
-                <div class="policy text-center text-muted">
-                    Nhấn "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo 
-                    <a href="${pageContext.request.contextPath}/policy" class="text-decoration-none">Điều khoản Shopyy</a>
+                                    <div class="form-group">
+                                        <input type="radio" id="cod" name="payment-type" value="cod" class="me-2">
+                                        <label for="cod">Thanh toán khi nhận hàng</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 px-2">
+                    <div class="border pb-4" style="height: 100%;">
+                        <div class="px-2 py-2 mb-2" style="background-color: rgb(245, 245, 245);">
+                            <h6 class="m-0">3. THÔNG TIN ĐƠN HÀNG</h6>
+                        </div>
+                        <div class="px-3">
+                            <c:forEach items="${listItem}" var="item" varStatus="status">
+                                <div class="d-flex my-0 align-items-center" style="justify-content: space-between;">
+                                    <div class="item-general-info">
+                                        <img class="item-img me-2" src="${item.image}" alt="">
+                                        <div class="item-name">${item.name}</div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="item-unit-price me-2"><custom:currencyFormat amount="${item.price}" currencyFormat="vi" /></div>
+                                        <div class="item-quantity">x${listQuantity[status.index]}</div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                            <hr>
+                            <div class="d-flex my-0 align-items-center" style="justify-content: space-between;">
+                                <h6>Tổng tiền hàng</h6>
+                                <div class="item-total-price">50.000</div>
+                            </div>
+                            <hr>
+                            <div class="d-flex my-0 align-items-center" style="justify-content: space-between;">
+                                <h6>Phí vận chuyển</h6>
+                                <div class="shipping-cost">15.000</div>  
+                            </div>
+                            <hr>
+                            <div class="d-flex" style="justify-content: space-between;">
+                                <div>
+                                    <h6>Tổng thanh toán</h6>
+                                </div>
+                                <div class="total-bill">110.000</div>
+                            </div>
+                            <hr class="mb-5">
+                            <div class="text-end">
+                                <button class="btn btn-primary pay-btn">Thanh toán</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="policy text-center text-muted">
+                Nhấn "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo 
+                <a href="${pageContext.request.contextPath}/policy" class="text-decoration-none">Điều khoản Shopyy</a>
             </div>
         </div>
 

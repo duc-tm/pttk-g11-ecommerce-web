@@ -9,13 +9,14 @@ import dao.cart.CartDAO;
 import dao.cart.CartDAOImpl;
 import dao.item.ItemDAO;
 import dao.item.ItemDAOImpl;
+import dao.order.OrderDAO;
 import dao.order.OrderDAOImpl;
+import dao.user.UserDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import javafx.util.Pair;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,9 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Item.Item;
 import model.order.Cart;
-import model.order.Order;
-import model.order.Payment;
-import model.order.Shipment;
+import model.user.User;
 
 /**
  *
@@ -46,8 +45,32 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/user-order.jsp");
-        rd.forward(request, response);
+        String route = request.getPathInfo();
+
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.sendRedirect("/g11/home");
+            return;
+        }
+
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            response.sendRedirect("/g11/auth/logout");
+            return;
+        }
+
+        if (route != null && route.equalsIgnoreCase("/fill-info")) {
+            User user = new UserDAOImpl().getUserById(userId);
+            Pair<List<Item>, List<Integer>> listItemAndQuantity = getCartItem(userId);
+            List<Item> listItem = listItemAndQuantity.getKey();
+            List<Integer> listQuantity = listItemAndQuantity.getValue();
+
+            request.setAttribute("listItem", listItem);
+            request.setAttribute("listQuantity", listQuantity);
+            request.setAttribute("user", user);
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/checkout.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**
@@ -75,13 +98,13 @@ public class OrderController extends HttpServlet {
             return;
         }
 
-        if (route != null && route.equalsIgnoreCase("/create")) {
+        if (route != null && route.equalsIgnoreCase("/create-order-cart")) {
             String itemIdStr = request.getParameter("itemIdStr");
             int rowAffected = 0;
 
             if (itemIdStr != null) {
                 Cart cart = getCart(userId);
-                rowAffected = createOrder(itemIdStr, cart, userId);
+                rowAffected = createOrderCart(itemIdStr, cart, userId);
             }
 
             if (rowAffected > 0) {
@@ -92,7 +115,7 @@ public class OrderController extends HttpServlet {
         }
     }
 
-    private int createOrder(String itemIdStr, Cart cart, int userId) {
+    private int createOrderCart(String itemIdStr, Cart cart, int userId) {
         String[] itemId = itemIdStr.split(";");
         ItemDAO itemDAO = new ItemDAOImpl();
 
@@ -124,14 +147,15 @@ public class OrderController extends HttpServlet {
             totalPrice += calcItemTotalPrice(item, quantity);
         }
 
-        return new OrderDAOImpl().createOrder(userId,
-                new Order(0, Calendar.getInstance().getTime(), 1),
-                new Payment(0, 0, null),
-                new Shipment(0, null, 20000),
-                cart,
-                quantityArr,
-                itemIdArr
-        );
+        OrderDAO orderDAO = new OrderDAOImpl();
+        int newCartId = orderDAO.addNewCart(userId, totalPrice);
+
+        if (newCartId <= 0) {
+            return 0;
+        }
+
+        orderDAO.addItemToCart(quantityArr, newCartId, itemIdArr);
+        return 1;
     }
 
     private Cart getCart(int userId) {
@@ -149,6 +173,13 @@ public class OrderController extends HttpServlet {
         PrintWriter writer = response.getWriter();
         writer.write(responseData);
         writer.close();
+    }
+
+    private Pair<List<Item>, List<Integer>> getCartItem(int userId) {
+        Cart cart = new CartDAOImpl().getCartByUserID(userId);
+        Pair<List<Item>, List<Integer>> listItem = new ItemDAOImpl().getItemOfCartByCartID(cart.getId());
+
+        return listItem;
     }
 
     /**

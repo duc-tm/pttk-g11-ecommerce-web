@@ -247,7 +247,8 @@ public class OrderDAOImpl implements OrderDAO {
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
+
+    
 
 }
