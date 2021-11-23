@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Item.Item;
 import model.order.Cart;
 
 /**
@@ -29,6 +30,7 @@ public class CartDAOImpl implements CartDAO {
     private final String DELETE_ITEM_IN_CART_BY_ITEMID = "DELETE FROM cart_item Where ItemID=?;";
     private final String ADD_ITEM_IN_CART_BY_ITEMID = "INSERT INTO cart_item (Quantity, CartID, ItemID) VALUES (?, ?, ?);";
     private final String UPDATE_ITEM_AMOUNT = "UPDATE cart_item SET Quantity = ? WHERE (itemID = ?);";
+    private final String GET_ITEM_AMOUNT_IN_CART_BY_ID_SQL = "SELECT quantity FROM cart_item WHERE itemid = ? AND cartid = ?";
 
     public CartDAOImpl() {
         conn = ConDB.getJDBCCOnection();
@@ -127,4 +129,21 @@ public class CartDAOImpl implements CartDAO {
         }
     }
 
+    public int getItemAmountById(int cartId, int itemId) {
+        int quantity = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(GET_ITEM_AMOUNT_IN_CART_BY_ID_SQL)) {
+            ps.setInt(1, itemId);
+            ps.setInt(2, cartId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                quantity = rs.getInt("quantity");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CartDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return quantity;
+        }
+    }
 }

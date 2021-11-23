@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.order.Cart;
-import model.user.User;
 import model.user.UserSTT;
 
 /**
@@ -32,16 +31,19 @@ public class OrderDAOImpl implements OrderDAO {
     Statement Statement;
     Statement Statement1;
     private Connection conn;
+    private final String GET_CART_ID = "INSERT INTO cart (UserID, OrderID, TotalPrice) VALUES (?, ?, ?);";
+    private final String ADD_TO_CART_ITEM = "INSERT INTO cart_item (Quantity, CartID, ItemID) VALUES (?, ?, ?);";
 
     public OrderDAOImpl() {
         conn = ConDB.getJDBCCOnection();
     }
 
     @Override
-    public int createOrder(int userID, String type, float cost, Date createdDate, String status, float amount) {
+    public int createOrder(int userID, String type, float cost, Date createdDate, String stt, int status, float amount, float totalPrice, int quantity[], int itemID[]) {
         String sql1 = "INSERT INTO shopbanhang.shipment (Type, Cost) VALUES (?, ?);";
-        String sql2 = "INSERT INTO shopbanhang.order (ShipmentID, UserID, CreatedDate) VALUES (?, ?, ?);";
+        String sql2 = "INSERT INTO shopbanhang.order (ShipmentID, UserID, CreatedDate,Status) VALUES (?, ?, ?, ?);";
         String sql3 = "INSERT INTO shopbanhang.payment (OrderID, Status, Amount) VALUES (?, ?, ?);";
+        PreparedStatement preStatement3;
         try {
             preStatement = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
             preStatement.setString(1, type);
@@ -56,6 +58,7 @@ public class OrderDAOImpl implements OrderDAO {
             preStatement1.setInt(1, shipmentid);
             preStatement1.setInt(2, userID);
             preStatement1.setDate(3, new java.sql.Date(createdDate.getTime()));
+            preStatement1.setInt(4, status);
             int rowcount1 = preStatement1.executeUpdate();
             rs = preStatement1.getGeneratedKeys();
             int orderid = 0;
@@ -64,10 +67,28 @@ public class OrderDAOImpl implements OrderDAO {
             }
             preStatement2 = conn.prepareStatement(sql3);
             preStatement2.setInt(1, orderid);
-            preStatement2.setString(2, status);
+            preStatement2.setString(2, stt);
             preStatement2.setFloat(3, amount);
             int rowcount2 = preStatement2.executeUpdate();
-            return rowcount2;
+            preStatement3 = conn.prepareStatement(GET_CART_ID, Statement.RETURN_GENERATED_KEYS);
+            preStatement3.setInt(1, userID);
+            preStatement3.setInt(2, orderid);
+            preStatement3.setFloat(3, totalPrice);
+            int rowcount3 = preStatement3.executeUpdate();
+            rs = preStatement3.getGeneratedKeys();
+            int cartid = 0;
+            if (rs.next()) {
+                cartid = rs.getInt(1);
+            }
+            for (int i = 0; i < itemID.length; i++) {
+                PreparedStatement prestate;
+                prestate = conn.prepareStatement(ADD_TO_CART_ITEM);
+                prestate.setInt(1, quantity[i]);
+                prestate.setInt(2, cartid);
+                prestate.setInt(3, itemID[i]);
+                int row = prestate.executeUpdate();
+            }
+            return rowcount3;
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return 0;

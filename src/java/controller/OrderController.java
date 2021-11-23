@@ -5,13 +5,22 @@
  */
 package controller;
 
+import dao.cart.CartDAO;
+import dao.cart.CartDAOImpl;
+import dao.item.ItemDAO;
+import dao.item.ItemDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Item.Item;
+import model.order.Cart;
 
 /**
  *
@@ -46,7 +55,60 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String route = request.getPathInfo();
+
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.sendRedirect("/g11/home");
+            return;
+        }
+
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            response.sendRedirect("/g11/auth/logout");
+            return;
+        }
+
+        if (route != null && route.equalsIgnoreCase("/create")) {
+            String itemIdStr = request.getParameter("itemIdStr");
+            if (itemIdStr != null) {
+                Cart cart = getCart(userId);
+                int rowAffected = createOrder(itemIdStr, cart);
+            }
+        }
+    }
+
+    private int createOrder(String itemIdStr, Cart cart) {
+        String[] itemId = itemIdStr.split(";");
+        ItemDAO itemDAO = new ItemDAOImpl();
+
+        List<Item> listItem = new ArrayList<>();
+
+        for (String id : itemId) {
+            try {
+                int idNumber = Integer.parseInt(id);
+                Item item = itemDAO.getItem(idNumber);
+                listItem.add(item);
+            } catch (NumberFormatException e) {
+                System.err.println(e);
+            }
+        }
+
+        CartDAO cartDAO = new CartDAOImpl();
+
+        float totalPrice = 0;
+        for (Item item : listItem) {
+            int quantity = cartDAO.getItemAmountById(cart.getId(), item.getID());
+            totalPrice += calcItemTotalPrice(item, quantity);
+        }
+    }
+
+    private Cart getCart(int userId) {
+        return new CartDAOImpl().getCartByUserID(userId);
+    }
+
+    private float calcItemTotalPrice(Item item, int quantity) {
+        return (item.getPrice() - item.getPrice() * item.getDiscount()) * quantity;
     }
 
     /**

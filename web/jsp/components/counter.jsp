@@ -10,7 +10,7 @@
 <div class="item-info__quantity-select">
     <div class="number item-counter" class="" id="<c:out value="${param.id}"/>">
         <span class="minus">-</span>
-        <input type="text" value="1"/>
+        <input type="text" value="<c:out value="${param.quantity}"/>"/>
         <span class="plus">+</span>
     </div>
 </div>

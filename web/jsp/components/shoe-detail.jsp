@@ -3,7 +3,7 @@
 <%@ taglib prefix = "custom" uri = "../../WEB-INF/custom-tag.tld"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<div class="item-detail bg-white mx-5 shadow-sm">
+<div class="item-detail bg-white mx-5 shadow-sm" itemid="${shoeItem.ID}" id="item-detail">
     <div class="row py-3 ps-3 pe-4">
         <div class="col-4">
             <div class="item-images">
@@ -38,7 +38,7 @@
                     <div class="col-10 content d-flex align-items-center">
                         <div class="item-info__type-select">
                             <div class="item-info__type">
-                                <input type="radio" name="type" value="${shoeItem.size}" id="type-1">
+                                <input type="radio" name="type" value="${shoeItem.size}" id="type-1" checked>
                                 <label for="type-1">${shoeItem.size}<i class="fas fa-check"></i></label>
                             </div>
                         </div>

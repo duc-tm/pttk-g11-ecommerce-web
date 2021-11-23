@@ -3,7 +3,7 @@
 <%@ taglib prefix = "custom" uri = "../../WEB-INF/custom-tag.tld"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<div class="item-detail bg-white mx-5 shadow-sm">
+<div class="item-detail bg-white mx-5 shadow-sm" itemid="${bookItem.ID}" id="item-detail">
     <div class="row py-3 ps-3 pe-4">
         <div class="col-4">
             <div class="item-images">

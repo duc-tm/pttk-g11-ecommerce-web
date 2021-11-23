@@ -13,7 +13,7 @@ import java.util.Date;
  * @author DELL
  */
 public interface OrderDAO <T> {
-    int createOrder(int userID,String type,float cost,Date createdDate,String status,float amount);
+    int createOrder(int userID,String type,float cost,Date createdDate,String stt,int status,float amount,float totalPrice,int quantity[],int itemID[]);
     int updateOrder(int orderID,String type,float cost,Date createdDate,String status,float amount);
     int deleteOrder(int orderID);
     T getUser(int userID);

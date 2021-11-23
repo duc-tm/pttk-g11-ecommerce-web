@@ -7,14 +7,19 @@ package controller;
 
 import dao.cart.CartDAO;
 import dao.cart.CartDAOImpl;
+import dao.item.ItemDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
+import javafx.util.Pair;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Item.Item;
 import model.order.Cart;
 
 /**
@@ -38,6 +43,23 @@ public class CartController extends HttpServlet {
         String route = request.getPathInfo();
 
         if (route == null) {
+            HttpSession session = request.getSession(false);
+
+            if (session == null) {
+                response.sendRedirect("/g11/home");
+                return;
+            }
+
+            Integer userId = (Integer) session.getAttribute("userId");
+            if (userId == null) {
+                response.sendRedirect("/g11/auth/logout");
+                return;
+            }
+
+            Pair<List<Item>, List<Integer>> listItemAndQuantity = getCartItem(userId);
+
+            request.setAttribute("listItem", listItemAndQuantity.getKey());
+            request.setAttribute("listQuantity", listItemAndQuantity.getValue());
             RequestDispatcher rd = request.getRequestDispatcher("/jsp/cart.jsp");
             rd.forward(request, response);
         }
@@ -82,9 +104,13 @@ public class CartController extends HttpServlet {
         }
     }
 
-//    private Cart getCartInfo() {
-//        
-//    }
+    private Pair<List<Item>, List<Integer>> getCartItem(int userId) {
+        Cart cart = new CartDAOImpl().getCartByUserID(userId);
+        Pair<List<Item>, List<Integer>> listItem = new ItemDAOImpl().getItemOfCartByCartID(cart.getId());
+
+        return listItem;
+    }
+
     private int addItemToCart(String itemId, int userId, String itemQuantity) {
         Integer itemIdNumber = Integer.parseInt(itemId);
         Integer itemQuantityNumber = Integer.parseInt(itemQuantity);

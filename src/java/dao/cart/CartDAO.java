@@ -13,9 +13,16 @@ import model.order.Cart;
  * @author DELL
  */
 public interface CartDAO {
-   public Cart getCartByUserID(int ID);
-   public int createCartByUserID(int ID);
-   public int deleteItemInCartByItemID(int ID);
-   public int addItemInCartByItemID(int quantity,int cartID,int itemID);
-   public int updateItemAmountByItemID(int quantity,int ID);
+
+    public Cart getCartByUserID(int ID);
+
+    public int createCartByUserID(int ID);
+
+    public int deleteItemInCartByItemID(int ID);
+
+    public int addItemInCartByItemID(int quantity, int cartID, int itemID);
+
+    public int updateItemAmountByItemID(int quantity, int ID);
+
+    public int getItemAmountById(int cartId, int itemId);
 }

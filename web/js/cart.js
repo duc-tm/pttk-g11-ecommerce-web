@@ -8,32 +8,30 @@ let currentBill = 0;
 const billContainerEle = document.getElementById('bill-container');
 
 function checkBillUpdate(updatedItem, checkboxChecked) {
-    if(typeof updatedItem === 'object') {
+    if (typeof updatedItem === 'object') {
 //        checkbox update event
-        if(checkboxChecked !== null) {
+        if (checkboxChecked !== null) {
             const changeAmount = document.querySelector('.item-total-price > input[type="hidden"]').value;
-            
-            if(checkboxChecked) {
+
+            if (checkboxChecked) {
                 currentBill += changeAmount;
-            }
-            else {
+            } else {
                 currentBill -= changeAmount;
             }
-            
+
             billContainerEle.innerText = currentBill;
         }
-        
+
         const selector = updatedItem.querySelector('.item-selector');
-        if(selector.checked) {
+        if (selector.checked) {
             updateBill();
         }
+    } else if (typeof updatedItem === 'string' && updatedItem === 'all') {
+
     }
-    else if(typeof updatedItem === 'string' && updatedItem === 'all') {
-        
-    }
-    
+
     function updateBill() {
-        
+
     }
 }
 
@@ -57,7 +55,7 @@ function checkBillUpdate(updatedItem, checkboxChecked) {
             const input = $(this).parent().find('input');
             const itemElement = this.closest('.item[itemid]');
             const itemId = itemElement.getAttribute('itemId');
-            
+
 //            disable more event
             Object.assign(this.parentElement.style,
                     {
@@ -73,11 +71,10 @@ function checkBillUpdate(updatedItem, checkboxChecked) {
                 count = count < 1 ? 1 : count;
                 input.val(count);
                 input.change();
-                
+
                 const priceContainer = itemElement.querySelector('.item-total-price > input[type="hidden"]');
                 priceContainer.value = fetchResult.totalPrice;
-            }
-            else {
+            } else {
                 console.log(fetchResult);
             }
 
@@ -120,3 +117,41 @@ function checkBillUpdate(updatedItem, checkboxChecked) {
         });
     })
 })();
+
+
+//checkout
+(function () {
+    const itemIdStr = Array.from(document.querySelectorAll('.item-selector[itemid]:checked')).reduce((total, element) => {
+        const itemId = element.getAttribute('itemid');
+        total += itemId + ";";
+    }, "");
+
+    const createOrderBtn = document.getElementById('pay-now');
+    createOrderBtn.addEventListener('click', createOrder)
+
+    async function createOrder() {
+        const formData = new URLSearchParams();
+
+        formData.append('itemIdStr', itemIdStr);
+
+        const response = await fetch('http://localhost:8080/g11/user/order/create',
+                {
+                    method: "POST",
+                    contentType: "application/x-www-form-urlencoded",
+                    body: formData,
+                }
+        );
+
+        const data = await response.text();
+
+        if (data) {
+            const dataTokens = data.split(';');
+            if (dataTokens[0] === '201') {
+                console.log('tao order')
+            } else if (dataTokens[0] === '503') {
+                console.log('tao that bai')
+            }
+        }
+    }
+
+})()

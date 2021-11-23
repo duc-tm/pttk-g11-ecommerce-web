@@ -6,6 +6,8 @@
 package dao.item;
 
 import java.util.List;
+import java.util.Map;
+import javafx.util.Pair;
 import model.Item.Item;
 
 /**
@@ -25,4 +27,7 @@ public interface ItemDAO {
     List<Item> getNewItemsByCategory(int limit, int from, String category, String itemName);
 
     String getItemCategory(int itemId);
+
+    Pair<List<Item>, List<Integer>> getItemOfCartByCartID(int id);
+    //1 la quantity,2 la ItemID.
 }

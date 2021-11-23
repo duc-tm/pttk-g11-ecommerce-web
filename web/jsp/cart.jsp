@@ -53,30 +53,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var = "i" begin = "1" end = "5">
-                                <tr class="align-content-lg-between center item" itemId="<c:out value="${i}"/>">
-                                    <td class="text-center"><input type="checkbox" name="" id="" class="form-check-input item-selector"></td>
+                            <c:forEach items="${listItem}" var="item" varStatus="status">
+                                <tr class="align-content-lg-between center item" itemId="<c:out value="${item.ID}"/>">
+                                    <td class="text-center"><input type="checkbox" name="" id="" itemid="" class="form-check-input item-selector"></td>
                                     <td>
                                         <a href="" class="item-general-info">
                                             <div class="item-img">
-                                                <img src="https://cf.shopee.vn/file/36368bf1379e8a1c664db03927622869_tn" alt="" class="img-fluid">
+                                                <img src="<c:out value="${item.image}"/>" alt="item image">
                                             </div>
                                             <div class="item-name">
-                                                Áo tdun nữ
+                                                ${item.name}
                                             </div>                               
                                         </a>
                                     </td>
-                                    <td><div class="item-unit-price"><custom:currencyFormat amount="10000" currencyFormat="vi" /></div></td>
+                                    <td><div class="item-unit-price"><custom:currencyFormat amount="${item.price - item.price*(item.discount/100)}" currencyFormat="vi" /></div></td>
                                     <td>                                    
                                         <jsp:include page="components/counter.jsp">
                                             <jsp:param name="id" value="item-counter-${i}"/>
+                                            <jsp:param name="quantity" value="${listQuantity[status.index]}" />
                                         </jsp:include>
                                     </td>
                                     <td class="item-total-price">
                                         <input type="hidden" value="10000">
-                                        <custom:currencyFormat amount="10000" currencyFormat="vi" />
+                                        <custom:currencyFormat amount="${(item.price - item.price*(item.discount/100))*listQuantity[status.index]}" currencyFormat="vi" />
                                     </td>
-                                    <td class="text-center"><i class="bi-trash-fill text-danger delete-item-btn" for="<c:out value="${i}"/>"></i></td>
+                                    <td class="text-center"><i class="bi-trash-fill text-danger delete-item-btn" for="<c:out value="${item.ID}"/>"></i></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
