@@ -113,7 +113,7 @@
                                             <div class="home-product__item-img"
                                                  style="background-image: url(<c:out value="${item.image}" />);">
                                             </div>
-                                            <h4 class="home-product__item-name"><c:out value="${item.name}" /></h4>
+                                            <h4 class="home-product__item-name text-capitalize"><c:out value="${item.name}" /></h4>
                                             <div class="home-product__item-price">
                                                 <span class="home-product__item-price--old me-1">
                                                     <custom:currencyFormat amount="${item.price}" currencyFormat="vi"/>

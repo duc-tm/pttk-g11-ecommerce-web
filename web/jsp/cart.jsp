@@ -61,7 +61,7 @@
                                             <div class="item-img">
                                                 <img src="<c:out value="${item.image}"/>" alt="item image">
                                             </div>
-                                            <div class="item-name">
+                                            <div class="item-name text-capitalize">
                                                 ${item.name}
                                             </div>                               
                                         </a>

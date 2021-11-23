@@ -177,7 +177,7 @@
                                 <div class="d-flex my-0 align-items-center" style="justify-content: space-between;">
                                     <div class="item-general-info">
                                         <img class="item-img me-2" src="${item.image}" alt="">
-                                        <div class="item-name">${item.name}</div>
+                                        <div class="item-name text-capitalize">${item.name}</div>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <div class="item-unit-price me-2"><custom:currencyFormat amount="${item.price}" currencyFormat="vi" /></div>
