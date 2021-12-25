@@ -5,28 +5,31 @@
  */
 package controller;
 
+import dao.bookitem.BookItemDAO;
+import dao.bookitem.BookItemDAOImpl;
 import dao.cart.CartDAO;
 import dao.cart.CartDAOImpl;
-import dao.item.ItemDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Item.Item;
-import model.order.Cart;
-import utils.ItemUtils;
+import model.book.BookItem;
 
 /**
  *
  * @author Admin
  */
 public class CartController extends HttpServlet {
+
+    private CartDAO cartDAO;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,31 +40,32 @@ public class CartController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+        cartDAO = new CartDAOImpl();
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String route = request.getPathInfo();
 
+        Integer userId = getUserIdFromSession(request.getSession(false));
+
+        if (userId == null) {
+            response.sendRedirect("/g11/auth/logout");
+            return;
+        }
+
         if (route == null) {
-            HttpSession session = request.getSession(false);
-
-            if (session == null) {
-                response.sendRedirect("/g11/home");
-                return;
-            }
-
-            Integer userId = (Integer) session.getAttribute("userId");
-            if (userId == null) {
-                response.sendRedirect("/g11/auth/logout");
-                return;
-            }
-
-            Pair<List<Item>, List<Integer>> listItemAndQuantity = getCartItem(userId);
-            List<Item> listItem = listItemAndQuantity.getKey();
+            Pair<List<BookItem>, List<Integer>> listItemAndQuantity = getCartItem(userId);
+            List<BookItem> listItem = listItemAndQuantity.getKey();
             List<Integer> listQuantity = listItemAndQuantity.getValue();
-            
+
             request.setAttribute("listItem", listItem);
             request.setAttribute("listQuantity", listQuantity);
+
             RequestDispatcher rd = request.getRequestDispatcher("/jsp/cart.jsp");
             rd.forward(request, response);
         }
@@ -79,54 +83,95 @@ public class CartController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String route = request.getPathInfo();
-        String itemId = request.getParameter("itemid");
+        String itemId = request.getParameter("itemId");
         String itemQuantity = request.getParameter("quantity");
 
-        if (route != null && route.equalsIgnoreCase("/add-to-cart")) {
-            HttpSession session = request.getSession(false);
+        Integer userId = getUserIdFromSession(request.getSession(false));
 
-            if (session == null) {
-                response.sendRedirect("/g11/home");
-                return;
-            }
+        if (userId == null) {
+            sendResponse(response, "401;");
+            return;
+        }
 
-            Integer userId = (Integer) session.getAttribute("userId");
-
-            if (userId == null) {
-                response.sendRedirect("/g11/auth/logout");
-                return;
-            }
+        if (route == null) {
+            response.sendRedirect("/error");
+        } else if (route.equalsIgnoreCase("/api/add-to-cart")) {
 
             int rowAffected = addItemToCart(itemId, userId, itemQuantity);
+
             if (rowAffected <= 0) {
                 sendResponse(response, "503;");
             } else {
                 sendResponse(response, "201;");
             }
+        } else if (route.equalsIgnoreCase("/api/delete")) {
+            if (deleteItemInCart(Integer.parseInt(itemId), userId)) {
+                sendResponse(response, "201");
+            } else {
+                sendResponse(response, "503");
+            }
         }
     }
 
-    private Pair<List<Item>, List<Integer>> getCartItem(int userId) {
-        Cart cart = new CartDAOImpl().getCartByUserID(userId);
-        Pair<List<Item>, List<Integer>> listItem = new ItemDAOImpl().getItemOfCartByCartID(cart.getId());
+    private Pair<List<BookItem>, List<Integer>> getCartItem(int userId) {
+        Pair<List<Integer>, List<Integer>> listBookItemIdAndQuantity = new CartDAOImpl().getBookInCartByUserId(userId);
 
-        return listItem;
+        BookItemDAO bookDAO = new BookItemDAOImpl();
+
+        List<Integer> listBookItemId = listBookItemIdAndQuantity.getKey();
+        List<BookItem> listBookItem = new ArrayList<>();
+
+        for (Integer bookItemId : listBookItemId) {
+            BookItem bookItem = bookDAO.getBookItem(bookItemId);
+            listBookItem.add(bookItem);
+        }
+
+        return new Pair(listBookItem, listBookItemIdAndQuantity.getValue());
+    }
+
+    private int checkItemExistInCart(int userId, int bookItemId) {
+        return cartDAO.checkItemExistInCart(userId, bookItemId);
     }
 
     private int addItemToCart(String itemId, int userId, String itemQuantity) {
-        Integer itemIdNumber = Integer.parseInt(itemId);
-        Integer itemQuantityNumber = Integer.parseInt(itemQuantity);
+        int itemIdNumber = Integer.parseInt(itemId);
+        int itemQuantityNumber = Integer.parseInt(itemQuantity);
         int rowAffected = 0;
 
-        CartDAO cartDAO = new CartDAOImpl();
+        int cartItemId = checkItemExistInCart(userId, itemIdNumber);
 
-        Cart cart = cartDAO.getCartByUserID(userId);
-        if (cart != null) {
-            rowAffected = cartDAO.addItemInCartByItemID(itemQuantityNumber, cart.getId(), itemIdNumber);
-            return rowAffected;
+//        item existed in cart -> add more
+        if (cartItemId > 0) {
+            rowAffected = cartDAO.addExistedItemToCart(cartItemId, itemQuantityNumber);
+        } else {
+            int cartId = cartDAO.getCartByUserID(userId);
+            if (cartId > 0) {
+                rowAffected = cartDAO.addItemToCart(itemQuantityNumber, cartId, itemIdNumber);
+            }
         }
 
         return rowAffected;
+    }
+
+    private boolean deleteItemInCart(int itemId, int userId) {
+        int cartId = cartDAO.getCartByUserID(userId);
+
+        int rowCount = cartDAO.deleteItemInCartByItemID(itemId, cartId);
+        if (rowCount > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private Integer getUserIdFromSession(HttpSession session) {
+        if (session == null || session.getAttribute("userId") == null) {
+            return null;
+        }
+
+        int userId = (Integer) session.getAttribute("userId");
+
+        return userId;
     }
 
     private void sendResponse(HttpServletResponse response, String responseData) throws IOException {

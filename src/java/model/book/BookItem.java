@@ -5,18 +5,116 @@
  */
 package model.book;
 
-import model.Item.Item;
+import utils.Jsonlizable;
 
 /**
  *
  * @author DELL
  */
-public class BookItem extends Item{
+public class BookItem implements Jsonlizable {
+
+    private int ID;
+    private float price;
+    private float discount;
+    private String sellingStatus;
+    private String description;
+    private String image;
+    private String name;
+    private String category;
+
     public BookItem() {
     }
 
-    public BookItem(int ID, String Name, String Description, Float Price, Float Discount, String SellingStatus, String Image, String Category) {
-        super(ID, Name, Description, Price, Discount, SellingStatus, Image, Category);
+    public BookItem(int ID, float price, float discount, String sellingStatus, String description, String image, String name, String category) {
+        this.ID = ID;
+        this.price = price;
+        this.discount = discount;
+        this.sellingStatus = sellingStatus;
+        this.description = description;
+        this.image = image;
+        this.name = name;
+        this.category = category;
     }
-    
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
+    }
+
+    public String getSellingStatus() {
+        return sellingStatus;
+    }
+
+    public void setSellingStatus(String sellingStatus) {
+        this.sellingStatus = sellingStatus;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    private String getAttributeCheckNull(String attribute) {
+        return attribute == null ? null : "\"" + attribute + "\"";
+    }
+
+    @Override
+    public String toJSON() {
+        return "{"
+                + "\"id\": " + ID
+                + ", \"name\": " + getAttributeCheckNull(name)
+                + ", \"price\": " + price
+                + ", \"discount\": " + discount
+                + ", \"sellingStatus\": " + getAttributeCheckNull(sellingStatus)
+                + ", \"image\": " + getAttributeCheckNull(image)
+                + ", \"category\": " + getAttributeCheckNull(category)
+                + "}";
+    }
+
 }

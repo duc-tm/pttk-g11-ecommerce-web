@@ -10,32 +10,18 @@ package model.order;
  * @author Admin
  */
 public class Cart {
-    private int id;
-    private float totalPrice;
 
-   public Cart(){
-       
-   }
-    public Cart(int id,int Quantity, float totalPrice) {
-        this.id=id;
-        this.totalPrice = totalPrice;
-    }
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
+    private int id;
+
+    public Cart(int id) {
         this.id = id;
     }
 
-
-    public void setTotalPrice(float totalPrice) {
-        this.totalPrice = totalPrice;
+    public int getId() {
+        return id;
     }
 
-
-    public float getTotalPrice() {
-        return totalPrice;
+    public void setId(int id) {
+        this.id = id;
     }
-    
-    
 }

@@ -5,22 +5,27 @@
  */
 package model.order;
 
+import utils.Jsonlizable;
+
 /**
  *
  * @author Admin
  */
-public class Shipment {
+public class Shipment implements Jsonlizable {
+
     private int id;
     private String type;
     private float cost;
+    private String shipUnit;
 
     public Shipment() {
     }
 
-    public Shipment(int id, String type, float cost) {
+    public Shipment(int id, String type, float cost, String shipUnit) {
         this.id = id;
         this.type = type;
         this.cost = cost;
+        this.shipUnit = shipUnit;
     }
 
     public void setId(int id) {
@@ -46,6 +51,27 @@ public class Shipment {
     public float getCost() {
         return cost;
     }
-    
-    
+
+    public String getShipUnit() {
+        return shipUnit;
+    }
+
+    public void setShipUnit(String shipUnit) {
+        this.shipUnit = shipUnit;
+    }
+
+    private String getAttributeCheckNull(String attribute) {
+        return attribute == null ? null : "\"" + attribute + "\"";
+    }
+
+    @Override
+    public String toJSON() {
+        return "{"
+                + "\"id\": " + id
+                + ", \"type\": " + getAttributeCheckNull(type)
+                + ", \"cost\": " + cost
+                + ", \"shipUnit\": " + getAttributeCheckNull(shipUnit)
+                + "}";
+    }
+
 }

@@ -12,9 +12,12 @@ import java.util.Date;
  * @author Admin
  */
 public class Order {
+
     private int id;
     private Date createdDate;
     private int status;
+    private Shipment shipmentInfo;
+    private Payment paymentInfo;
 
     public Order() {
     }
@@ -24,8 +27,22 @@ public class Order {
         this.createdDate = createdDate;
         this.status = status;
     }
-   
-    
+
+    public Shipment getShipmentInfo() {
+        return shipmentInfo;
+    }
+
+    public Payment getPaymentInfo() {
+        return paymentInfo;
+    }
+
+    public void setShipmentInfo(Shipment shipmentInfo) {
+        this.shipmentInfo = shipmentInfo;
+    }
+
+    public void setPaymentInfo(Payment paymentInfo) {
+        this.paymentInfo = paymentInfo;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -50,6 +67,5 @@ public class Order {
     public void setStatus(int status) {
         this.status = status;
     }
-    
-    
+
 }

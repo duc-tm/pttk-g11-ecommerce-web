@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class ConDB {
 
     public static Connection getJDBCCOnection() {
-        final String url = "jdbc:mysql://localhost:3306/shopbanhang";
+        final String url = "jdbc:mysql://localhost:3306/bookstore";
         final String username = "pttkg11";
         final String password = "123456";
         try {

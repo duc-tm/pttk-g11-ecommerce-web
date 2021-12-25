@@ -24,8 +24,22 @@
                         <div class="text-muted text-capitalize">Số Lượng</div>
                     </div>
                     <div class="col-10 content d-flex align-items-center">
-                        <jsp:include page="counter.jsp"></jsp:include>
-                            <div class="item-info__quantity-available ms-3 text-muted">
+                        <c:choose>
+                            <c:when test="${shoe.remainingQuantity < 1}">
+                                <jsp:include page="counter.jsp">
+                                    <jsp:param name="id" value="item-counter-${shoeItem.ID}"></jsp:param>
+                                    <jsp:param name="quantity" value="1"></jsp:param>
+                                    <jsp:param name="className" value="pe-none text-muted user-select-none" ></jsp:param>
+                                </jsp:include>
+                            </c:when>
+                            <c:otherwise>
+                                <jsp:include page="counter.jsp">
+                                    <jsp:param name="id" value="item-counter-${shoeItem.ID}"></jsp:param>
+                                    <jsp:param name="quantity" value="1"></jsp:param>
+                                </jsp:include>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="item-info__quantity-available ms-3 text-muted">
                             ${shoe.remainingQuantity} sản phẩm có sẵn
                         </div>
                     </div>

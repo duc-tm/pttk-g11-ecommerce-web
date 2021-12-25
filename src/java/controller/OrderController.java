@@ -5,10 +5,7 @@
  */
 package controller;
 
-import dao.cart.CartDAO;
 import dao.cart.CartDAOImpl;
-import dao.item.ItemDAO;
-import dao.item.ItemDAOImpl;
 import dao.order.OrderDAO;
 import dao.order.OrderDAOImpl;
 import dao.user.UserDAOImpl;
@@ -18,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Item.Item;
-import model.order.Cart;
+import model.book.BookItem;
 import model.user.User;
 
 /**
@@ -32,6 +29,8 @@ import model.user.User;
  * @author Admin
  */
 public class OrderController extends HttpServlet {
+    
+    private OrderDAO orderDAO;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -42,35 +41,24 @@ public class OrderController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+        orderDAO = new OrderDAOImpl();
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String route = request.getPathInfo();
 
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            response.sendRedirect("/g11/home");
-            return;
-        }
+        Integer userId = getUserIdFromSession(request.getSession(false));
 
-        Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
             response.sendRedirect("/g11/auth/logout");
             return;
         }
 
-        if (route != null && route.equalsIgnoreCase("/fill-info")) {
-            User user = new UserDAOImpl().getUserById(userId);
-            Pair<List<Item>, List<Integer>> listItemAndQuantity = getCartItem(userId);
-            List<Item> listItem = listItemAndQuantity.getKey();
-            List<Integer> listQuantity = listItemAndQuantity.getValue();
-
-            request.setAttribute("listItem", listItem);
-            request.setAttribute("listQuantity", listQuantity);
-            request.setAttribute("user", user);
-            RequestDispatcher rd = request.getRequestDispatcher("/jsp/checkout.jsp");
-            rd.forward(request, response);
-        }
     }
 
     /**
@@ -86,84 +74,71 @@ public class OrderController extends HttpServlet {
             throws ServletException, IOException {
         String route = request.getPathInfo();
 
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            response.sendRedirect("/g11/home");
-            return;
-        }
+        Integer userId = getUserIdFromSession(request.getSession(false));
 
-        Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
             response.sendRedirect("/g11/auth/logout");
             return;
         }
 
-        if (route != null && route.equalsIgnoreCase("/create-order-cart")) {
-            String itemIdStr = request.getParameter("itemIdStr");
-            int rowAffected = 0;
+        if (route == null) {
 
-            if (itemIdStr != null) {
-                Cart cart = getCart(userId);
-                rowAffected = createOrderCart(itemIdStr, cart, userId);
-            }
+        } else if (route.equalsIgnoreCase("/create")) {
+            String selectedItemJSON = request.getParameter("selectedItemJSON");
+            String selectedPaymentType = request.getParameter("selectedPaymentType");
+            String selectedShipmentType = request.getParameter("selectedShipmentType");
 
-            if (rowAffected > 0) {
-                sendResponse(response, "201;");
-            } else {
-                sendResponse(response, "503;");
-            }
+            createOrder(userId, selectedItemJSON, selectedPaymentType, selectedShipmentType);
         }
     }
 
-    private int createOrderCart(String itemIdStr, Cart cart, int userId) {
-        String[] itemId = itemIdStr.split(";");
-        ItemDAO itemDAO = new ItemDAOImpl();
-
-        List<Item> listItem = new ArrayList<>();
-
-        for (String id : itemId) {
-            try {
-                int idNumber = Integer.parseInt(id);
-                Item item = itemDAO.getItem(idNumber);
-                listItem.add(item);
-            } catch (NumberFormatException e) {
-                System.err.println(e);
-            }
-        }
-
-        CartDAO cartDAO = new CartDAOImpl();
-
-        float totalPrice = 0;
-        int[] quantityArr = new int[listItem.size()];
-        int[] itemIdArr = new int[listItem.size()];
-
-        for (int i = 0; i < listItem.size(); i++) {
-            Item item = listItem.get(i);
-            int quantity = cartDAO.getItemAmountById(cart.getId(), item.getID());
-
-            quantityArr[i] = quantity;
-            itemIdArr[i] = item.getID();
-
-            totalPrice += calcItemTotalPrice(item, quantity);
-        }
-
-        OrderDAO orderDAO = new OrderDAOImpl();
-        int newCartId = orderDAO.addNewCart(userId, totalPrice);
-
-        if (newCartId <= 0) {
-            return 0;
-        }
-
-        orderDAO.addItemToCart(quantityArr, newCartId, itemIdArr);
-        return 1;
+    private boolean createOrder(int userId, String selectedItemJSON, String selectedPaymentType, String selectedShipmentType) {
+        List<Pair<Integer, Integer>> selectedItemIdAndQuantity = parseSelectedItem(selectedItemJSON);
+        
+//        orderDAO.createOrder(userId, order, 0, 0, pair)
+        return true;
     }
 
-    private Cart getCart(int userId) {
+    private List<Pair<Integer, Integer>> parseSelectedItem(String selectedItemJSON) {
+        List<Pair<Integer, Integer>> selectedItemIdAndQuantity = new ArrayList<>();
+
+        String removedBracketStr = selectedItemJSON.substring(1, selectedItemJSON.length() - 1);
+        String[] selectedItemArr = removedBracketStr.split(",");
+
+        for (String selectedItem : selectedItemArr) {
+            String[] tokens = selectedItem.split(":");
+            int itemId = Integer.parseInt(tokens[0].substring(1, tokens[0].length() - 1));
+            int quantity = Integer.parseInt(tokens[1]);
+            
+            selectedItemIdAndQuantity.add(new Pair(itemId, quantity));
+        }
+
+        return selectedItemIdAndQuantity;
+    }
+
+    private int getCart(int userId) {
         return new CartDAOImpl().getCartByUserID(userId);
     }
 
-    private float calcItemTotalPrice(Item item, int quantity) {
+    private float calcItemTotalPrice(BookItem item, int quantity) {
         return (item.getPrice() - item.getPrice() * item.getDiscount()) * quantity;
+    }
+
+    private Pair<List<BookItem>, List<Integer>> getCartItem(int userId) {
+        int cartId = new CartDAOImpl().getCartByUserID(userId);
+//        Pair<List<BookItem>, List<Integer>> listItem = new ItemDAOImpl().getItemOfCartByCartID(cart.getId());
+
+        return null;
+    }
+
+    private Integer getUserIdFromSession(HttpSession session) {
+        if (session == null || session.getAttribute("userId") == null) {
+            return null;
+        }
+
+        int userId = (Integer) session.getAttribute("userId");
+
+        return userId;
     }
 
     private void sendResponse(HttpServletResponse response, String responseData) throws IOException {
@@ -173,13 +148,6 @@ public class OrderController extends HttpServlet {
         PrintWriter writer = response.getWriter();
         writer.write(responseData);
         writer.close();
-    }
-
-    private Pair<List<Item>, List<Integer>> getCartItem(int userId) {
-        Cart cart = new CartDAOImpl().getCartByUserID(userId);
-        Pair<List<Item>, List<Integer>> listItem = new ItemDAOImpl().getItemOfCartByCartID(cart.getId());
-
-        return listItem;
     }
 
     /**

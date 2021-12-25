@@ -52,13 +52,13 @@ function checkBillUpdate(updatedItem, checkboxChecked) {
                 const newPrice = totalBillInput.value + price;
                 totalBill = newPrice;
 
-                billContainer.innerHTML = currencyFormat(newPrice) + "<sup>đ</sub>"
+                billContainer.innerHTML = new Intl.NumberFormat().format(newPrice) + "<sup>đ</sub>"
                 totalBillInput.value = newPrice;
             } else {
                 const newPrice = totalBillInput.value - price;
                 totalBill = newPrice;
 
-                billContainer.innerHTML = currencyFormat(newPrice) + "<sup>đ</sub>"
+                billContainer.innerHTML = new Intl.NumberFormat().format(newPrice) + "<sup>đ</sub>"
                 totalBillInput.value = newPrice;
             }
         });
@@ -73,150 +73,220 @@ function checkBillUpdate(updatedItem, checkboxChecked) {
             element.dispatchEvent(new Event("change"))
         });
 
-        billContainer.innerHTML = currencyFormat(totalBill) + "<sup>đ</sub>";
+        billContainer.innerHTML = new Intl.NumberFormat().format(totalBill) + "<sup>đ</sub>";
         totalBillInput.value = totalBill;
     });
 
-    function currencyFormat(amount) {
-        let formatted = "";
-        let currentAmount = Math.trunc(amount);
+})();
 
-        const baseDivider = 1000;
-        let divider = baseDivider;
+//update item quantity
+(function () {
+    const checkItemAvailable = async (itemId, quantity) => {
+        const response = await fetch('http://localhost:8080/g11/product/api/available', {
+            method: 'POST',
+            body: new URLSearchParams({
+                itemId,
+                quantity
+            })
+        });
 
-        while (Math.trunc(currentAmount / divider) > 0) {
-            const mod = currentAmount % divider;
-
-            if (mod == 0) {
-                formatted = formatted + mod + mod + mod + ".";
-            } else {
-                formatted = formatted + mod;
-                formatted = formatted.split("").reverse().join("") + ".";
-            }
-            currentAmount = Math.trunc(currentAmount / divider);
-            divider *= baseDivider;
+        const data = await response.text();
+        if (data) {
+            return data.split(';')[0];
         }
 
-        formatted = formatted.split("").reverse().join("")
-        formatted = currentAmount + formatted;
-        return formatted;
+        return '503';
     }
-})();
 
-//select checkbox update total price
-(function () {
+    const calcNewQuantity = (quantity, action) => {
+        switch (action) {
+            case 'plus':
+                return quantity + 1;
+            case 'minus':
+                const newQuantity = quantity - 1;
+                return newQuantity < 1 ? 1 : newQuantity;
+            default:
+                return quantity;
+        }
 
-})();
+    }
 
-//update item amount
-(function () {
-    Array.from($('.item-counter > .minus')).forEach((ele) => {
-        ele.addEventListener('click', function () {
-            const input = $(this).parent().find('input');
-            const itemElement = this.closest('.item[itemid]');
-            const itemId = itemElement.getAttribute('itemId');
+    async function updateItemQuantity(action, updateControlEle) {
+        const input = $(updateControlEle).parent().find('input');
+        const itemElement = updateControlEle.closest('.item[itemid]');
+        const itemId = itemElement.getAttribute('itemId');
+        const itemUnitPrice = itemElement.querySelector(`#item-unit-price-${itemId}`).value;
 
 //            disable more event
-            Object.assign(this.parentElement.style,
-                    {
-                        pointerEvents: 'none',
-                        opacity: '0.4'
-                    }
-            );
+        Object.assign(updateControlEle.parentElement.style,
+                {
+                    pointerEvents: 'none',
+                    opacity: '0.4'
+                }
+        );
 
-            const fetchResult = fetchUpdate('');
+        const quantity = +(input.val());
+        const newQuantity = calcNewQuantity(quantity, action);
+        const responseCode = await checkItemAvailable(itemId, newQuantity);
 
-            if (fetchResult.statusCode == 200) {
-                let count = parseInt(input.val()) - 1;
-                count = count < 1 ? 1 : count;
-                input.val(count);
-                input.change();
+        if (responseCode === '200') {
+            const priceInputContainer = itemElement.querySelector('.item-total-price > input[type="hidden"]');
+            const priceDisplayContainer = itemElement.querySelector('#item-total-price-display');
 
-                const priceContainer = itemElement.querySelector('.item-total-price > input[type="hidden"]');
-                priceContainer.value = fetchResult.totalPrice;
-            } else {
-                console.log(fetchResult);
-            }
+            input.val(newQuantity);
+            input.change();
+
+            const newTotalCost = (+itemUnitPrice) * newQuantity;
+            priceInputContainer.value = newTotalCost;
+            priceDisplayContainer.innerHTML = new Intl.NumberFormat({maximumSignificantDigits: 3}).format(newTotalCost) + '<sup>đ</sup>';
+        } else if (responseCode === '406') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Sản phẩm không còn đủ hàng',
+                timer: 2000,
+                showCancelButton: false,
+                showConfirmButton: true,
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Đã có lỗi xảy ra, vui lòng thử lại sau',
+                timer: 2000,
+                showCancelButton: false,
+                showConfirmButton: false,
+            });
+        }
 
 //          active more event
-            Object.assign(element.parentElement.style,
-                    {
-                        pointerEvents: null,
-                        opacity: null
-                    }
-            );
-        });
+        Object.assign(updateControlEle.parentElement.style,
+                {
+                    pointerEvents: null,
+                    opacity: null
+                }
+        );
+    }
+
+//    add update quantity event listener
+    Array.from($('.item-counter > .minus')).forEach((ele) => {
+        const action = 'minus';
+        ele.addEventListener('click', () => updateItemQuantity(action, ele));
     });
 
     Array.from($('.item-counter > .plus')).forEach((ele) => {
-        ele.addEventListener('click', function () {
-            var $input = $(this).parent().find('input');
-            $input.val(parseInt($input.val()) + 1);
-            $input.change();
-            return false;
-        });
+        const action = 'plus';
+        ele.addEventListener('click', () => updateItemQuantity(action, ele));
     });
-
-    function fetchUpdate(url) {
-        const fetchResult = {statusCode: 200, totalPrice: 20000};
-        return fetchResult;
-    }
 
 })();
 
 //remove item in cart
 (function () {
-    Array.from(document.getElementsByClassName('delete-item-btn')).forEach((element) => {
-        element.addEventListener('click', function () {
-//            fetch
-            const fetchResult = true;
+    const removeItemFromCart = async (itemId) => {
+        const response = await fetch('http://localhost:8080/g11/cart/api/delete', {
+            method: 'POST',
+            body: new URLSearchParams({
+                itemId
+            })
+        });
 
-            if (fetchResult) {
-                document.querySelector(`.item[itemId="${this.getAttribute('for')}"]`).remove();
+        const data = await response.text();
+        if (data) {
+            return data.split(';')[0];
+        }
+
+        return '503';
+    }
+
+    Array.from(document.getElementsByClassName('delete-item-btn')).forEach((element) => {
+        element.addEventListener('click', async function () {
+            const itemElement = document.querySelector(`.item[itemId="${this.getAttribute('for')}"]`);
+            const itemId = itemElement.getAttribute('itemId');
+
+            const responseCode = await removeItemFromCart(itemId);
+
+            if (responseCode === '201') {
+                itemElement.remove();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Đã có lỗi xảy ra, vui lòng thử lại sau',
+                    timer: 2000,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                });
             }
         });
     })
 })();
 
 
-//checkout
+//pre fill info for create order
 (function () {
-    const itemIdStr = Array.from(document.querySelectorAll('.item-selector[itemid]:checked')).reduce((total, element) => {
-        const itemId = element.getAttribute('itemid');
-        total += itemId + ";";
-    }, "");
+    const payNowBtn = document.getElementById('pay-now');
+    payNowBtn.addEventListener('click', () => {
+        let haveItemSelected = false;
 
-    const createOrderBtn = document.getElementById('pay-now');
-    createOrderBtn.addEventListener('click', createOrder)
+        //        get selected item and convert to string
+        let selectedItem = Array.from(document.querySelectorAll('.item-selector:checked')).reduce((total, element, index) => {
+            haveItemSelected = true;
+            const itemEle = element.closest('[itemId]');
 
-    async function createOrder() {
-        const formData = new URLSearchParams();
+            const quantity = itemEle.querySelector(`#item-counter-${index} input`).value;
+            const itemId = itemEle.getAttribute('itemId');
 
-        formData.append('itemIdStr', itemIdStr);
+            return total + `"${itemId}":${quantity},`;
+        }, '{');
 
-        const response = await fetch('http://localhost:8080/g11/user/order/create-order-cart',
-                {
-                    method: "POST",
-                    contentType: "application/x-www-form-urlencoded",
-                    body: formData,
-                }
-        );
+        selectedItem = selectedItem.substring(0, selectedItem.length - 1) + "}"
 
-        const data = await response.text();
+        if (haveItemSelected) {
+            //    save selected item to session storage
+            window.sessionStorage.setItem('selectedItem', selectedItem);
 
-        if (data) {
-            const dataTokens = data.split(';');
-            if (dataTokens[0] === '201') {
-                window.location.href = 'http://localhost:8080/g11/user/order/fill-info';
-            } else if (dataTokens[0] === '503') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Đã có lỗi xảy ra, vui lòng thử lại sau',
-                    timer: 2000,
-                    showCancelButton: false,
-                });
-            }
+            window.location.href = "http://localhost:8080/g11/checkout/fill-info";
+        } else {
+            Swal.fire({
+                title: 'Bạn chưa chọn mặt hàng nào để thanh toán!',
+                text: "Vui lòng chọn ít nhất một mặt hàng trong giỏ hàng",
+                icon: 'warning',
+                showConfirmButton: true,
+                showCancelButton: false,
+            });
         }
-    }
+    });
 
-})()
+
+
+//    const createOrder = async  () => {
+//        saveSelectedItemToSessionStorage();
+//        
+//        const formData = new URLSearchParams();
+//
+//        formData.append('itemIdStr', itemIdStr);
+//
+//        const response = await fetch('http://localhost:8080/g11/user/order/create-order-cart',
+//                {
+//                    method: "POST",
+//                    contentType: "application/x-www-form-urlencoded",
+//                    body: formData,
+//                }
+//        );
+//
+//        const data = await response.text();
+//
+//        if (data) {
+//            const dataTokens = data.split(';');
+//            if (dataTokens[0] === '201') {
+//                window.location.href = 'http://localhost:8080/g11/user/order/fill-info';
+//            } else if (dataTokens[0] === '503') {
+//                Swal.fire({
+//                    icon: 'error',
+//                    title: 'Đã có lỗi xảy ra, vui lòng thử lại sau',
+//                    timer: 2000,
+//                    showCancelButton: false,
+//                });
+//            }
+//        }
+//    }
+
+})();

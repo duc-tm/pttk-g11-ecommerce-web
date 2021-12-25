@@ -6,7 +6,7 @@
 package utils;
 
 import java.util.List;
-import model.Item.Item;
+import model.book.BookItem;
 
 /**
  *
@@ -14,14 +14,15 @@ import model.Item.Item;
  */
 public class ItemUtils {
 
-    public static float calcTotalPrice(List<Item> listItem, List<Integer> listQuantity) {
-        float totalPrice = 0;
-
-        for (int i = 0; i < listItem.size(); i++) {
-            Item item = listItem.get(i);
-            totalPrice += (item.getPrice() - item.getPrice() * (item.getDiscount()/100)) * listQuantity.get(i);
-        }
-
-        return totalPrice;
+    public static float calcTotalPrice(List<BookItem> listItem, List<Integer> listQuantity) {
+//        float totalPrice = 0;
+//
+//        for (int i = 0; i < listItem.size(); i++) {
+//            Item item = listItem.get(i);
+//            totalPrice += (item.getPrice() - item.getPrice() * (item.getDiscount()/100)) * listQuantity.get(i);
+//        }
+//
+//        return totalPrice;
+        return 0;
     }
 }

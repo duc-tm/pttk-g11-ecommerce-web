@@ -10,20 +10,21 @@ package model.order;
  * @author Admin
  */
 public class Payment {
+
     private int id;
     private float amount;
-    private String status;
+    private int status;
+    private String type;
 
     public Payment() {
     }
 
-    public Payment(int id, float amount, String status) {
+    public Payment(int id, float amount, int status, String type) {
         this.id = id;
         this.amount = amount;
         this.status = status;
+        this.type = type;
     }
-
-    
 
     public int getId() {
         return id;
@@ -41,17 +42,20 @@ public class Payment {
         this.amount = amount;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    
+    public String getType() {
+        return type;
+    }
 
-    
-    
-    
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

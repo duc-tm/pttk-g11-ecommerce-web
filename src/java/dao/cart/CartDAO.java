@@ -5,7 +5,6 @@
  */
 package dao.cart;
 
-import java.util.Date;
 import model.order.Cart;
 
 /**
@@ -14,15 +13,19 @@ import model.order.Cart;
  */
 public interface CartDAO {
 
-    public Cart getCartByUserID(int ID);
+    public int getCartByUserID(int userId);
 
     public int createCartByUserID(int ID);
 
-    public int deleteItemInCartByItemID(int ID);
+    public int deleteItemInCartByItemID(int itemId, int cartId);
 
-    public int addItemInCartByItemID(int quantity, int cartID, int itemID);
+    public int addItemToCart(int quantity, int cartID, int itemID);
 
-    public int updateItemAmountByItemID(int quantity, int ID);
+    public int updateItemAmountByItemID(int quantity, int itemId, int cartId);
 
     public int getItemAmountById(int cartId, int itemId);
+
+    public int checkItemExistInCart(int userId, int bookItemId);
+
+    public int addExistedItemToCart(int cartItemId, int quantity);
 }

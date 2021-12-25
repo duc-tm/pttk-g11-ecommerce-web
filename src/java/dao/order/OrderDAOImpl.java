@@ -5,7 +5,9 @@
  */
 package dao.order;
 
+import dao.bookitem.BookItemDAOImpl;
 import dao.utils.ConDB;
+import dao.utils.Mapper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,13 +15,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.order.Cart;
+import javafx.util.Pair;
+import model.book.BookItem;
 import model.order.Order;
-import model.order.Payment;
 import model.order.Shipment;
-import model.user.User;
 import model.user.UserSTT;
 
 /**
@@ -28,138 +30,123 @@ import model.user.UserSTT;
  */
 public class OrderDAOImpl implements OrderDAO {
 
-    PreparedStatement preStatement;
-    PreparedStatement preStatement1;
-    PreparedStatement preStatement2;
-    ResultSet rs;
-    Statement Statement;
-    Statement Statement1;
     private Connection conn;
+
     private final String GET_CART_ID = "INSERT INTO cart (UserID, TotalPrice) VALUES (?, ?);";
-    private final String ADD_TO_CART_ITEM = "INSERT INTO cart_item (Quantity, CartID, ItemID) VALUES (?, ?, ?);";
-    private final String UPDATE_ORDERID_TO_CART="UPDATE cart SET OrderID = ? WHERE (ID = ?);";
+    private final String GET_ALL_SHIPMENT_SQL = "SELECT * FROM shipment";
+
+    private final String INSERT_SHIPMENT_SQL = "INSERT INTO shipment (Type, Cost ,ShipUnit) VALUES (?, ? ,?);";
+    private final String INSERT_ORDER_SQL = "INSERT INTO order (CustomerUserID ,ShipmentID,Status,PaymentID) VALUES (?, ?, ?, ?);";
+
+    private final String DELETE_ORDER = "DELETE FROM order WHERE id=?";
+
+    private final String ADD_ITEM_TO_ORDER = "INSERT INTO orderitem (Quantity, BookitemID, OrderID) VALUES (?, ?, ?)";
+
     public OrderDAOImpl() {
         conn = ConDB.getJDBCCOnection();
     }
 
     @Override
-    public int createOrder(int userID, Order order, Payment payment, Shipment shipment, Cart cart, int quantity[], int itemID[]) {
-        String sql1 = "INSERT INTO shopbanhang.shipment (Type, Cost) VALUES (?, ?);";
-        String sql2 = "INSERT INTO shopbanhang.order (ShipmentID, UserID, CreatedDate,Status) VALUES (?, ?, ?, ?);";
-        String sql3 = "INSERT INTO shopbanhang.payment (OrderID, Status, Amount) VALUES (?, ?, ?);";
-        PreparedStatement preStatement3;
-        try {
-            preStatement = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
-            preStatement.setString(1, shipment.getType());
-            preStatement.setFloat(2, shipment.getCost());
-            int rowcount = preStatement.executeUpdate();
-            rs = preStatement.getGeneratedKeys();
-            int shipmentid = 0;
+    public int createOrder(int userID, Order order, int paymentid, int shipmentid, Pair pair) {
+        int rowCount = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(INSERT_ORDER_SQL, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, userID);
+            ps.setInt(2, shipmentid);
+            ps.setInt(3, order.getStatus());
+            ps.setInt(4, paymentid);
+
+            rowCount = ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+
             if (rs.next()) {
-                shipmentid = rs.getInt(1);
+                int orderId = rs.getInt(1);
+                rowCount = addItemsToOrder(pair, orderId);
             }
-            preStatement1 = conn.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
-            preStatement1.setInt(1, shipmentid);
-            preStatement1.setInt(2, userID);
-            preStatement1.setDate(3, new java.sql.Date(order.getCreatedDate().getTime()));
-            preStatement1.setInt(4, order.getStatus());
-            int rowcount1 = preStatement1.executeUpdate();
-            rs = preStatement1.getGeneratedKeys();
-            int orderid = 0;
-            if (rs.next()) {
-                orderid = rs.getInt(1);
-            }
-            preStatement2 = conn.prepareStatement(sql3);
-            preStatement2.setInt(1, orderid);
-            preStatement2.setString(2, payment.getStatus());
-            preStatement2.setFloat(3, payment.getAmount());
-            int rowcount2 = preStatement2.executeUpdate();
-            int cartID=addNewCart(userID, orderid);
-            updateOrderIDToCart(orderid, cartID);
-            return rowcount2;
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
+        } finally {
+            return rowCount;
         }
     }
 
     @Override
-    public int updateOrder(int orderID, String type, float cost, Date createdDate, String status, float amount) {
-        String sql1 = "Update shopbanhang.order\n"
-                + "set createdDate= ? \n"
-                + "where id= " + orderID + ";";
-        String sql2 = "Update payment\n"
-                + "set Status=?,Amount=?\n"
-                + "where OrderID=" + orderID + ";";
-        String sql3 = "Select ShipmentID from shopbanhang.order Where ID=" + orderID + ";";
-        String sql4 = "Update shipment\n"
-                + "set Type=?,Cost=?\n"
-                + "where id=?";
-        try {
-            preStatement = conn.prepareStatement(sql1);
-            preStatement.setDate(1, new java.sql.Date(createdDate.getTime()));
-            int rowcout = preStatement.executeUpdate();
-            preStatement1 = conn.prepareStatement(sql2);
-            preStatement1.setString(1, status);
-            preStatement1.setFloat(2, amount);
-            int rowcout1 = preStatement1.executeUpdate();
-            Statement = conn.createStatement();
-            rs = Statement.executeQuery(sql3);
-            int shipmentid = 0;
-            while (rs.next()) {
-                shipmentid = rs.getInt(1);
-            }
-            preStatement2 = conn.prepareStatement(sql4);
-            preStatement2.setString(1, type);
-            preStatement2.setFloat(2, cost);
-            preStatement2.setInt(3, shipmentid);
-            int rowcout2 = preStatement2.executeUpdate();
-            return rowcout2;
-        } catch (SQLException ex) {
-            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
-        }
+    public int updateOrder(int orderID, String shipType, float cost, Date createdDate, int status, float amount, String payType, String shipUnit) {
+//        String UPDATE_ORDER = "Update ORDER\n"
+//                + "set createDate= ? , status = ? \n"
+//                + "where id= " + orderID + ";";
+//        String UPDATE_PAYMENT = "Update payment\n"
+//                + "set Status=?,Amount=?,Type=?\n"
+//                + "where id=?";
+//        String GET_SHIPMENTID_FROM_ORDERID = "Select ShipmentID from order Where ID=" + orderID + ";";
+//        String GET_PAYMENTID_FROM_ORDERID = "Select ShipmentID from order Where ID=" + orderID + ";";
+//        String UPDATE_SHIPMENT = "Update shipment\n"
+//                + "set Type=?,Cost=?,ShipUnit=?\n"
+//                + "where id=?";
+//
+//        try {
+//            preStatement = conn.prepareStatement(UPDATE_ORDER);
+//            preStatement.setDate(1, new java.sql.Date(createdDate.getTime()));
+//            preStatement.setInt(2, status);
+//            int rowcout = preStatement.executeUpdate();
+//            Statement1 = conn.createStatement();
+//            rs = Statement1.executeQuery(GET_PAYMENTID_FROM_ORDERID);
+//            int paymentid = 0;
+//            while (rs.next()) {
+//                paymentid = rs.getInt(1);
+//            }
+//            preStatement1 = conn.prepareStatement(UPDATE_PAYMENT);
+//            preStatement1.setInt(1, status);
+//            preStatement1.setFloat(2, amount);
+//            preStatement1.setString(3, payType);
+//            preStatement1.setInt(4, paymentid);
+//            int rowcout1 = preStatement1.executeUpdate();
+//            Statement = conn.createStatement();
+//            rs = Statement.executeQuery(GET_SHIPMENTID_FROM_ORDERID);
+//            int shipmentid = 0;
+//            while (rs.next()) {
+//                shipmentid = rs.getInt(1);
+//            }
+//            preStatement2 = conn.prepareStatement(UPDATE_SHIPMENT);
+//            preStatement2.setString(1, shipType);
+//            preStatement2.setFloat(2, cost);
+//            preStatement2.setString(3, shipUnit);
+//            preStatement2.setInt(4, shipmentid);
+//            int rowcout2 = preStatement2.executeUpdate();
+//            return rowcout2;
+//        } catch (SQLException ex) {
+//            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+//            return 0;
+//        }
+        return 1;
     }
 
     @Override
     public int deleteOrder(int orderID) {
-        String sql1 = "Select ShipmentID from shopbanhang.order Where ID=" + orderID + ";";
-        String sql2 = "Delete  from shipment where ID= ? ;";
-        String sql3 = "Delete from payment where OrderID= ? ;";
-        String sql4 = "Delete from shopbanhang.order where ID=? ;";
-        try {
-            Statement = conn.createStatement();
-            rs = Statement.executeQuery(sql1);
-            int shipmentid = 0;
-            while (rs.next()) {
-                shipmentid = rs.getInt(1);
-            }
-            preStatement = conn.prepareStatement(sql2);
-            preStatement.setInt(1, shipmentid);
-            int rowcount = preStatement.executeUpdate();
-            preStatement1 = conn.prepareStatement(sql3);
-            preStatement1.setInt(1, orderID);
-            int rowcount1 = preStatement1.executeUpdate();
-            preStatement2 = conn.prepareStatement(sql4);
-            preStatement2.setInt(1, orderID);
-            int rowcount2 = preStatement2.executeUpdate();
-            return rowcount2;
+        int rowCount = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(DELETE_ORDER);) {
+            ps.setInt(1, orderID);
+
+            rowCount = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
+        } finally {
+            return rowCount;
         }
     }
 
     @Override
     public UserSTT getUser(int userID) {
-        String sql1 = "Select user.Phone,user.mail,address.NumberHouse,address.Street,address.Distincts,address.City,fullname.FirstName,fullname.Midname,fullname.LastName \n"
+        String sql = "Select user.Phone,user.mail,address.NumberHouse,address.Street,address.Distincts,address.City,fullname.FirstName,fullname.Midname,fullname.LastName \n"
                 + "from((user\n"
                 + "inner join address on user.ID=address.UserID)\n"
                 + "inner join fullname on user.ID=fullname.UserID) \n"
                 + "Where user.id=" + userID + ";";
         try {
-            Statement = conn.createStatement();
-            rs = Statement.executeQuery(sql1);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
             UserSTT u = new UserSTT();
             while (rs.next()) {
                 u.setPhone(rs.getString(1));
@@ -181,74 +168,40 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public ArrayList<Cart> getCart(int orderID) {
-        String sql = "SELECT * FROM shopbanhang.cart WHERE OrderID=" + orderID + ";";
-        try {
-            Statement = conn.createStatement();
-            rs = Statement.executeQuery(sql);
-            ArrayList<Cart> list = new ArrayList<>();
-            while (rs.next()) {
-                Cart c = new Cart();
-                c.setTotalPrice(rs.getFloat(4));
-                list.add(c);
-            }
-            return list;
-        } catch (SQLException ex) {
-            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+    public int addItemsToOrder(Pair listBookItemAndQuantity, int orderID) {
+        List<BookItem> bookItem = (List<BookItem>) listBookItemAndQuantity.getKey();
+        List<Integer> quantity = (List< Integer>) listBookItemAndQuantity.getValue();
 
-    }
+        int rowCount = 0;
 
-    @Override
-    public int addNewCart(int userID, float totalPrice) {
-        PreparedStatement preStatement3;
-        try {
-            preStatement3 = conn.prepareStatement(GET_CART_ID, Statement.RETURN_GENERATED_KEYS);
-            preStatement3.setInt(1, userID);
-            preStatement3.setFloat(2, totalPrice);
-            int rowcount3 = preStatement3.executeUpdate();
-            rs = preStatement3.getGeneratedKeys();
-            int cartid = 0;
-            if (rs.next()) {
-                cartid = rs.getInt(1);
-            }
-            return cartid;
-        } catch (SQLException ex) {
-            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
-        }
-    }
+        for (int i = 0; i < bookItem.size(); i++) {
+            try (PreparedStatement ps = conn.prepareStatement(ADD_ITEM_TO_ORDER)) {
+                ps.setInt(1, quantity.get(i));
+                ps.setInt(2, bookItem.get(i).getID());
+                ps.setInt(3, orderID);
 
-    @Override
-    public void addItemToCart(int quantity[], int cartID, int itemID[]) {
-        for (int i = 0; i < itemID.length; i++) {
-            try {
-                PreparedStatement prestate;
-                prestate = conn.prepareStatement(ADD_TO_CART_ITEM);
-                prestate.setInt(1, quantity[i]);
-                prestate.setInt(2, cartID);
-                prestate.setInt(3, itemID[i]);
-                int row = prestate.executeUpdate();
+                rowCount += ps.executeUpdate();
             } catch (SQLException ex) {
-                Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BookItemDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+        return rowCount;
     }
 
-    @Override
-    public void updateOrderIDToCart(int orderID,int cartID) {
-        PreparedStatement pre;
-        try {
-            pre= conn.prepareStatement(UPDATE_ORDERID_TO_CART);
-            pre.setInt(1, orderID);
-            pre.setInt(2, cartID);
-            int rowcount=pre.executeUpdate();
+    public List<Shipment> getShipmentList() {
+        List<Shipment> listShipment = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(GET_ALL_SHIPMENT_SQL)) {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                listShipment.add(Mapper.mapShipment(rs));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return listShipment;
         }
     }
-
-    
-
 }

@@ -5,41 +5,29 @@
  */
 package controller;
 
+import dao.bookitem.BookItemDAOImpl;
+import dao.order.OrderDAOImpl;
+import dao.user.UserDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.book.BookItem;
+import model.order.Shipment;
+import model.user.User;
+import utils.Jsonlizable;
+import utils.Parser;
 
 /**
  *
  * @author Admin
  */
 public class CheckoutController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String path = request.getPathInfo();
-
-        if (path == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/jsp/checkout.jsp");
-            rd.forward(request, response);
-        } else if (path.equalsIgnoreCase("/success")) {
-            RequestDispatcher rd = request.getRequestDispatcher("/jsp/checkout-success.jsp");
-            rd.forward(request, response);
-        }
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -53,7 +41,37 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String route = request.getPathInfo();
+
+        Integer userId = getUserIdFromSession(request.getSession(false));
+
+        if (userId == null) {
+            response.sendRedirect("/g11/auth/logout");
+            return;
+        }
+
+        if (route == null) {
+            response.sendRedirect("/g11/error");
+        } else if (route.equalsIgnoreCase("/fill-info")) {
+            User user = new UserDAOImpl().getUserById(userId);
+
+            request.setAttribute("user", user);
+
+            RequestDispatcher rd = request.getRequestDispatcher("/jsp/checkout.jsp");
+            rd.forward(request, response);
+        } else if (route.equalsIgnoreCase("/api/order-item-info")) {
+            String itemIdStr = request.getParameter("orderitemid");
+            int[] itemIdArray = Parser.parseStringToIntegerArray(itemIdStr, ";");
+
+            String bookItemArrayJSON = createArrayJSON(getBookItems(itemIdArray));
+
+            sendResponse(response, "200", bookItemArrayJSON);
+        } else if (route.equalsIgnoreCase("/api/shipment-list")) {
+            List<Shipment> listShipment = new OrderDAOImpl().getShipmentList();
+            String shipmentArrayJSON = createArrayJSON(listShipment);
+            
+            sendResponse(response, "200", shipmentArrayJSON);
+        }
     }
 
     /**
@@ -67,7 +85,43 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+    }
+
+    private List<BookItem> getBookItems(int[] bookItemIdArray) {
+        return new BookItemDAOImpl().getMultipleBookItem(bookItemIdArray);
+    }
+
+    private Integer getUserIdFromSession(HttpSession session) {
+        if (session == null || session.getAttribute("userId") == null) {
+            return null;
+        }
+
+        int userId = (Integer) session.getAttribute("userId");
+
+        return userId;
+    }
+
+    private <T extends Jsonlizable> String createArrayJSON(List<T> listItem) {
+        StringBuilder arrayJSON = new StringBuilder("[");
+
+        for (T item : listItem) {
+            arrayJSON.append(item.toJSON());
+            arrayJSON.append(",");
+        }
+
+        arrayJSON.deleteCharAt(arrayJSON.length() - 1);
+        arrayJSON.append("]");
+
+        return arrayJSON.toString();
+    }
+
+    private void sendResponse(HttpServletResponse response, String responseCode, String responseData) throws IOException {
+        response.setHeader("Content-Type", "text/plain");
+        response.setCharacterEncoding("UTF-8");
+
+        try (PrintWriter writer = response.getWriter()) {
+            writer.write(responseCode + ";" + responseData);
+        }
     }
 
     /**

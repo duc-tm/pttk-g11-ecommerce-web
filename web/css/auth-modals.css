@@ -8,6 +8,14 @@ and open the template in the editor.
     Author     : Admin
 */
 
+body:not(.modal-open){
+  padding-right: 0px !important;
+}
+
+.modal {
+    padding-right: 0px !important;
+}
+
 .show-password-control {
     right: 12px;
     top: 50%;

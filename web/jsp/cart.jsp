@@ -66,16 +66,25 @@
                                             </div>                               
                                         </a>
                                     </td>
-                                    <td><div class="item-unit-price"><custom:currencyFormat amount="${item.price - item.price*(item.discount/100)}" currencyFormat="vi" /></div></td>
+                                    <td>
+                                        <div class="item-unit-price">
+                                            <input type="hidden" value="${item.price - item.price*(item.discount/100)}" id="item-unit-price-${item.ID}">
+                                            <div id="item-unit-price-display">
+                                                <custom:currencyFormat amount="${item.price - item.price*(item.discount/100)}" currencyFormat="vi" />
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td>                                    
                                         <jsp:include page="components/counter.jsp">
-                                            <jsp:param name="id" value="item-counter-${i}"/>
+                                            <jsp:param name="id" value="item-counter-${status.index}"/>
                                             <jsp:param name="quantity" value="${listQuantity[status.index]}" />
                                         </jsp:include>
                                     </td>
                                     <td class="item-total-price">
                                         <input type="hidden" value="${(item.price - item.price*(item.discount/100))*listQuantity[status.index]}" class="item-total-price__input">
-                                        <custom:currencyFormat amount="${(item.price - item.price*(item.discount/100))*listQuantity[status.index]}" currencyFormat="vi" />
+                                        <div id="item-total-price-display">
+                                            <custom:currencyFormat amount="${(item.price - item.price*(item.discount/100))*listQuantity[status.index]}" currencyFormat="vi" />
+                                        </div>
                                     </td>
                                     <td class="text-center"><i class="bi-trash-fill text-danger delete-item-btn" for="<c:out value="${item.ID}"/>"></i></td>
                                 </tr>

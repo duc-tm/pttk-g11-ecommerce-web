@@ -28,7 +28,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
-    <body>
+    <body class="bg-light">
 
         <!-- Nav -->
         <jsp:include page="components/header.jsp"></jsp:include>
@@ -72,9 +72,9 @@
                     </div>
                     <div class="col-3"></div>
                 </div>
-                <div class="row row-cols-3 gx-3 mt-5 mb-4 px-5">
-                    <div class="col-4 px-2 ">
-                        <div class="border" style="height: 100%;">
+                <div class="row row-cols-3 mt-5 mb-4 px-5">
+                    <div class="col-4 px-2">
+                        <div class="border pb-2 shadow-sm bg-white rounded" style="height: 100%;">
                             <div class="px-2 py-2 mb-2" style="background-color: rgb(245, 245, 245);">
                                 <h6 class="m-0">1. ĐỊA CHỈ THANH TOÁN VÀ GIAO HÀNG</h6>
                             </div>
@@ -82,7 +82,7 @@
                                 <div class="pb-1"><p>THÔNG TIN THANH TOÁN</p></div>
                                 <div class="shipment-info mt-0 row">
                                     <div class="col  my-auto">
-                                        <label class="form-label mb-0">Người Nhận</label>
+                                        <label class="form-label mb-0">Người Nhận:</label>
                                     </div>
                                     <div class="col">
                                         <input class="form-control-plaintext" readonly value="<c:out value="${user.fullName.toString()}" />" >
@@ -90,7 +90,7 @@
                             </div>
                             <div class="shipment-info d-flex row">
                                 <div class="col  my-auto">
-                                    <label class="form-label mb-0">Số Điện thoại</label>
+                                    <label class="form-label mb-0">Số Điện thoại:</label>
                                 </div>
                                 <div class="col">
                                     <input class="form-control-plaintext" readonly value="<c:out value="${user.phone}" />" >
@@ -98,7 +98,7 @@
                             </div>
                             <div class="shipment-info d-flex row">
                                 <div class="col my-auto">
-                                    <label class="form-label mb-0">Địa chỉ cụ thể</label>
+                                    <label class="form-label mb-0">Địa chỉ cụ thể:</label>
                                 </div>
                                 <div class="col">
                                     <input class="form-control-plaintext" readonly value="<c:out value="${user.address.addressDetail}" />" >
@@ -106,7 +106,7 @@
                             </div>
                             <div class="shipment-info d-flex row">
                                 <div class="col my-auto">
-                                    <label class="form-label mb-0 ">Quận/Huyện</label>
+                                    <label class="form-label mb-0 ">Quận/Huyện:</label>
                                 </div>
                                 <div class="col">
                                     <input class="form-control-plaintext" readonly value="<c:out value="${user.address.district}" />" >
@@ -114,53 +114,49 @@
                             </div> 
                             <div class="shipment-info d-flex row">
                                 <div class="col my-auto">
-                                    <label class="form-label mb-0">Thành phố</label>
+                                    <label class="form-label mb-0">Thành phố:</label>
                                 </div>
                                 <div class="col">
                                     <input class="form-control-plaintext" readonly value="<c:out value="${user.address.city}" />" >
                                 </div>
                             </div>
-                            <div class="mt-3 pe-none text-muted user-select-none">
-                                <div>
-                                    <input type="checkbox" class="form-check-input" id="another-address-checkbox" data-bs-toggle="collapse" data-bs-target="#another-address-collapse">
-                                    <label class="form-check-label ms-3 user-select-none" for="another-address-checkbox">Chọn địa chỉ giao hàng khác</label>
-                                </div>
-                                <div id="another-address-collapse" class="collapse mt-4">
-                                    <form id="another-address-form">
-                                        <input type="text" id="diff-ship-type-name" placeholder="Người nhận" class="form-control">
-                                        <input type="text" id="diff-ship-type-phone" placeholder="Số điện thoại" class="form-control my-4">
-                                        <input type="text" id="diff-ship-type-add" placeholder="Địa chỉ cụ thể" class="form-control my-4">
-                                        <input type="text" id="diff-ship-type-add" placeholder="Quận/Huyện" class="form-control my-4">
-                                        <input type="text" id="diff-ship-type-add" placeholder="Thành phố" class="form-control my-4">
-                                    </form>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-4 px-2">
-                    <div class="border" style="height: 100%;">
+                    <div class="border pb-2 shadow-sm bg-white rounded" style="height: 100%;">
                         <div class="px-2 py-2 mb-2" style="background-color: rgb(245, 245, 245);">
                             <h6 class="m-0">2. THANH TOÁN VÀ VẬN CHUYỂN</h6>
                         </div>
                         <div class="py-1 px-3">
-                            <div class="pb-1"><p>VẬN CHUYỂN</p></div>
-                            <select class="form-select" id="shipment-type-select" name="shipment-type">
-                                <option value="ghn">Giao hàng nhanh</option>
-                                <option value="now">Now ship</option>
-                                <option value="economy">Giao hàng tiết kiệm</option>
-                            </select>
-                            <div class="payment-type">
-                                <div class="py-2 mt-3"><p>PHƯƠNG THỨC THANH TOÁN</p></div>
-                                <div>
-                                    <div class="form-group mb-2">
-                                        <input type="radio" id="bank" name="payment-type" value="bank" class="me-2">
-                                        <label for="bank">Thanh toán qua ngân hàng</label>
-                                    </div>
+                            <div class="shipment">
+                                <div class="pb-1"><p>VẬN CHUYỂN</p></div>
 
-                                    <div class="form-group">
-                                        <input type="radio" id="cod" name="payment-type" value="cod" class="me-2">
-                                        <label for="cod">Thanh toán khi nhận hàng</label>
+                                <div class="shipment-type mb-3">
+                                    <h5 class="fw-normal text-capitalize fs-6">Hình thức vận chuyển</h5>
+                                    <select class="form-select" id="shipment-type-select" name="shipment-type">
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="payment">
+                                <div class="payment-type mt-4">
+                                    <div class="py-2"><p>PHƯƠNG THỨC THANH TOÁN</p></div>
+                                    <div>
+                                        <div class="form-group mb-2">
+                                            <input type="radio" id="bank" name="payment-type" value="bank" class="me-2">
+                                            <label for="bank">Thanh toán qua ngân hàng</label>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="radio" id="cod" name="payment-type" value="cod" class="me-2">
+                                            <label for="cod">Thanh toán khi nhận hàng</label>
+                                        </div>
+                                        
+                                        <div class="payment-type-msg text-danger fs-6">
+                                            
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -168,43 +164,33 @@
                     </div>
                 </div>
                 <div class="col-4 px-2">
-                    <div class="border pb-4" style="height: 100%;">
+                    <div class="border pb-2 shadow-sm bg-white rounded" style="height: 100%;">
                         <div class="px-2 py-2 mb-2" style="background-color: rgb(245, 245, 245);">
                             <h6 class="m-0">3. THÔNG TIN ĐƠN HÀNG</h6>
                         </div>
                         <div class="px-3">
-                            <c:forEach items="${listItem}" var="item" varStatus="status">
-                                <div class="d-flex my-0 align-items-center" style="justify-content: space-between;">
-                                    <div class="item-general-info">
-                                        <img class="item-img me-2" src="${item.image}" alt="">
-                                        <div class="item-name text-capitalize">${item.name}</div>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="item-unit-price me-2"><custom:currencyFormat amount="${item.price}" currencyFormat="vi" /></div>
-                                        <div class="item-quantity">x${listQuantity[status.index]}</div>
-                                    </div>
-                                </div>
-                            </c:forEach>
+                            <div id="order-item">
+                                <ul class="list-unstyled">
+                                </ul>
+                            </div>
                             <hr>
                             <div class="d-flex my-0 align-items-center" style="justify-content: space-between;">
                                 <h6>Tổng tiền hàng</h6>
-                                <div class="item-total-price">50.000</div>
+                                <div id="item-total-price">0<sup>đ</sup></div>
                             </div>
                             <hr>
                             <div class="d-flex my-0 align-items-center" style="justify-content: space-between;">
                                 <h6>Phí vận chuyển</h6>
-                                <div class="shipping-cost">15.000</div>  
+                                <div id="shipping-cost">0<sup>đ</sup></div>  
                             </div>
                             <hr>
                             <div class="d-flex" style="justify-content: space-between;">
-                                <div>
-                                    <h6>Tổng thanh toán</h6>
-                                </div>
-                                <div class="total-bill">110.000</div>
+                                <h6>Tổng thanh toán</h6>
+                                <div id="total-bill">0<sup>đ</sup></div>
                             </div>
                             <hr class="mb-5">
                             <div class="text-end">
-                                <button class="btn btn-primary pay-btn">Thanh toán</button>
+                                <button class="btn btn-primary pay-btn" id="pay-btn">Thanh toán</button>
                             </div>
                         </div>
                     </div>
@@ -219,6 +205,7 @@
 
         <!-- Footer -->
         <jsp:include page="components/footer.jsp"></jsp:include>
+        <script src="${pageContext.request.contextPath}/js/fill-info.js"></script>
 
     </body>
 </html>

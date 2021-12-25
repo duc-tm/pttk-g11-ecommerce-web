@@ -1,4 +1,4 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,35 +6,40 @@
 package model.book;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
  * @author DELL
  */
 public class Book {
+
     private int id;
+    private String IBSN;
     private String title;
     private String summary;
-    private Date publicationDate;
+    private String publicationYear;
     private int numberOfPage;
     private int RemainingQuantity;
     private boolean Status;
     private float cost;
+    private String language;
     private Publisher pub;
     private ArrayList<Author> aut;
+
     public Book() {
     }
 
-    public Book(int id, String title, String summary, Date publicationDate, int numberOfPage, int RemainingQuantity, boolean Status, float cost) {
+    public Book(int id, String IBSN, String title, String summary, String publicationYear, int numberOfPage, int RemainingQuantity, boolean Status, float cost, String language) {
         this.id = id;
+        this.IBSN = IBSN;
         this.title = title;
         this.summary = summary;
-        this.publicationDate = publicationDate;
+        this.publicationYear = publicationYear;
         this.numberOfPage = numberOfPage;
         this.RemainingQuantity = RemainingQuantity;
         this.Status = Status;
         this.cost = cost;
+        this.language = language;
     }
 
     public int getId() {
@@ -61,12 +66,12 @@ public class Book {
         this.summary = summary;
     }
 
-    public Date getPublicationDate() {
-        return publicationDate;
+    public String getPublicationYear() {
+        return publicationYear;
     }
 
-    public void setPublicationDate(Date publicationDate) {
-        this.publicationDate = publicationDate;
+    public void setPublicationYear(String publicationYear) {
+        this.publicationYear = publicationYear;
     }
 
     public int getNumberOfPage() {
@@ -117,5 +122,20 @@ public class Book {
         this.aut = aut;
     }
 
+    public String getIBSN() {
+        return IBSN;
+    }
+
+    public void setIBSN(String IBSN) {
+        this.IBSN = IBSN;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 
 }

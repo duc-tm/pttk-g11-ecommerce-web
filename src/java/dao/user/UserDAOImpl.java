@@ -12,9 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.order.OrderSTT;
@@ -22,7 +19,6 @@ import model.user.Account;
 import model.user.Address;
 import model.user.FullName;
 import model.user.User;
-import utils.HashGenerator;
 
 /**
  *
@@ -33,18 +29,16 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
     private Connection conn;
 
     private final String CHECK_USERNAME_EXIST_SQL = "SELECT 1 FROM account WHERE username = ?";
-
     private final String CREATE_EMPTY_USER_SQL = "INSERT INTO user VALUES ()";
     private final String CREATE_EMPTY_USER_FULLNAME_SQL = "INSERT INTO fullname (userid) VALUES (?)";
     private final String CREATE_EMPTY_USER_ADDRESS_SQL = "INSERT INTO address (userid) VALUES (?)";
     private final String CREATE_USER_ACCOUNT_SQL = "INSERT INTO account (userid, username, password) values (?, ?, ?)";
-
     private final String GET_USER_BY_USERNAME_SQL = "SELECT * FROM user, account, fullname, address "
             + "WHERE account.username = ? AND user.id = account.userid AND user.id = fullname.userid AND user.id = address.userid";
     private final String GET_USER_BY_USERID_SQL = "SELECT * FROM user, account, fullname, address "
             + "WHERE user.id = ? AND user.id = account.userid AND user.id = fullname.userid AND user.id = address.userid";
 
-    private final String UPDATE_USER_SQL = "UPDATE user SET phone = IFNULL(?, phone), mail = IFNULL(?, mail), gender = IFNULL(?, gender) WHERE id = ?";
+    private final String UPDATE_USER_SQL = "UPDATE user SET phone = IFNULL(?, phone), email = IFNULL(?, email), gender = IFNULL(?, gender) WHERE id = ?";
     private final String UPDATE_ADDRESS_SQL = "UPDATE address SET addressdetail = IFNULL(?, addressdetail), "
             + "district=IFNULL(?, district), "
             + "city=IFNULL(?, city)"
@@ -119,89 +113,89 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
 
     }
 
+//    @Override
+//    public OrderSTT viewOrder(int orderID) {
+//        String sql1 = "SELECT * FROM shopbanhang.order WHERE ID=" + orderID + ";";
+//        OrderSTT o = new OrderSTT();
+//        Statement statement;
+//        ResultSet rs;
+//
+//        try {
+//            statement = conn.createStatement();
+//            rs = statement.executeQuery(sql1);
+//            int shipmentid = 0;
+//
+//            while (rs.next()) {
+//                shipmentid = rs.getInt("ShipmentID");
+//                o.setCreatedDate(rs.getDate("CreatedDate"));
+//            }
+//
+//            String sql2 = "SELECT * FROM shopbanhang.shipment WHERE ID=" + shipmentid + ";";
+//            statement = conn.createStatement();
+//            rs = statement.executeQuery(sql2);
+//
+//            while (rs.next()) {
+//                o.setType(rs.getString(2));
+//                o.setCost(rs.getFloat(3));
+//            }
+//
+//            String sql3 = "SELECT * FROM shopbanhang.payment WHERE ID=" + orderID + ";";
+//            statement = conn.createStatement();
+//            rs = statement.executeQuery(sql3);
+//
+//            while (rs.next()) {
+//                o.setStatus(rs.getString(3));
+//                o.setAmmount(rs.getFloat(4));
+//            }
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return o;
+//    }
+
+//    @Override
+//    public ArrayList<OrderSTT> getAllOrder(int UserID) {
+//        String sql1 = "SELECT Shipment.Type,Shipment.Cost,shopbanhang.Order.CreatedDate,payment.status,payment.Amount\n"
+//                + "FROM ((shopbanhang.order\n"
+//                + "inner join shipment on shopbanhang.order.ShipmentID = shipment.ID)\n"
+//                + "inner join payment on shopbanhang.order.ID = payment.OrderID)\n"
+//                + "WHERE Shopbanhang.order.UserID =" + UserID + ";";
+//        ArrayList<OrderSTT> listorder = new ArrayList<>();
+//        Statement statement;
+//        ResultSet rs;
+//
+//        try {
+//            statement = conn.createStatement();
+//            rs = statement.executeQuery(sql1);
+//
+//            while (rs.next()) {
+//                OrderSTT o = new OrderSTT();
+//                o.setType(rs.getString(1));
+//                o.setCost(rs.getFloat(2));
+//                o.setCreatedDate(rs.getDate(3));
+//                o.setStatus(rs.getString(4));
+//                o.setAmmount(rs.getFloat(5));
+//                listorder.add(o);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+//            return null;
+//        }
+//
+//        return listorder;
+//    }
+
     @Override
-    public OrderSTT viewOrder(int orderID) {
-        String sql1 = "SELECT * FROM shopbanhang.order WHERE ID=" + orderID + ";";
-        OrderSTT o = new OrderSTT();
-        Statement statement;
-        ResultSet rs;
-
-        try {
-            statement = conn.createStatement();
-            rs = statement.executeQuery(sql1);
-            int shipmentid = 0;
-
-            while (rs.next()) {
-                shipmentid = rs.getInt("ShipmentID");
-                o.setCreatedDate(rs.getDate("CreatedDate"));
-            }
-
-            String sql2 = "SELECT * FROM shopbanhang.shipment WHERE ID=" + shipmentid + ";";
-            statement = conn.createStatement();
-            rs = statement.executeQuery(sql2);
-
-            while (rs.next()) {
-                o.setType(rs.getString(2));
-                o.setCost(rs.getFloat(3));
-            }
-
-            String sql3 = "SELECT * FROM shopbanhang.payment WHERE ID=" + orderID + ";";
-            statement = conn.createStatement();
-            rs = statement.executeQuery(sql3);
-
-            while (rs.next()) {
-                o.setStatus(rs.getString(3));
-                o.setAmmount(rs.getFloat(4));
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return o;
-    }
-
-    @Override
-    public ArrayList<OrderSTT> getAllOrder(int UserID) {
-        String sql1 = "SELECT Shipment.Type,Shipment.Cost,shopbanhang.Order.CreatedDate,payment.status,payment.Amount\n"
-                + "FROM ((shopbanhang.order\n"
-                + "inner join shipment on shopbanhang.order.ShipmentID = shipment.ID)\n"
-                + "inner join payment on shopbanhang.order.ID = payment.OrderID)\n"
-                + "WHERE Shopbanhang.order.UserID =" + UserID + ";";
-        ArrayList<OrderSTT> listorder = new ArrayList<>();
-        Statement statement;
-        ResultSet rs;
-
-        try {
-            statement = conn.createStatement();
-            rs = statement.executeQuery(sql1);
-
-            while (rs.next()) {
-                OrderSTT o = new OrderSTT();
-                o.setType(rs.getString(1));
-                o.setCost(rs.getFloat(2));
-                o.setCreatedDate(rs.getDate(3));
-                o.setStatus(rs.getString(4));
-                o.setAmmount(rs.getFloat(5));
-                listorder.add(o);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-        return listorder;
-    }
-
-    @Override
-    public int getUserID(String phone, String mail) {
-        String sql = "Insert into user (Phone,Mail)  values (?,?);";
+    public int getUserID(String phone, String email) {
+        String sql = "Insert into user (Phone,email)  values (?,?);";
         PreparedStatement prestatement;
         ResultSet rs;
 
         try {
             prestatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             prestatement.setString(1, phone);
-            prestatement.setString(2, mail);
+            prestatement.setString(2, email);
             int rowcount = prestatement.executeUpdate();
             rs = prestatement.getGeneratedKeys();
             int idValue = 0;

@@ -16,8 +16,8 @@
         <servlet-class>controller.CheckoutController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ItemController</servlet-name>
-        <servlet-class>controller.ItemController</servlet-class>
+        <servlet-name>BookController</servlet-name>
+        <servlet-class>controller.BookController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserController</servlet-name>
@@ -48,7 +48,7 @@
         <url-pattern>/checkout/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ItemController</servlet-name>
+        <servlet-name>BookController</servlet-name>
         <url-pattern>/product/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

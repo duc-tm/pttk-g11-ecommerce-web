@@ -24,8 +24,23 @@
                         <div class="text-muted text-capitalize">Số Lượng</div>
                     </div>
                     <div class="col-10 content d-flex align-items-center">
-                        <jsp:include page="counter.jsp"></jsp:include>
-                            <div class="item-info__quantity-available ms-3 text-muted">
+                        <c:choose>
+                            <c:when test="${book.remainingQuantity < 1}">
+                                <jsp:include page="counter.jsp">
+                                    <jsp:param name="id" value="item-counter-${bookItem.ID}"></jsp:param>
+                                    <jsp:param name="quantity" value="1"></jsp:param>
+                                    <jsp:param name="className" value="pe-none text-muted user-select-none" ></jsp:param>
+                                </jsp:include>
+                            </c:when>
+                            <c:otherwise>
+                                <jsp:include page="counter.jsp">
+                                    <jsp:param name="id" value="item-counter-${bookItem.ID}"></jsp:param>
+                                    <jsp:param name="quantity" value="1"></jsp:param>
+                                </jsp:include>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <div class="item-info__quantity-available ms-3 text-muted">
                             ${book.remainingQuantity} sản phẩm có sẵn
                         </div>
                     </div>
@@ -66,7 +81,7 @@
                                 <p class="mb-0">
                                     <a href="home">Shopyy</a>
                                     > 
-                                    <a href="#">Thời trang</a>
+                                    <a href="#">${bookItem.category}</a>
                                 </p>
                             </div>
                         </li>
@@ -83,11 +98,79 @@
                                 </p>
                             </div>
                         </li>
+                        
+                        <li class="mb-3 row align-items-center">
+                            <div class="col-2">
+                                <h6 class="fw-normal text-muted mb-0">
+                                    Tác giả
+                                </h6>
+                            </div>
+                            <div class="col-10">
+                                <p class="mb-0">
+                                    <c:forEach items="${book.aut}" var="author">
+                                        ${author.name},
+                                    </c:forEach>
+                                </p>
+                            </div>
+                        </li>
+                        
+                        <li class="mb-3 row align-items-center">
+                            <div class="col-2">
+                                <h6 class="fw-normal text-muted mb-0">
+                                    NXB
+                                </h6>
+                            </div>
+                            <div class="col-10">
+                                <p class="mb-0">
+                                    ${book.pub.name}
+                                </p>
+                            </div>
+                        </li>
+                        
+                        <li class="mb-3 row align-items-center">
+                            <div class="col-2">
+                                <h6 class="fw-normal text-muted mb-0">
+                                    Ngôn Ngữ
+                                </h6>
+                            </div>
+                            <div class="col-10">
+                                <p class="mb-0">
+                                    ${book.language}
+                                </p>
+                            </div>
+                        </li>
+                        
+                         <li class="mb-3 row align-items-center">
+                            <div class="col-2">
+                                <h6 class="fw-normal text-muted mb-0">
+                                    Năm XB
+                                </h6>
+                            </div>
+                            <div class="col-10">
+                                <p class="mb-0">
+                                    ${book.publicationYear}
+                                </p>
+                            </div>
+                        </li>
+                        
+                         <li class="mb-3 row align-items-center">
+                            <div class="col-2">
+                                <h6 class="fw-normal text-muted mb-0">
+                                    Số trang
+                                </h6>
+                            </div>
+                            <div class="col-10">
+                                <p class="mb-0">
+                                    ${book.numberOfPage}
+                                </p>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <div class="item-detail-desc text-uppercase  p-4 bg-white">
                     <h4 class="fw-normal text-uppercase bg-light px-3 py-2">Mô tả sản phẩm</h4>
                     <div class="item-detail-desc__content px-3 mt-4">
+                        <h6 class="text-capitalize fw-bold">${bookItem.name}</h6>
                         <p class="text-wrap">${bookItem.description}</p>
                     </div>
                 </div>

@@ -5,8 +5,8 @@
  */
 package controller;
 
-import dao.cart.CartDAO;
 import dao.cart.CartDAOImpl;
+import dao.user.UserDAO;
 import dao.user.UserDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.order.Cart;
 import model.user.Account;
 import model.user.User;
 import utils.HashGenerator;
@@ -60,7 +59,6 @@ public class AuthController extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(route);
 
         if (route.equalsIgnoreCase("/login")) {
             login(username, password, request, response);
@@ -82,7 +80,7 @@ public class AuthController extends HttpServlet {
     }
 
     private void register(String username, String password, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        UserDAOImpl userDAO = new UserDAOImpl();
+        UserDAO userDAO = new UserDAOImpl();
         boolean isUsernameExist = userDAO.checkUsernameExist(username);
 
         if (isUsernameExist == false) {
@@ -119,7 +117,7 @@ public class AuthController extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("userId", user.getId());
         session.setAttribute("username", user.getAccount().getUsername());
-        
+
         return session;
     }
 

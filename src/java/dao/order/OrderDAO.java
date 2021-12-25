@@ -7,22 +7,25 @@ package dao.order;
 
 import java.util.ArrayList;
 import java.util.Date;
-import model.order.Cart;
+import java.util.List;
+import javafx.util.Pair;
+import model.book.BookItem;
 import model.order.Order;
-import model.order.Payment;
-import model.order.Shipment;
 
 /**
  *
  * @author DELL
+ * @param <T>
  */
-public interface OrderDAO <T> {
-    int createOrder(int userID,Order order,Payment payment,Shipment shipment,Cart cart,int quantity[],int itemID[]);
-    int updateOrder(int orderID,String type,float cost,Date createdDate,String status,float amount);
+public interface OrderDAO<T> {
+
+    int addItemsToOrder(Pair<List<BookItem>, List<Integer>> listBookItemAndQuantity, int orderID);
+
+    int createOrder(int userID, Order order, int paymentid, int shipmentid, Pair<List<BookItem>, List<Integer>> pair);
+
+    int updateOrder(int orderID, String shipType, float cost, Date createdDate, int status, float amount, String payType, String shipUnit);
+
     int deleteOrder(int orderID);
-    T getUser(int userID);
-    ArrayList<T> getCart(int cartID);
-    int addNewCart(int userID,float totalPrice);
-    void addItemToCart(int quantity[],int cartID,int itemID[]);
-    void updateOrderIDToCart(int orderID,int cartID);
+
+    T getUser(int orderID);
 }
