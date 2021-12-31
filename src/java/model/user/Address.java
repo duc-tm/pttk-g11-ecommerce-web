@@ -5,11 +5,13 @@
  */
 package model.user;
 
+import utils.Jsonlizable;
+
 /**
  *
  * @author Admin
  */
-public class Address {
+public class Address extends ShipmentSpecificAddress implements Jsonlizable {
 
     private int id;
     private String addressDetail;
@@ -17,6 +19,7 @@ public class Address {
     private String city;
 
     public Address() {
+        super();
     }
 
     public Address(String addressDetail, String district, String city) {
@@ -26,6 +29,21 @@ public class Address {
     }
 
     public Address(int id, String addressDetail, String district, String city) {
+        this.id = id;
+        this.addressDetail = addressDetail;
+        this.district = district;
+        this.city = city;
+    }
+
+    public Address(String addressDetail, String district, String city, String shipmentDistrictId, String shipmentCityId) {
+        super(shipmentDistrictId, shipmentCityId);
+        this.addressDetail = addressDetail;
+        this.district = district;
+        this.city = city;
+    }
+
+    public Address(int id, String addressDetail, String district, String city, String shipmentDistrictId, String shipmentCityId) {
+        super(shipmentDistrictId, shipmentCityId);
         this.id = id;
         this.addressDetail = addressDetail;
         this.district = district;
@@ -62,6 +80,22 @@ public class Address {
 
     public String getCity() {
         return city;
+    }
+
+    private String getAttributeCheckNull(String attribute) {
+        return attribute == null ? null : "\"" + attribute + "\"";
+    }
+
+    @Override
+    public String toJSON() {
+        return "{"
+                + "\"id\": " + id
+                + ", \"addressDetail\": " + getAttributeCheckNull(addressDetail)
+                + ", \"district\": " + getAttributeCheckNull(district)
+                + ", \"city\": " + getAttributeCheckNull(city)
+                + ", \"shipmentDistrictId\": " + getAttributeCheckNull(getShipmentDistrictId())
+                + ", \"shipmentCityId\": " + getAttributeCheckNull(getShipmentCityId())
+                + "}";
     }
 
 }

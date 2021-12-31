@@ -38,8 +38,8 @@
                     <div class="col-2">
                         <div class="user__general-info">
                             <img class="user__avatar rounded-circle" src="<c:out value="${(user.avatar eq null) ? 'https://cf.shopee.vn/file/1d74524ec09542f944ad95a2a6fd111d_tn' : user.avatar }" />" alt="user avatar">
-                            <div class="d-flex flex-column ms-3">
-                                <div class="user__name mb-1"><c:out value="${user.account.username}" /></div>
+                        <div class="d-flex flex-column ms-3">
+                            <div class="user__name mb-1"><c:out value="${user.account.username}" /></div>
                             <div class="user__edit-profile-ctrl text-capitalize text-muted">
                                 <i class="fas fa-pen"></i>
                                 Sửa hồ sơ
@@ -130,40 +130,52 @@
                                             <div class="col-8 d-flex align-items-center">
                                                 <div class="form-group me-3">
                                                     <input class="form-check-input" type="radio" value="male" id="gender-male" name="gender"  <c:if test="${user.gender eq 'male'}">checked</c:if>>
-                                                    <label class="form-check-label" for="gender-male">Nam</label>
+                                                        <label class="form-check-label" for="gender-male">Nam</label>
+                                                    </div>
+                                                    <div class="form-group me-3">
+                                                        <input class="form-check-input" type="radio" value="female" id="gender-female" name="gender"  <c:if test="${user.gender eq 'female'}">checked</c:if>>
+                                                        <label class="form-check-label" for="gender-female">Nữ</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input class="form-check-input" type="radio" value="other" id="gender-other" name="gender" <c:if test="${user.gender eq 'other'}">checked</c:if> >
+                                                        <label class="form-check-label" for="gender-other">Khác</label>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group me-3">
-                                                    <input class="form-check-input" type="radio" value="female" id="gender-female" name="gender"  <c:if test="${user.gender eq 'female'}">checked</c:if>>
-                                                    <label class="form-check-label" for="gender-female">Nữ</label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input class="form-check-input" type="radio" value="other" id="gender-other" name="gender" <c:if test="${user.gender eq 'other'}">checked</c:if> >
-                                                    <label class="form-check-label" for="gender-other">Khác</label>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="user-profile__info-item text-muted row align-items-center">
-                                            <label class="user-profile__info-label form-label col-4" for="detail-address">
-                                                Địa chỉ cụ thể
-                                            </label>
-                                            <div class="col-8 d-flex">
-                                                <input type="text" class="user-profile__info-input form-control" id="detail-address" name="detailaddress" value="<c:out value="${user.address.addressDetail}" />">
+                                            </li>
+                                            <li class="user-profile__info-item text-muted row align-items-center">
+                                                <label class="user-profile__info-label form-label col-4" for="detail-address">
+                                                    Địa chỉ cụ thể
+                                                </label>
+                                                <div class="col-8 d-flex">
+                                                    <input type="text" class="user-profile__info-input form-control" id="detail-address" name="addressdetail" value="<c:out value="${user.address.addressDetail}" />">
                                             </div>
                                         </li>
                                         <li class="user-profile__info-item text-muted row align-items-center">
                                             <label class="user-profile__info-label form-label col-4" for="district">
-                                                Quận huyện/Phường xã
+                                                Quận huyện
                                             </label>
-                                            <div class="col-8 d-flex">
-                                                <input type="text" class="user-profile__info-input form-control" id="district" name="district" value="<c:out value="${user.address.district}" />">
+                                            <div class="col-8 d-flex justify-content-between">
+                                                <div id="district-uneditable"><c:out value="${user.address.district}" /></div>
+                                                <select id="district-select"  name="district" class="form-select d-none">
+                                                    <option value="">-- Chọn quận huyện --</option>
+                                                </select>
+
+                                                <input type="checkbox" class="d-none" id="district-input-toggler">
+                                                <label class="input-edit-control" for="district-input-toggler">Thay đổi</label>
                                             </div>
                                         </li>
                                         <li class="user-profile__info-item text-muted row align-items-center">
                                             <label class="user-profile__info-label form-label col-4" for="city">
                                                 Tỉnh/Thành phố
                                             </label>
-                                            <div class="col-8 d-flex">
-                                                <input type="text" class="user-profile__info-input form-control" id="city" name="city" value="<c:out value="${user.address.city}" />">
+                                            <div class="col-8 d-flex justify-content-between">
+                                                <div id="city-uneditable"><c:out value="${user.address.city}" /></div>
+                                                <select id="city-select"  name="city" class="form-select d-none">
+                                                    <option value="">-- Chọn tỉnh/thành phố --</option>
+                                                </select>
+                                                
+                                                <input type="checkbox" class="d-none" id="city-input-toggler">
+                                                <label class="input-edit-control" for="city-input-toggler">Thay đổi</label>
                                             </div>
                                         </li>
                                     </div>
@@ -197,9 +209,14 @@
             <script src="${pageContext.request.contextPath}/js/user.js"></script>
         <!--toggle input-->
         <script>
-            togglerElement('email', 'email-input-toggler', 'form-control-plaintext', null, 'Thay đổi', 'Hủy');
-            togglerElement('phonenumber', 'phonenumber-input-toggler', 'form-control-plaintext', null, 'Thay đổi', 'Hủy');
+            toggleInputEditable('email', 'email-input-toggler', 'form-control-plaintext', null, 'Thay đổi', 'Hủy');
+            toggleInputEditable('phonenumber', 'phonenumber-input-toggler', 'form-control-plaintext', null, 'Thay đổi', 'Hủy');
+
+            toggleEditable('district-uneditable', 'district-select', 'd-block', 'd-none', 'district-input-toggler', 'Thay đổi', 'Hủy');
+            toggleEditable('city-uneditable', 'city-select', 'd-block', 'd-none', 'city-input-toggler', 'Thay đổi', 'Hủy');
         </script>
+
+        <script src="${pageContext.request.contextPath}/js/address-api.js"></script>
 
         <script src="${pageContext.request.contextPath}/js/image-previewer.js"></script>
         <script src="${pageContext.request.contextPath}/js/file-validator.js"></script>

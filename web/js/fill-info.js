@@ -16,9 +16,12 @@ function jsonEscape(str) {
     const shipmentCostEle = document.getElementById('shipping-cost');
     const totalBillEle = document.getElementById('total-bill');
 
-    const getShipmentList = async () => {
-        const response = await fetch('http://localhost:8080/g11/checkout/api/shipment-list', {
-            method: 'GET'
+    const shopId = 2371719;
+    const shopDistrictId = 1484;
+
+    const getCustomerAddressInfo = async () => {
+        const response = await fetch('http://localhost:8080/g11/user/api/get-address', {
+            method: 'GET',
         });
 
         const data = await response.text();
@@ -26,35 +29,108 @@ function jsonEscape(str) {
             const dataTokens = data.split(';');
 
             if (dataTokens[0] === '200') {
-                return dataTokens[1];
+                return JSON.parse(dataTokens[1]);
             }
         }
 
         return null;
     }
 
-    const shipmentListJSON = await getShipmentList();
-
-    if (shipmentListJSON) {
-        const updateSelectedShipmentCost = (e) => {
-            const selectedShipmentId = e.target.value;
-            const selectedShipmentCost = shipmentList[selectedShipmentId - 1].cost;
-
-            shipmentCostEle.innerHTML = `${new Intl.NumberFormat().format(selectedShipmentCost)}<sup>đ</sup>`;
-            totalBillEle.innerHTML = `${new Intl.NumberFormat().format(selectedShipmentCost + totalPriceEle.value)}<sup>đ</sup>`;
-        }
-
-        const shipmentList = JSON.parse(shipmentListJSON);
-
-// create shipment option for select
-        shipmentList.forEach((shipment) => {
-            const optionEle = new Option(shipment.type, shipment.id);
-            shipmentTypeSelectEle.add(optionEle);
+    const getShipmentList = async (shopId, fromDistrict, toDistrict) => {
+        const response = await fetch('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Token': '92ba9c57-658c-11ec-9054-0a1729325323'
+            },
+            body: JSON.stringify({
+                "shop_id": shopId,
+                "from_district": fromDistrict,
+                "to_district": toDistrict
+            })
         });
 
-// update cost on shipment change
-        shipmentTypeSelectEle.addEventListener('change', updateSelectedShipmentCost);
+        const data = await response.json();
+        if (data && data.code === 200) {
+            return data.data;
+        }
+
+        return null;
     }
+
+    const customerAddressInfo = await getCustomerAddressInfo();
+
+    if (customerAddressInfo === null) {
+        console.error('GET http://localhost:8080/g11/user/api/get-address FAILED')
+        return;
+    }
+
+// default shop address is Ba Dinh, Ha Noi
+    const shipmentList = await getShipmentList(shopId, shopDistrictId, Number(customerAddressInfo.shipmentDistrictId));
+
+    const updateSelectedShipmentCost = async (e) => {
+        const serviceId = Number(e.target.value);
+        if (serviceId === 0) {
+            return;
+        }
+
+        const response = await fetch('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Token': '92ba9c57-658c-11ec-9054-0a1729325323',
+                "ShopId": shopId,
+            },
+            body: JSON.stringify({
+                "from_district_id": shopDistrictId,
+                "service_type_id": serviceId,
+                "to_district_id": Number(customerAddressInfo.shipmentDistrictId),
+//                "to_ward_code": "21012",
+                "height": 20,
+                "length": 35,
+                "weight": 300,
+                "width": 30,
+                "insurance_value": 50000,
+                "coupon": null
+            })
+        });
+
+        const data = await response.json();
+        if (data.code === 200) {
+            const totalShipmentFee = data.data.total;
+
+            shipmentCostEle.value = totalShipmentFee;
+            shipmentCostEle.innerHTML = `${new Intl.NumberFormat().format(totalShipmentFee)}<sup>đ</sup>`;
+            totalBillEle.innerHTML = `${new Intl.NumberFormat().format(totalShipmentFee + totalPriceEle.value)}<sup>đ</sup>`;
+        } else {
+            console.log(data.message)
+        }
+
+    }
+
+// create shipment option for select
+    shipmentList.forEach((shipment) => {
+        let serviceType;
+
+        switch (shipment.service_type_id) {
+            case 1:
+                serviceType = 'Nhanh';
+                break;
+            case 2:
+                serviceType = 'Tiêu chuẩn';
+                break;
+            case 3:
+                serviceType = 'Tiết kiệm';
+                break;
+            default:
+                serviceType = 'Không có dịch vụ khả thi';
+        }
+        const optionEle = new Option(serviceType, shipment.service_type_id);
+        shipmentTypeSelectEle.add(optionEle);
+    });
+
+// update cost on shipment change
+    shipmentTypeSelectEle.addEventListener('change', updateSelectedShipmentCost);
 
 })();
 
@@ -126,6 +202,10 @@ function jsonEscape(str) {
 (function () {
     const payBtnEle = document.getElementById('pay-btn');
 
+    const checkRequiredFieldFilled = () => {
+
+    }
+
     payBtnEle.addEventListener('click', async () => {
         const selectedItemJSON = sessionStorage.getItem('selectedItem');
 
@@ -134,7 +214,14 @@ function jsonEscape(str) {
             return;
         }
 
-// check payment type selected
+        // check shipment type selected
+        const selectedShipmentType = document.getElementById('shipment-type-select').value;
+        if (selectedShipmentType === null || selectedShipmentType === '') {
+            document.querySelector('.shipment-type-msg').innerText = "Vui lòng chọn hình thức vận chuyển";
+            return;
+        }
+
+        // check payment type selected
         const selectedPaymentTypeEle = document.querySelector('input[name="payment-type"]:checked');
         if (selectedPaymentTypeEle == null) {
             document.querySelector('.payment-type-msg').innerText = "Vui lòng chọn phương thức thanh toán";
@@ -142,18 +229,44 @@ function jsonEscape(str) {
         }
 
         const selectedPaymentType = selectedPaymentTypeEle.value;
-        const selectedShipmentType = document.getElementById('shipment-type-select').value;
+        const shipmentCost = document.getElementById('shipping-cost').value;
 
-        const response = await fetch('http://localhost:8080/g11/user/order/create', {
-            method: 'POST',
-            body: new URLSearchParams({
-                selectedItemJSON,
-                selectedPaymentType,
-                selectedShipmentType
-            })
-        });
+//        const response = await fetch('http://localhost:8080/g11/user/order/create', {
+//            method: 'POST',
+//            body: new URLSearchParams({
+//                selectedItemJSON,
+//                selectedPaymentType,
+//                selectedShipmentType,
+//                shipmentCost
+//            })
+//        });
+//
+//        const data = await response.text();
+        const data = "201;100"
+        if (data) {
+            const dataTokens = data.split(';');
 
-        const data = await response.text();
-//        console.log(data);
+            if (dataTokens[0] === '201') {
+                sessionStorage.removeItem('selectedItem');
+                
+                const orderId = dataTokens[1];
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Tạo đơn hàng thành công',
+                    allowOutsideClick: false,
+                    confirmButtonText: `<a href="/g11/customer/order?orderid=${orderId}" class="text-decoration-none text-white">Xem trạng thái đơn hàng</a>`,
+                    footer: '<a href="/g11/home" class="text-decoration-none fs-6">Tiếp tục mua hàng</a>'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Tạo đơn hàng thất bại, vui lòng thử lại sau',
+                    allowOutsideClick: false,
+                    showCancelButton: false,
+                    showConfirmButton: true,
+                });
+            }
+        }
     })
-})()
+})();

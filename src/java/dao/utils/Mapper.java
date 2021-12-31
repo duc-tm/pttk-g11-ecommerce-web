@@ -26,11 +26,14 @@ public class Mapper {
     
     public static Address mapAddress(ResultSet rs) throws SQLException {
         int id = rs.getInt("address.id");
-        String addressDetail = rs.getString("address.addressdetail");
+        String addressDetail = rs.getString("address.addressDetail");
         String district = rs.getString("address.district");
         String city = rs.getString("address.city");
         
-        return new Address(id, addressDetail, district, city);
+        String shipmentDistrictId = rs.getString("address.shipmentDistrictId");
+        String shipmentCityId = rs.getString("address.shipmentCityId");
+        
+        return new Address(id, addressDetail, district, city, shipmentDistrictId, shipmentCityId);
     }
     
     public static FullName mapFullName(ResultSet rs) throws SQLException {

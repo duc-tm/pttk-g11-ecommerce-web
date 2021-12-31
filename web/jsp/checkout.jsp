@@ -81,7 +81,7 @@
                             <div class="py-1 px-3">
                                 <div class="pb-1"><p>THÔNG TIN THANH TOÁN</p></div>
                                 <div class="shipment-info mt-0 row">
-                                    <div class="col  my-auto">
+                                    <div class="col my-auto">
                                         <label class="form-label mb-0">Người Nhận:</label>
                                     </div>
                                     <div class="col">
@@ -133,9 +133,22 @@
                                 <div class="pb-1"><p>VẬN CHUYỂN</p></div>
 
                                 <div class="shipment-type mb-3">
-                                    <h5 class="fw-normal text-capitalize fs-6">Hình thức vận chuyển</h5>
-                                    <select class="form-select" id="shipment-type-select" name="shipment-type">
-                                    </select>
+                                    <div class="form-group mb-2">
+                                        <label class="fw-normal text-capitalize fs-6 mb-1" for="shipment-unit-select">Đơn vị vận chuyển</label>
+                                        <select class="form-select" id="shipment-unit-select" name="shipment-unit" disabled>
+                                            <option value="">-- Chọn đơn vị vận chuyển --</option>
+                                            <option value="ghn" selected>Giao hàng nhanh</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="fw-normal text-capitalize fs-6 mb-1" for="shipment-type-select">Hình thức vận chuyển</label>
+                                        <select class="form-select" id="shipment-type-select" name="shipment-type">
+                                            <option value="" selected>-- Chọn hình thức vận chuyển --</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="shipment-type-msg text-danger fs-6 mt-1"></div>
                                 </div>
 
                             </div>
@@ -153,10 +166,8 @@
                                             <input type="radio" id="cod" name="payment-type" value="cod" class="me-2">
                                             <label for="cod">Thanh toán khi nhận hàng</label>
                                         </div>
-                                        
-                                        <div class="payment-type-msg text-danger fs-6">
-                                            
-                                        </div>
+
+                                        <div class="payment-type-msg text-danger fs-6 mt-1"></div>
                                     </div>
                                 </div>
                             </div>
@@ -205,7 +216,9 @@
 
         <!-- Footer -->
         <jsp:include page="components/footer.jsp"></jsp:include>
-        <script src="${pageContext.request.contextPath}/js/fill-info.js"></script>
+
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="${pageContext.request.contextPath}/js/fill-info.js"></script>
 
     </body>
 </html>

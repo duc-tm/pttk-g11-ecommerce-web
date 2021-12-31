@@ -21,7 +21,7 @@ public interface OrderDAO<T> {
 
     int addItemsToOrder(Pair<List<BookItem>, List<Integer>> listBookItemAndQuantity, int orderID);
 
-    int createOrder(int userID, Order order, int paymentid, int shipmentid, Pair<List<BookItem>, List<Integer>> pair);
+    int createOrder(int customerId, Order order, List<Pair<Integer, Integer>> listItem);
 
     int updateOrder(int orderID, String shipType, float cost, Date createdDate, int status, float amount, String payType, String shipUnit);
 

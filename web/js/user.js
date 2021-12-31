@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-function togglerElement(toggledElementId, togglerElementId, className1, className2, labelContent1, labelContent2) {
+function toggleInputEditable(toggledElementId, togglerElementId, className1, className2, labelContent1, labelContent2) {
     const toggledElement = document.getElementById(toggledElementId);
     const togglerElement = document.getElementById(togglerElementId);
     const labelElement = document.querySelector(`#${togglerElementId} + label`);
@@ -13,7 +13,7 @@ function togglerElement(toggledElementId, togglerElementId, className1, classNam
         toggledElement.classList.add(cName2);
         toggledElement.classList.remove(cName1);
         toggledElement.toggleAttribute('readonly');
-        
+
         labelElement.innerText = labelContent;
     }
 
@@ -22,6 +22,32 @@ function togglerElement(toggledElementId, togglerElementId, className1, classNam
             toggleClassName(className1, className2, labelContent2);
         } else {
             toggleClassName(className2, className1, labelContent1);
+        }
+    });
+}
+
+function toggleEditable(unEditableEleId, editableEleId, displayClassName, hiddenClassName, togglerCheckboxId, unEditableLabel, editableLabel) {
+    const unEditableEle = document.getElementById(unEditableEleId);
+    const editableEle = document.getElementById(editableEleId);
+    const togglerCheckbox = document.getElementById(togglerCheckboxId);
+    const labelElement = document.querySelector(`#${togglerCheckboxId} + label`);
+    
+    function toggleDisplay(displayEle, hiddenEle, label) {
+        displayEle.classList.add(displayClassName);
+        displayEle.classList.remove(hiddenClassName);
+
+        hiddenEle.classList.add(hiddenClassName);
+        hiddenEle.classList.remove(displayClassName);
+
+
+        labelElement.innerText = label;
+    }
+
+    togglerCheckbox.addEventListener('change', () => {
+        if (togglerCheckbox.checked) {
+            toggleDisplay(editableEle, unEditableEle, editableLabel);
+        } else {
+            toggleDisplay(unEditableEle, editableEle, unEditableLabel);
         }
     });
 }

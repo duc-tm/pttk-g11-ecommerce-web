@@ -14,15 +14,26 @@ import utils.Jsonlizable;
 public class Shipment implements Jsonlizable {
 
     private int id;
-    private String type;
     private float cost;
     private String shipUnit;
+
+    /**
+     * Type of shipment.
+     * 1 - express, 2 - standard, 3 - saving
+     */
+    private String type;
 
     public Shipment() {
     }
 
     public Shipment(int id, String type, float cost, String shipUnit) {
         this.id = id;
+        this.type = type;
+        this.cost = cost;
+        this.shipUnit = shipUnit;
+    }
+
+    public Shipment(String type, float cost, String shipUnit) {
         this.type = type;
         this.cost = cost;
         this.shipUnit = shipUnit;

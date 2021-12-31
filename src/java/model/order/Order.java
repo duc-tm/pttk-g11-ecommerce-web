@@ -8,16 +8,20 @@ package model.order;
 import java.util.Date;
 
 /**
- *
  * @author Admin
  */
 public class Order {
 
     private int id;
     private Date createdDate;
-    private int status;
     private Shipment shipmentInfo;
     private Payment paymentInfo;
+
+    /**
+     * Status of payment. 0 - pending approved, 1 - preparing, 2 - shipping, 3 -
+     * received success, 4 - received failed
+     */
+    private int status;
 
     public Order() {
     }
@@ -26,6 +30,12 @@ public class Order {
         this.id = id;
         this.createdDate = createdDate;
         this.status = status;
+    }
+
+    public Order(int status, Shipment shipmentInfo, Payment paymentInfo) {
+        this.status = status;
+        this.shipmentInfo = shipmentInfo;
+        this.paymentInfo = paymentInfo;
     }
 
     public Shipment getShipmentInfo() {

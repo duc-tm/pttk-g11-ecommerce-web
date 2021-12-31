@@ -13,14 +13,25 @@ public class Payment {
 
     private int id;
     private float amount;
-    private int status;
     private String type;
+
+    /**
+     * Have paid or not.
+     * 0 - unpaid, 1 - paid
+     */
+    private int status;
 
     public Payment() {
     }
 
     public Payment(int id, float amount, int status, String type) {
         this.id = id;
+        this.amount = amount;
+        this.status = status;
+        this.type = type;
+    }
+
+    public Payment(float amount, int status, String type) {
         this.amount = amount;
         this.status = status;
         this.type = type;

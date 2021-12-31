@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import javafx.util.Pair;
 import model.book.BookItem;
 import model.order.Order;
+import model.order.Payment;
 import model.order.Shipment;
 import model.user.UserSTT;
 
@@ -35,8 +36,10 @@ public class OrderDAOImpl implements OrderDAO {
     private final String GET_CART_ID = "INSERT INTO cart (UserID, TotalPrice) VALUES (?, ?);";
     private final String GET_ALL_SHIPMENT_SQL = "SELECT * FROM shipment";
 
-    private final String INSERT_SHIPMENT_SQL = "INSERT INTO shipment (Type, Cost ,ShipUnit) VALUES (?, ? ,?);";
-    private final String INSERT_ORDER_SQL = "INSERT INTO order (CustomerUserID ,ShipmentID,Status,PaymentID) VALUES (?, ?, ?, ?);";
+    private final String INSERT_PAYMENT_SQL = "INSERT INTO payment (status, amount, type) VALUES (?, ? ,?);";
+    private final String INSERT_SHIPMENT_SQL = "INSERT INTO shipment (type, cost, shipUnit) VALUES (?, ? ,?);";
+    private final String INSERT_ORDER_SQL = "INSERT INTO `order` (customerUserId, shipmentId, paymentId, status) VALUES (?, ?, ?, ?);";
+    private final String INSERT_ITEM_TO_ORDER = "INSERT INTO orderitem (orderId, bookItemId, quantity) VALUES (?, ?, ?)";
 
     private final String DELETE_ORDER = "DELETE FROM order WHERE id=?";
 
@@ -44,31 +47,6 @@ public class OrderDAOImpl implements OrderDAO {
 
     public OrderDAOImpl() {
         conn = ConDB.getJDBCCOnection();
-    }
-
-    @Override
-    public int createOrder(int userID, Order order, int paymentid, int shipmentid, Pair pair) {
-        int rowCount = 0;
-
-        try (PreparedStatement ps = conn.prepareStatement(INSERT_ORDER_SQL, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, userID);
-            ps.setInt(2, shipmentid);
-            ps.setInt(3, order.getStatus());
-            ps.setInt(4, paymentid);
-
-            rowCount = ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-
-            if (rs.next()) {
-                int orderId = rs.getInt(1);
-                rowCount = addItemsToOrder(pair, orderId);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
-        } finally {
-            return rowCount;
-        }
     }
 
     @Override
@@ -202,6 +180,96 @@ public class OrderDAOImpl implements OrderDAO {
             Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             return listShipment;
+        }
+    }
+
+    @Override
+    public int createOrder(int customerId, Order order, List listItem) {
+        Shipment shipmentInfo = order.getShipmentInfo();
+        Payment paymentInfo = order.getPaymentInfo();
+
+        int shipmentId = insertShipmentInfo(shipmentInfo.getType(), shipmentInfo.getCost(), shipmentInfo.getShipUnit());
+        int paymentId = insertPaymentInfo(paymentInfo.getStatus(), paymentInfo.getAmount(), paymentInfo.getType());
+
+        int rowCount = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(INSERT_ORDER_SQL, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, customerId);
+            ps.setInt(2, shipmentId);
+            ps.setInt(3, paymentId);
+            ps.setInt(4, order.getStatus());
+
+            rowCount = ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                int orderId = rs.getInt(1);
+                insertItemOrder(orderId, listItem);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return rowCount;
+        }
+    }
+
+    private int insertItemOrder(int orderId, List<Pair<Integer, Integer>> listItem) {
+        int rowCount = 0;
+
+        for (Pair<Integer, Integer> item : listItem) {
+            try (PreparedStatement ps = conn.prepareStatement(INSERT_ITEM_TO_ORDER)) {
+                ps.setInt(1, orderId);
+                ps.setInt(2, item.getKey());
+                ps.setInt(3, item.getValue());
+
+                rowCount += ps.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        return rowCount;
+    }
+
+    private int insertPaymentInfo(int status, float amount, String type) {
+        int paymentId = -1;
+
+        try (PreparedStatement ps = conn.prepareStatement(INSERT_PAYMENT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, status);
+            ps.setFloat(2, amount);
+            ps.setString(3, type);
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                paymentId = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return paymentId;
+        }
+    }
+
+    private int insertShipmentInfo(String shipmentType, float shipmentCost, String shipUnit) {
+        int shipmentId = -1;
+
+        try (PreparedStatement ps = conn.prepareStatement(INSERT_SHIPMENT_SQL, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, shipmentType);
+            ps.setFloat(2, shipmentCost);
+            ps.setString(3, shipUnit);
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                shipmentId = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return shipmentId;
         }
     }
 }

@@ -14,6 +14,39 @@ import java.util.List;
  */
 public class Parser {
 
+    public static Integer parseIntSafe(String target) {
+        if (target == null) {
+            return null;
+        }
+
+        Integer number = null;
+        try {
+            number = Integer.parseInt(target);
+        } catch (NumberFormatException e) {
+            System.err.println(e);
+        }
+
+        return number;
+    }
+
+    public static String[] parseString(String target, String separator) {
+        if (target == null) {
+            return new String[0];
+        }
+
+        return target.split(separator);
+    }
+
+    public static String[] parseStringWithFilledNull(String target, String separator, int expectedArrayLength) {
+        String[] splittedString = parseString(target, separator);
+
+        if (splittedString.length < expectedArrayLength) {
+            return new String[expectedArrayLength];
+        }
+
+        return splittedString;
+    }
+
     public static int[] parseStringToIntegerArray(String target, String separator) {
         if (target == null) {
             return new int[0];

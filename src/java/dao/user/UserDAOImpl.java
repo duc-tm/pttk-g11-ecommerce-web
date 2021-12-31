@@ -33,16 +33,20 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
     private final String CREATE_EMPTY_USER_FULLNAME_SQL = "INSERT INTO fullname (userid) VALUES (?)";
     private final String CREATE_EMPTY_USER_ADDRESS_SQL = "INSERT INTO address (userid) VALUES (?)";
     private final String CREATE_USER_ACCOUNT_SQL = "INSERT INTO account (userid, username, password) values (?, ?, ?)";
+
     private final String GET_USER_BY_USERNAME_SQL = "SELECT * FROM user, account, fullname, address "
             + "WHERE account.username = ? AND user.id = account.userid AND user.id = fullname.userid AND user.id = address.userid";
     private final String GET_USER_BY_USERID_SQL = "SELECT * FROM user, account, fullname, address "
             + "WHERE user.id = ? AND user.id = account.userid AND user.id = fullname.userid AND user.id = address.userid";
+    private final String GET_USER_ADDRESS_BY_USER_ID_SQL = "SELECT * FROM address WHERE userid = ?";
 
     private final String UPDATE_USER_SQL = "UPDATE user SET phone = IFNULL(?, phone), email = IFNULL(?, email), gender = IFNULL(?, gender) WHERE id = ?";
     private final String UPDATE_ADDRESS_SQL = "UPDATE address SET addressdetail = IFNULL(?, addressdetail), "
-            + "district=IFNULL(?, district), "
-            + "city=IFNULL(?, city)"
-            + " WHERE userid = ?";
+            + "district = IFNULL(?, district), "
+            + "city = IFNULL(?, city), "
+            + "shipmentDistrictId = IFNULL(?, shipmentDistrictId), "
+            + "shipmentCityId = IFNULL(?, shipmentCityId) "
+            + "WHERE userid = ?";
     private final String UPDATE_FULLNAME_SQL = "UPDATE fullname SET firstname = IFNULL(?, firstname), "
             + "midname=IFNULL(?, midname), "
             + "lastname=IFNULL(?, lastname) "
@@ -69,7 +73,6 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
     public User createUserAccount(Account account) {
         User user = null;
         PreparedStatement ps;
-        ResultSet rs;
 
         try {
             ps = conn.prepareStatement(CREATE_EMPTY_USER_SQL, Statement.RETURN_GENERATED_KEYS);
@@ -77,7 +80,7 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
             int rowAffected = ps.executeUpdate();
 
             if (rowAffected > 0) {
-                rs = ps.getGeneratedKeys();
+                ResultSet rs = ps.getGeneratedKeys();
 
                 if (rs.next()) {
                     int userId = rs.getInt(1);
@@ -111,6 +114,24 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
             return user;
         }
 
+    }
+
+    @Override
+    public Address getUserAddress(int userId) {
+        Address address = null;
+
+        try (PreparedStatement ps = conn.prepareStatement(GET_USER_ADDRESS_BY_USER_ID_SQL)) {
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                address = Mapper.mapAddress(rs);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return address;
+        }
     }
 
 //    @Override
@@ -153,7 +174,6 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
 //        }
 //        return o;
 //    }
-
 //    @Override
 //    public ArrayList<OrderSTT> getAllOrder(int UserID) {
 //        String sql1 = "SELECT Shipment.Type,Shipment.Cost,shopbanhang.Order.CreatedDate,payment.status,payment.Amount\n"
@@ -185,9 +205,9 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
 //
 //        return listorder;
 //    }
-
     @Override
-    public int getUserID(String phone, String email) {
+    public int getUserID(String phone, String email
+    ) {
         String sql = "Insert into user (Phone,email)  values (?,?);";
         PreparedStatement prestatement;
         ResultSet rs;
@@ -211,8 +231,7 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
     }
 
     @Override
-    public int updateCustomer(User user) {
-
+    public int updateUser(User user) {
         int rowAffected = 0;
 
         try (PreparedStatement prestatement = conn.prepareStatement(UPDATE_USER_SQL)) {
@@ -232,7 +251,7 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
         }
     }
 
-    public int updateFullName(FullName fullName, int userId) {
+    private int updateFullName(FullName fullName, int userId) {
         int rowAffected = 0;
         if (fullName == null) {
             return rowAffected;
@@ -252,7 +271,7 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
         }
     }
 
-    public int updateAddress(Address address, int userId) {
+    private int updateAddress(Address address, int userId) {
         int rowAffected = 0;
         if (address == null) {
             return rowAffected;
@@ -262,7 +281,9 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
             ps.setString(1, address.getAddressDetail());
             ps.setString(2, address.getDistrict());
             ps.setString(3, address.getCity());
-            ps.setInt(4, userId);
+            ps.setString(4, address.getShipmentDistrictId());
+            ps.setString(5, address.getShipmentCityId());
+            ps.setInt(6, userId);
 
             rowAffected = ps.executeUpdate();
         } catch (SQLException ex) {
