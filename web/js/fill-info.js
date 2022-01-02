@@ -231,18 +231,17 @@ function jsonEscape(str) {
         const selectedPaymentType = selectedPaymentTypeEle.value;
         const shipmentCost = document.getElementById('shipping-cost').value;
 
-//        const response = await fetch('http://localhost:8080/g11/user/order/create', {
-//            method: 'POST',
-//            body: new URLSearchParams({
-//                selectedItemJSON,
-//                selectedPaymentType,
-//                selectedShipmentType,
-//                shipmentCost
-//            })
-//        });
-//
-//        const data = await response.text();
-        const data = "201;100"
+        const response = await fetch('http://localhost:8080/g11/customer/order/create', {
+            method: 'POST',
+            body: new URLSearchParams({
+                selectedItemJSON,
+                selectedPaymentType,
+                selectedShipmentType,
+                shipmentCost
+            })
+        });
+
+        const data = await response.text();
         if (data) {
             const dataTokens = data.split(';');
 

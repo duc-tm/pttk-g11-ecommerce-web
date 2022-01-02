@@ -5,6 +5,7 @@
  */
 package model.user;
 
+import model.order.ShipmentSpecificAddress;
 import utils.Jsonlizable;
 
 /**

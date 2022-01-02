@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,41 +24,78 @@ import model.book.BookItem;
 import model.order.Order;
 import model.order.Payment;
 import model.order.Shipment;
+import utils.Parser;
 
 /**
  *
  * @author Admin
  */
-public class OrderController extends HttpServlet {
-    
+public class CustomerOrderController extends HttpServlet {
+
     private OrderDAO orderDAO;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+
+        orderDAO = new OrderDAOImpl();
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param config
+     * @param request
+     * @param response
      * @throws ServletException if a servlet-specific error occurs
+     * @throws java.io.IOException
      */
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        
-        orderDAO = new OrderDAOImpl();
-    }
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String route = request.getPathInfo();
-        
-        Integer userId = getUserIdFromSession(request.getSession(false));
-        
+        System.out.println(route);
+        HttpSession session = request.getSession(false);
+        Integer userId = getUserIdFromSession(session);
+
+//        check login success
         if (userId == null) {
             response.sendRedirect("/g11/auth/logout");
             return;
         }
-        
+
+//        controller for customer role
+        if ((Byte) session.getAttribute("role") != 0) {
+            response.sendRedirect("/g11/error");
+            return;
+        }
+
+        if (route == null) {
+            Integer orderId = Parser.parseIntSafe(request.getParameter("orderid"));
+
+//            get multiple order route
+            if (orderId == null) {
+                int from = 0;
+                int to = 5;
+                Integer status = Parser.parseIntSafe(request.getParameter("status"));
+
+                List<Order> listOrder = getMultipleCustomerOrder(userId, status, from, to);
+                List<List<Pair<BookItem, Integer>>> listBookItem = getAllOrderBookItem(listOrder);
+
+                request.setAttribute("orderList", listOrder);
+                request.setAttribute("listBookItem", listBookItem);
+                forwardRequest(request, response, "/jsp/customer-order.jsp");
+            } else {
+                Order order = getOrder(orderId, userId);
+
+                if (order == null) {
+                    response.sendRedirect("/g11/error");
+                } else {
+                    forwardRequest(request, response, "");
+                }
+            }
+        }
+
     }
 
     /**
@@ -72,37 +110,37 @@ public class OrderController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String route = request.getPathInfo();
-        
+
         Integer userId = getUserIdFromSession(request.getSession(false));
-        
+
         if (userId == null) {
             response.sendRedirect("/g11/auth/logout");
             return;
         }
-        
+
         if (route == null) {
-            
+
         } else if (route.equalsIgnoreCase("/create")) {
             String selectedItemJSON = request.getParameter("selectedItemJSON");
             String selectedPaymentType = request.getParameter("selectedPaymentType");
             String selectedShipmentType = request.getParameter("selectedShipmentType");
             float shipmentCost = Float.parseFloat(request.getParameter("shipmentCost"));
-            
-            boolean isOrderCreated = createOrder(userId, selectedItemJSON, selectedPaymentType, selectedShipmentType, shipmentCost);
-            if (isOrderCreated) {
-                sendResponse(response, "201", "");
+
+            int orderId = createOrder(userId, selectedItemJSON, selectedPaymentType, selectedShipmentType, shipmentCost);
+            if (orderId > 0) {
+                sendResponse(response, "201", orderId + "");
             } else {
                 sendResponse(response, "503", "");
             }
         }
     }
-    
-    private boolean createOrder(int userId, String selectedItemJSON, String selectedPaymentType, String selectedShipmentType, float shipmentCost) {
+
+    private int createOrder(int userId, String selectedItemJSON, String selectedPaymentType, String selectedShipmentType, float shipmentCost) {
         List<Pair<Integer, Integer>> selectedItemIdAndQuantity = parseSelectedItem(selectedItemJSON);
-        
+
 //        pending order
         int orderStatus = 0;
-        
+
 //        unpaid
         int paymentStatus = 0;
         Order order = new Order(
@@ -110,56 +148,79 @@ public class OrderController extends HttpServlet {
                 new Shipment(selectedShipmentType, shipmentCost, "ghn"),
                 new Payment(shipmentCost, paymentStatus, selectedPaymentType)
         );
-        
-        return (orderDAO.createOrder(userId, order, selectedItemIdAndQuantity)) > 0;
+
+        return (orderDAO.createOrder(userId, order, selectedItemIdAndQuantity));
     }
-    
+
     private List<Pair<Integer, Integer>> parseSelectedItem(String selectedItemJSON) {
         List<Pair<Integer, Integer>> selectedItemIdAndQuantity = new ArrayList<>();
-        
+
         String removedBracketStr = selectedItemJSON.substring(1, selectedItemJSON.length() - 1);
         String[] selectedItemArr = removedBracketStr.split(",");
-        
+
         for (String selectedItem : selectedItemArr) {
             String[] tokens = selectedItem.split(":");
             int itemId = Integer.parseInt(tokens[0].substring(1, tokens[0].length() - 1));
             int quantity = Integer.parseInt(tokens[1]);
-            
+
             selectedItemIdAndQuantity.add(new Pair(itemId, quantity));
         }
-        
+
         return selectedItemIdAndQuantity;
     }
-    
+
     private int getCart(int userId) {
         return new CartDAOImpl().getCartByUserID(userId);
     }
-    
+
     private float calcItemTotalPrice(BookItem item, int quantity) {
         return (item.getPrice() - item.getPrice() * item.getDiscount()) * quantity;
     }
-    
-    private Pair<List<BookItem>, List<Integer>> getCartItem(int userId) {
-        int cartId = new CartDAOImpl().getCartByUserID(userId);
-//        Pair<List<BookItem>, List<Integer>> listItem = new ItemDAOImpl().getItemOfCartByCartID(cart.getId());
+
+    private Order getOrder(int orderId, int userId) {
+        Order order = (Order) orderDAO.getOrderDetail(orderId);
+
+        if (order.getUserId() == userId) {
+            return order;
+        }
 
         return null;
     }
-    
+
+    private List<Order> getMultipleCustomerOrder(int userId, Integer status, int from, int to) {
+        return orderDAO.getMultipleOrderInfoOnly(userId, status, from, to);
+    }
+
+    private List<List<Pair<BookItem, Integer>>> getAllOrderBookItem(List<Order> listOrder) {
+        List<List<Pair<BookItem, Integer>>> listBookItem = new ArrayList<>();
+
+        for (Order order : listOrder) {
+            List<Pair<BookItem, Integer>> listBookItemOfOneOrder = orderDAO.getAllOrderBookItem(order.getId());
+            listBookItem.add(listBookItemOfOneOrder);
+        }
+
+        return listBookItem;
+    }
+
     private Integer getUserIdFromSession(HttpSession session) {
         if (session == null || session.getAttribute("userId") == null) {
             return null;
         }
-        
+
         int userId = (Integer) session.getAttribute("userId");
-        
+
         return userId;
     }
-    
+
+    private void forwardRequest(HttpServletRequest request, HttpServletResponse response, String forwardPath) throws ServletException, IOException {
+        RequestDispatcher rd = request.getRequestDispatcher(forwardPath);
+        rd.forward(request, response);
+    }
+
     private void sendResponse(HttpServletResponse response, String responseCode, String responseData) throws IOException {
         response.setHeader("Content-Type", "text/plain");
         response.setCharacterEncoding("UTF-8");
-        
+
         try (PrintWriter writer = response.getWriter()) {
             writer.write(responseCode + ";" + responseData);
         }

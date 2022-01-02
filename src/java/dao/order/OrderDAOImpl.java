@@ -6,6 +6,7 @@
 package dao.order;
 
 import dao.bookitem.BookItemDAOImpl;
+import dao.user.UserDAOImpl;
 import dao.utils.ConDB;
 import dao.utils.Mapper;
 import java.sql.Connection;
@@ -23,7 +24,6 @@ import model.book.BookItem;
 import model.order.Order;
 import model.order.Payment;
 import model.order.Shipment;
-import model.user.UserSTT;
 
 /**
  *
@@ -34,7 +34,19 @@ public class OrderDAOImpl implements OrderDAO {
     private Connection conn;
 
     private final String GET_CART_ID = "INSERT INTO cart (UserID, TotalPrice) VALUES (?, ?);";
-    private final String GET_ALL_SHIPMENT_SQL = "SELECT * FROM shipment";
+    private final String GET_ALL_ORDER = "SELECT * FROM ("
+            + "(`order` INNER JOIN shipment ON `order`.shipmentId = shipment.id) "
+            + "INNER JOIN payment ON `order`.paymentId = payment.id) "
+            + "WHERE `order`.customerUserId = ?";
+    private final String GET_ALL_ORDER_INFO_ONLY_SQL = "SELECT * FROM `order` WHERE `order`.customerUserId = ? LIMIT ?, ?";
+    private final String GET_ALL_ORDER_INFO_ONLY_WITH_STATUS_SQL = "SELECT * FROM `order` WHERE `order`.customerUserId = ? AND status = ? LIMIT ?, ?";
+    private final String GET_ORDER_DETAIL_SQL = "SELECT * FROM `order`, shipment, payment WHERE `order`.id = ? "
+            + "AND `order`.shipmentId = shipment.id "
+            + "AND `order`.paymentId = payment.id";
+    private final String GET_ALL_ORDER_BOOK_ITEM_SQL = "SELECT bookitem.*, orderitem.quantity FROM `order`, orderitem, bookitem "
+            + "WHERE `order`.id = ? "
+            + "AND `order`.id = orderitem.orderId "
+            + "AND orderitem.bookItemId = bookitem.id";
 
     private final String INSERT_PAYMENT_SQL = "INSERT INTO payment (status, amount, type) VALUES (?, ? ,?);";
     private final String INSERT_SHIPMENT_SQL = "INSERT INTO shipment (type, cost, shipUnit) VALUES (?, ? ,?);";
@@ -116,36 +128,6 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public UserSTT getUser(int userID) {
-        String sql = "Select user.Phone,user.mail,address.NumberHouse,address.Street,address.Distincts,address.City,fullname.FirstName,fullname.Midname,fullname.LastName \n"
-                + "from((user\n"
-                + "inner join address on user.ID=address.UserID)\n"
-                + "inner join fullname on user.ID=fullname.UserID) \n"
-                + "Where user.id=" + userID + ";";
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            UserSTT u = new UserSTT();
-            while (rs.next()) {
-                u.setPhone(rs.getString(1));
-                u.setMail(rs.getString(2));
-                u.setNumberHouse(rs.getString(3));
-                u.setStreet(rs.getString(4));
-                u.setDistinct(rs.getString(5));
-                u.setCity(rs.getString(6));
-                u.setFirstname(rs.getString(7));
-                u.setMidname(rs.getString(8));
-                u.setLastname(rs.getString(9));
-            }
-            return u;
-        } catch (SQLException ex) {
-            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-    }
-
-    @Override
     public int addItemsToOrder(Pair listBookItemAndQuantity, int orderID) {
         List<BookItem> bookItem = (List<BookItem>) listBookItemAndQuantity.getKey();
         List<Integer> quantity = (List< Integer>) listBookItemAndQuantity.getValue();
@@ -167,22 +149,6 @@ public class OrderDAOImpl implements OrderDAO {
         return rowCount;
     }
 
-    public List<Shipment> getShipmentList() {
-        List<Shipment> listShipment = new ArrayList<>();
-
-        try (PreparedStatement ps = conn.prepareStatement(GET_ALL_SHIPMENT_SQL)) {
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                listShipment.add(Mapper.mapShipment(rs));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            return listShipment;
-        }
-    }
-
     @Override
     public int createOrder(int customerId, Order order, List listItem) {
         Shipment shipmentInfo = order.getShipmentInfo();
@@ -191,7 +157,7 @@ public class OrderDAOImpl implements OrderDAO {
         int shipmentId = insertShipmentInfo(shipmentInfo.getType(), shipmentInfo.getCost(), shipmentInfo.getShipUnit());
         int paymentId = insertPaymentInfo(paymentInfo.getStatus(), paymentInfo.getAmount(), paymentInfo.getType());
 
-        int rowCount = 0;
+        int orderId = -1;
 
         try (PreparedStatement ps = conn.prepareStatement(INSERT_ORDER_SQL, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, customerId);
@@ -199,16 +165,17 @@ public class OrderDAOImpl implements OrderDAO {
             ps.setInt(3, paymentId);
             ps.setInt(4, order.getStatus());
 
-            rowCount = ps.executeUpdate();
+            ps.executeUpdate();
+
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
-                int orderId = rs.getInt(1);
+                orderId = rs.getInt(1);
                 insertItemOrder(orderId, listItem);
             }
         } catch (SQLException ex) {
             Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            return rowCount;
+            return orderId;
         }
     }
 
@@ -270,6 +237,76 @@ public class OrderDAOImpl implements OrderDAO {
             Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             return shipmentId;
+        }
+    }
+
+    @Override
+    public Order getOrderDetail(int orderId) {
+        Order order = null;
+
+        try (PreparedStatement ps = conn.prepareStatement(GET_ORDER_DETAIL_SQL)) {
+            ps.setInt(1, orderId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                order = Mapper.mapOrder(rs);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return order;
+        }
+    }
+
+    @Override
+    public List<Order> getMultipleOrderInfoOnly(int userId, Integer status, int from, int to) {
+        List<Order> listOrder = new ArrayList<>();
+
+        try {
+            PreparedStatement ps;
+            if (status == null) {
+                ps = conn.prepareStatement(GET_ALL_ORDER_INFO_ONLY_SQL);
+                ps.setInt(1, userId);
+                ps.setInt(2, from);
+                ps.setInt(3, to);
+            } else {
+                ps = conn.prepareStatement(GET_ALL_ORDER_INFO_ONLY_WITH_STATUS_SQL);
+                ps.setInt(1, userId);
+                ps.setInt(2, status);
+                ps.setInt(3, from);
+                ps.setInt(4, to);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Order order = Mapper.mapOrderInfoOnly(rs);
+                listOrder.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return listOrder;
+        }
+    }
+
+    @Override
+    public List<Pair<BookItem, Integer>> getAllOrderBookItem(int orderId) {
+        List<Pair<BookItem, Integer>> listBookItem = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(GET_ALL_ORDER_BOOK_ITEM_SQL)) {
+            ps.setInt(1, orderId);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                BookItem bookItem = Mapper.mapBookItem(rs);
+                int quantity = rs.getInt("quantity");
+
+                listBookItem.add(new Pair(bookItem, quantity));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return listBookItem;
         }
     }
 }

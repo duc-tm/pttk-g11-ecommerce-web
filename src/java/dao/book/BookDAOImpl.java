@@ -101,7 +101,7 @@ public class BookDAOImpl implements BookDAO {
             ps.setString(1, Book.getIBSN());
             ps.setString(2, Book.getTitle());
             ps.setString(3, Book.getSummary());
-            ps.setString(4, Book.getPublicationYear().toString());
+            ps.setString(4, Book.getPublicationYear());
             ps.setInt(5, Book.getNumberOfPage());
             ps.setFloat(6, Book.getCost());
             ps.setString(7, Book.getLanguage());

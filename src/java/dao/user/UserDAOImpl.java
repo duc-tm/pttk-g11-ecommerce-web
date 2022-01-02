@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.order.OrderSTT;
 import model.user.Account;
 import model.user.Address;
 import model.user.FullName;
@@ -24,7 +23,7 @@ import model.user.User;
  *
  * @author Admin
  */
-public class UserDAOImpl implements UserDAO<OrderSTT> {
+public class UserDAOImpl implements UserDAO {
 
     private Connection conn;
 
@@ -134,77 +133,6 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
         }
     }
 
-//    @Override
-//    public OrderSTT viewOrder(int orderID) {
-//        String sql1 = "SELECT * FROM shopbanhang.order WHERE ID=" + orderID + ";";
-//        OrderSTT o = new OrderSTT();
-//        Statement statement;
-//        ResultSet rs;
-//
-//        try {
-//            statement = conn.createStatement();
-//            rs = statement.executeQuery(sql1);
-//            int shipmentid = 0;
-//
-//            while (rs.next()) {
-//                shipmentid = rs.getInt("ShipmentID");
-//                o.setCreatedDate(rs.getDate("CreatedDate"));
-//            }
-//
-//            String sql2 = "SELECT * FROM shopbanhang.shipment WHERE ID=" + shipmentid + ";";
-//            statement = conn.createStatement();
-//            rs = statement.executeQuery(sql2);
-//
-//            while (rs.next()) {
-//                o.setType(rs.getString(2));
-//                o.setCost(rs.getFloat(3));
-//            }
-//
-//            String sql3 = "SELECT * FROM shopbanhang.payment WHERE ID=" + orderID + ";";
-//            statement = conn.createStatement();
-//            rs = statement.executeQuery(sql3);
-//
-//            while (rs.next()) {
-//                o.setStatus(rs.getString(3));
-//                o.setAmmount(rs.getFloat(4));
-//            }
-//
-//        } catch (SQLException ex) {
-//            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return o;
-//    }
-//    @Override
-//    public ArrayList<OrderSTT> getAllOrder(int UserID) {
-//        String sql1 = "SELECT Shipment.Type,Shipment.Cost,shopbanhang.Order.CreatedDate,payment.status,payment.Amount\n"
-//                + "FROM ((shopbanhang.order\n"
-//                + "inner join shipment on shopbanhang.order.ShipmentID = shipment.ID)\n"
-//                + "inner join payment on shopbanhang.order.ID = payment.OrderID)\n"
-//                + "WHERE Shopbanhang.order.UserID =" + UserID + ";";
-//        ArrayList<OrderSTT> listorder = new ArrayList<>();
-//        Statement statement;
-//        ResultSet rs;
-//
-//        try {
-//            statement = conn.createStatement();
-//            rs = statement.executeQuery(sql1);
-//
-//            while (rs.next()) {
-//                OrderSTT o = new OrderSTT();
-//                o.setType(rs.getString(1));
-//                o.setCost(rs.getFloat(2));
-//                o.setCreatedDate(rs.getDate(3));
-//                o.setStatus(rs.getString(4));
-//                o.setAmmount(rs.getFloat(5));
-//                listorder.add(o);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            return null;
-//        }
-//
-//        return listorder;
-//    }
     @Override
     public int getUserID(String phone, String email
     ) {
@@ -245,7 +173,7 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
             rowAffected += updateFullName(user.getFullName(), user.getId());
             rowAffected += updateAddress(user.getAddress(), user.getId());
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.err.println(ex);
         } finally {
             return rowAffected;
         }
@@ -304,7 +232,6 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
             System.out.println(username);
 
             if (rs.next()) {
-
                 user = Mapper.mapUser(rs);
             }
         } catch (SQLException ex) {
@@ -325,8 +252,6 @@ public class UserDAOImpl implements UserDAO<OrderSTT> {
             if (rs.next()) {
                 user = Mapper.mapUser(rs);
             }
-
-            System.out.println("User null ? " + (user == null));
         } catch (SQLException ex) {
             Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

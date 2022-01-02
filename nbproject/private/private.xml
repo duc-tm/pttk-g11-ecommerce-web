@@ -3,19 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/utils/Mapper.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/UserController.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/CartController.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/checkout.jsp</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/js/fill-info.js</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/utils/Parser.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/model/user/ShipmentSpecificAddress.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/user-profile.jsp</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/user/UserDAOImpl.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/css/customer-order.css</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/order/OrderDAOImpl.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/OrderController.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/model/user/Address.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/js/address-api.js</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/customer-order.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/CartController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/CustomerOrderController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/css/variables.css</file>
         </group>
     </open-files>
 </project-private>

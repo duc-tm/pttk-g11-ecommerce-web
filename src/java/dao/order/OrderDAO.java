@@ -5,7 +5,6 @@
  */
 package dao.order;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javafx.util.Pair;
@@ -19,13 +18,17 @@ import model.order.Order;
  */
 public interface OrderDAO<T> {
 
-    int addItemsToOrder(Pair<List<BookItem>, List<Integer>> listBookItemAndQuantity, int orderID);
+    int addItemsToOrder(Pair<List<BookItem>, List<Integer>> listBookItemAndQuantity, int orderId);
 
     int createOrder(int customerId, Order order, List<Pair<Integer, Integer>> listItem);
 
-    int updateOrder(int orderID, String shipType, float cost, Date createdDate, int status, float amount, String payType, String shipUnit);
+    int updateOrder(int orderId, String shipType, float cost, Date createdDate, int status, float amount, String payType, String shipUnit);
 
-    int deleteOrder(int orderID);
+    int deleteOrder(int orderId);
 
-    T getUser(int orderID);
+    T getOrderDetail(int orderId);
+
+    List<T> getMultipleOrderInfoOnly(int userId, Integer status, int from, int to);
+
+    List<Pair<BookItem, Integer>> getAllOrderBookItem(int orderId);
 }

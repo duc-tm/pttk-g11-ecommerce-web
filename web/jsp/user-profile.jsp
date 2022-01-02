@@ -68,7 +68,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="${pageContext.request.contextPath}/user/order">
+                                <a href="${pageContext.request.contextPath}/customer/order">
                                     <i class="fas fa-clipboard-list me-2"></i>
                                     Đơn hàng
                                 </a>

@@ -37,7 +37,7 @@ and open the template in the editor.
 }
 
 .nav-list .nav-item.active a {
-    color: #ee4d2d;
+    color: var(--primary-color);
 }
 
 .nav-list .nav-item img {

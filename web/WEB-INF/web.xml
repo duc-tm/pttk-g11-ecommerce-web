@@ -33,11 +33,7 @@
     </servlet>
     <servlet>
         <servlet-name>OrderController</servlet-name>
-        <servlet-class>controller.OrderController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CustomerController</servlet-name>
-        <servlet-class>controller.CustomerController</servlet-class>
+        <servlet-class>controller.CustomerOrderController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -77,11 +73,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
-        <url-pattern>/user/order/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CustomerController</servlet-name>
-        <url-pattern>/customer</url-pattern>
+        <url-pattern>/customer/order/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

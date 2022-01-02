@@ -66,11 +66,6 @@ public class CheckoutController extends HttpServlet {
             String bookItemArrayJSON = createArrayJSON(getBookItems(itemIdArray));
 
             sendResponse(response, "200", bookItemArrayJSON);
-        } else if (route.equalsIgnoreCase("/api/shipment-list")) {
-            List<Shipment> listShipment = new OrderDAOImpl().getShipmentList();
-            String shipmentArrayJSON = createArrayJSON(listShipment);
-            
-            sendResponse(response, "200", shipmentArrayJSON);
         }
     }
 

@@ -25,7 +25,6 @@ import utils.HashGenerator;
  */
 public class AuthController extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -99,15 +98,6 @@ public class AuthController extends HttpServlet {
         }
     }
 
-    private void sendResponse(HttpServletResponse response, String responseData) throws IOException {
-        response.setHeader("Content-Type", "text/plain");
-        response.setCharacterEncoding("UTF-8");
-
-        PrintWriter writer = response.getWriter();
-        writer.write(responseData);
-        writer.close();
-    }
-
     private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         destroySession(request);
         response.sendRedirect("/g11/home");
@@ -117,6 +107,7 @@ public class AuthController extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("userId", user.getId());
         session.setAttribute("username", user.getAccount().getUsername());
+        session.setAttribute("role", user.getAccount().getRole());
 
         return session;
     }
@@ -126,6 +117,15 @@ public class AuthController extends HttpServlet {
 
         if (session != null) {
             session.invalidate();
+        }
+    }
+
+    private void sendResponse(HttpServletResponse response, String responseData) throws IOException {
+        response.setHeader("Content-Type", "text/plain");
+        response.setCharacterEncoding("UTF-8");
+
+        try (PrintWriter writer = response.getWriter()) {
+            writer.write(responseData);
         }
     }
 

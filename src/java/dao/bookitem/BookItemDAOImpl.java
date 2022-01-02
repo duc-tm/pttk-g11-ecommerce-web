@@ -132,6 +132,7 @@ public class BookItemDAOImpl implements BookItemDAO {
         }
     }
 
+    @Override
     public List<BookItem> getMultipleBookItem(int[] bookItemIdArray) {
         List<BookItem> listBookItem = new ArrayList<>();
 

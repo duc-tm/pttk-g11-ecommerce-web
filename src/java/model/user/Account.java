@@ -14,6 +14,12 @@ public class Account {
     private int id;
     private String username;
     private String password;
+    
+    /**
+     * Account role.
+     * 0 - customer, 1 - admin
+     */
+    private byte role;
 
     public Account() {
     }
@@ -27,6 +33,13 @@ public class Account {
         this.id = id;
         this.username = username;
         this.password = password;
+    }
+
+    public Account(int id, String username, String password, byte role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public int getId() {
@@ -51,6 +64,14 @@ public class Account {
 
     public String getPassword() {
         return password;
+    }
+
+    public byte getRole() {
+        return role;
+    }
+
+    public void setRole(byte role) {
+        this.role = role;
     }
 
 }
