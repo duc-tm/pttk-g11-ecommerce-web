@@ -16,7 +16,7 @@ public class BookItem implements Jsonlizable {
     private int ID;
     private float price;
     private float discount;
-    private String sellingStatus;
+    private int sellingStatus;
     private String description;
     private String image;
     private String name;
@@ -25,7 +25,7 @@ public class BookItem implements Jsonlizable {
     public BookItem() {
     }
 
-    public BookItem(int ID, float price, float discount, String sellingStatus, String description, String image, String name, String category) {
+    public BookItem(int ID, float price, float discount, int sellingStatus, String description, String image, String name, String category) {
         this.ID = ID;
         this.price = price;
         this.discount = discount;
@@ -60,11 +60,11 @@ public class BookItem implements Jsonlizable {
         this.discount = discount;
     }
 
-    public String getSellingStatus() {
+    public int getSellingStatus() {
         return sellingStatus;
     }
 
-    public void setSellingStatus(String sellingStatus) {
+    public void setSellingStatus(int sellingStatus) {
         this.sellingStatus = sellingStatus;
     }
 
@@ -111,7 +111,7 @@ public class BookItem implements Jsonlizable {
                 + ", \"name\": " + getAttributeCheckNull(name)
                 + ", \"price\": " + price
                 + ", \"discount\": " + discount
-                + ", \"sellingStatus\": " + getAttributeCheckNull(sellingStatus)
+                + ", \"sellingStatus\": " + sellingStatus
                 + ", \"image\": " + getAttributeCheckNull(image)
                 + ", \"category\": " + getAttributeCheckNull(category)
                 + "}";

@@ -7,8 +7,10 @@ package dao.utils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import model.book.Author;
 import model.book.Book;
 import model.book.BookItem;
+import model.book.Publisher;
 import model.order.Order;
 import model.order.Payment;
 import model.order.Shipment;
@@ -69,6 +71,7 @@ public class Mapper {
 
     public static Book mapBook(ResultSet rs) throws SQLException {
         int id = rs.getInt("book.id");
+        int bookItemId = rs.getInt("book.bookItemId");
         String isbn = rs.getString("book.ibsn");
         String title = rs.getString("book.tittle");
         String summary = rs.getString("book.sumary");
@@ -79,7 +82,26 @@ public class Mapper {
         int remaningQuantity = rs.getInt("book.remainingQuantity");
         boolean status = rs.getBoolean("book.status");
 
-        return new Book(id, isbn, title, summary, publicationYear, numberOfPage, remaningQuantity, status, cost, language);
+        Book book = new Book(id, isbn, title, summary, publicationYear, numberOfPage, remaningQuantity, status, cost, language);
+        book.setBookItemId(bookItemId);
+        return book;
+    }
+
+    public static Author mapAuthor(ResultSet rs) throws SQLException {
+        int id = rs.getInt("author.id");
+        String name = rs.getString("author.name");
+        String biography = rs.getString("author.biography");
+        String email = rs.getString("author.email");
+        String address = rs.getString("author.address");
+
+        return new Author(id, name, biography, email, address);
+    }
+
+    public static Publisher mapPublisher(ResultSet rs) throws SQLException {
+        int id = rs.getInt("publisher.id");
+        String name = rs.getString("publisher.name");
+
+        return new Publisher(id, name, null);
     }
 
     public static BookItem mapBookItem(ResultSet rs) throws SQLException {
@@ -88,7 +110,7 @@ public class Mapper {
         String description = rs.getString("bookitem.description");
         float price = rs.getFloat("bookitem.price");
         float discount = rs.getFloat("bookitem.discount");
-        String sellingStatus = rs.getString("bookitem.sellingStatus");
+        int sellingStatus = rs.getInt("bookitem.sellingStatus");
         String image = rs.getString("bookitem.image");
         String category = rs.getString("bookitem.category");
 

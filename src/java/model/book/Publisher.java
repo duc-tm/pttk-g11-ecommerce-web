@@ -10,15 +10,20 @@ package model.book;
  * @author DELL
  */
 public class Publisher {
-    private int id; 
+
+    private int id;
     private String name;
     private String address;
 
     public Publisher() {
     }
 
-    public Publisher(int id,String name, String address) {
-        this.id=id;
+    public Publisher(String name) {
+        this.name = name;
+    }
+
+    public Publisher(int id, String name, String address) {
+        this.id = id;
         this.name = name;
         this.address = address;
     }
@@ -46,5 +51,5 @@ public class Publisher {
     public void setAddress(String address) {
         this.address = address;
     }
-    
+
 }

@@ -6,8 +6,6 @@
 package dao.bookitem;
 
 import java.util.List;
-import java.util.Map;
-import javafx.util.Pair;
 import model.book.BookItem;
 
 /**
@@ -21,7 +19,7 @@ public interface BookItemDAO {
     int updateBookItem(BookItem bookitem);
 
     List<BookItem> getMultipleBookItem(int[] bookItemIdArray);
-            
+
     BookItem getBookItem(int id);
 
     List<BookItem> getNewItems(int limit, int from, String itemName);
@@ -29,4 +27,5 @@ public interface BookItemDAO {
     List<BookItem> getNewItemsByCategory(int limit, int from, String category, String itemName);
 
     String getItemCategory(int itemId);
+
 }

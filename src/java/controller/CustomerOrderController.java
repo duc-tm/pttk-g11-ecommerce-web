@@ -41,7 +41,6 @@ public class CustomerOrderController extends HttpServlet {
         orderDAO = new OrderDAOImpl();
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -71,13 +70,13 @@ public class CustomerOrderController extends HttpServlet {
         }
 
         if (route == null) {
-            Integer orderId = Parser.parseIntSafe(request.getParameter("orderid"));
+            Integer orderId = Parser.parseIntSafe(request.getParameter("orderid"), null);
 
 //            get multiple order route
             if (orderId == null) {
                 int from = 0;
                 int to = 5;
-                Integer status = Parser.parseIntSafe(request.getParameter("status"));
+                Integer status = Parser.parseIntSafe(request.getParameter("status"), null);
 
                 List<Order> listOrder = getMultipleCustomerOrder(userId, status, from, to);
                 List<List<Pair<BookItem, Integer>>> listBookItem = getAllOrderBookItem(listOrder);

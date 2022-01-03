@@ -118,7 +118,7 @@ public class BookItemDAOImpl implements BookItemDAO {
             prestatement = conn.prepareStatement(sql2);
             prestatement.setFloat(1, bookitem.getPrice());
             prestatement.setFloat(2, bookitem.getDiscount());
-            prestatement.setString(3, bookitem.getSellingStatus());
+            prestatement.setInt(3, bookitem.getSellingStatus());
             prestatement.setString(4, bookitem.getDescription());
             prestatement.setString(5, bookitem.getImage());
             prestatement.setString(6, bookitem.getName());

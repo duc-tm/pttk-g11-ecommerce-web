@@ -72,9 +72,15 @@ public class AuthController extends HttpServlet {
 
         if (user != null && hashedPassword.equals(user.getAccount().getPassword())) {
             createSession(user, request);
-            sendResponse(response, "201;");
+
+            String redirectPath = "/g11/home";
+            if (user.getAccount().getRole() == 1) {
+                redirectPath = "/g11/staff";
+            }
+
+            sendResponse(response, "200", redirectPath);
         } else {
-            sendResponse(response, "401;");
+            sendResponse(response, "401", "Unauthorized");
         }
     }
 
@@ -89,12 +95,12 @@ public class AuthController extends HttpServlet {
             if (user != null) {
                 int cartId = new CartDAOImpl().createCartByUserID(user.getId());
                 createSession(user, request);
-                sendResponse(response, "201;");
+                sendResponse(response, "201", "Create resource successfully");
             }
 
-            sendResponse(response, "503;");
+            sendResponse(response, "503", "Unexpected server error");
         } else {
-            sendResponse(response, "403;");
+            sendResponse(response, "409", "Resource already exist");
         }
     }
 
@@ -120,12 +126,12 @@ public class AuthController extends HttpServlet {
         }
     }
 
-    private void sendResponse(HttpServletResponse response, String responseData) throws IOException {
+    private void sendResponse(HttpServletResponse response, String responseCode, String responseData) throws IOException {
         response.setHeader("Content-Type", "text/plain");
         response.setCharacterEncoding("UTF-8");
 
         try (PrintWriter writer = response.getWriter()) {
-            writer.write(responseData);
+            writer.write(responseCode + ";" + responseData);
         }
     }
 

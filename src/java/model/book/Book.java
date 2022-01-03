@@ -19,24 +19,38 @@ public class Book {
     private String summary;
     private String publicationYear;
     private int numberOfPage;
-    private int RemainingQuantity;
+    private int remainingQuantity;
     private boolean Status;
     private float cost;
     private String language;
     private Publisher pub;
     private ArrayList<Author> aut;
 
+    private int bookItemId;
+
     public Book() {
     }
 
-    public Book(int id, String IBSN, String title, String summary, String publicationYear, int numberOfPage, int RemainingQuantity, boolean Status, float cost, String language) {
+    public Book(int id, String IBSN, String title, String summary, String publicationYear, int numberOfPage, int remainingQuantity, float cost, String language) {
         this.id = id;
         this.IBSN = IBSN;
         this.title = title;
         this.summary = summary;
         this.publicationYear = publicationYear;
         this.numberOfPage = numberOfPage;
-        this.RemainingQuantity = RemainingQuantity;
+        this.remainingQuantity = remainingQuantity;
+        this.cost = cost;
+        this.language = language;
+    }
+
+    public Book(int id, String IBSN, String title, String summary, String publicationYear, int numberOfPage, int remainingQuantity, boolean Status, float cost, String language) {
+        this.id = id;
+        this.IBSN = IBSN;
+        this.title = title;
+        this.summary = summary;
+        this.publicationYear = publicationYear;
+        this.numberOfPage = numberOfPage;
+        this.remainingQuantity = remainingQuantity;
         this.Status = Status;
         this.cost = cost;
         this.language = language;
@@ -83,11 +97,11 @@ public class Book {
     }
 
     public int getRemainingQuantity() {
-        return RemainingQuantity;
+        return remainingQuantity;
     }
 
-    public void setRemainingQuantity(int RemainingQuantity) {
-        this.RemainingQuantity = RemainingQuantity;
+    public void setRemainingQuantity(int remainingQuantity) {
+        this.remainingQuantity = remainingQuantity;
     }
 
     public boolean getStatus() {
@@ -132,6 +146,18 @@ public class Book {
 
     public String getLanguage() {
         return language;
+    }
+
+    public void setBookItemId(int bookItemId) {
+        this.bookItemId = bookItemId;
+    }
+
+    public boolean isStatus() {
+        return Status;
+    }
+
+    public int getBookItemId() {
+        return bookItemId;
     }
 
     public void setLanguage(String language) {

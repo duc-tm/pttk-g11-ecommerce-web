@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+// login
 (function () {
     document.getElementById('login-form').addEventListener('submit', async function (event) {
         event.preventDefault();
@@ -26,8 +26,9 @@
         const data = await response.text();
         if (data) {
             const dataTokens = data.split(';');
-            if (dataTokens[0] === '201') {
-                document.location.pathname = "/g11/home";
+            if (dataTokens[0] === '200') {
+                const redirectPath = dataTokens[1]
+                document.location.pathname = redirectPath;
             } else if (dataTokens[0] === '401') {
                 document.querySelector('#login-form .form-message').innerText = 'Sai tên tài khoản hoặc mật khẩu';
             }
@@ -35,6 +36,7 @@
     });
 })();
 
+// register
 (function () {
     document.getElementById('register-form').addEventListener('submit', async function (event) {
         event.preventDefault();
@@ -44,7 +46,6 @@
         const password = document.getElementById('register-password').value;
         const rePassword = document.getElementById('register-password-confirm').value;
 
-        console.log(username, password)
         if (rePassword !== password) {
             document.querySelector('#register-form .form-message').innerText = "Nhập lại mật khẩu không khớp!";
             return;
@@ -68,8 +69,8 @@
 
             if (dataTokens[0] === '201') {
                 document.location.pathname = "/g11/home";
-            } else if (dataTokens[0] === '403') {
-                formMessageEle.innerText = 'Tên tài khoản đã tồn tại';
+            } else if (dataTokens[0] === '409') {
+                formMessageEle.innerText = 'Tài khoản đã tồn tại';
             }
         }
     });

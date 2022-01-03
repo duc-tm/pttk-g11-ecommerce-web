@@ -14,14 +14,29 @@ import java.util.List;
  */
 public class Parser {
 
-    public static Integer parseIntSafe(String target) {
+    public static Integer parseIntSafe(String target, Integer defaultValue) {
         if (target == null) {
-            return null;
+            return defaultValue;
         }
 
-        Integer number = null;
+        Integer number = defaultValue;
         try {
             number = Integer.parseInt(target);
+        } catch (NumberFormatException e) {
+            System.err.println(e);
+        }
+
+        return number;
+    }
+
+    public static Float parseFloatSafe(String target, Float defaultValue) {
+        if (target == null) {
+            return defaultValue;
+        }
+
+        Float number = defaultValue;
+        try {
+            number = Float.parseFloat(target);
         } catch (NumberFormatException e) {
             System.err.println(e);
         }

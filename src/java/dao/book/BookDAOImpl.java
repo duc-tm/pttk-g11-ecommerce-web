@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
@@ -27,23 +28,39 @@ import model.book.Publisher;
 public class BookDAOImpl implements BookDAO {
 
     private final Connection conn;
-    private final String DELETE_BOOK_WITH_BOOKID = "DELETE FROM book where ID=? ;";
-    private final String DELETE_BOOK_AUTHOR_WITH_BOOKID = "DELETE FROM bookauthor where BookID=? ;";
-    private final String UPDATE_BOOK = "UPDATE book SET IBSN = ?, Tittle = ?, Sumary = ?, PublicationYear = ?, NumberOfPage = ?, Cost = ?, Language = ?, RemainingQuantity = ?, status = ? WHERE (ID = ?);";
-    private final String UPDATE_AUTHOR = "Update author SET Name=?,Biography=?,Email=?,Adress=?" + "where ID=?";
-    private final String UPDATE_PUBLISHER = "Update publisher SET Name=?,Adress=?" + "where ID=?";
-    private final String GET_BOOK = "SELECT * FROM book where id=?;";
-    private final String GET_BOOK_PUBLISHER = "SELECT * FROM publisher where BookID=?;";
+
+    private final String ADD_AUTHOR = "INSERT INTO author (name, biography, email, address) VALUES (?, ?, ?, ?)";
+    private final String ADD_BOOK_AUTHOR = "INSERT INTO bookauthor (bookId, authorId) VALUES(?, ?)";
+
+    private final String GET_BOOK = "SELECT * FROM book, publisher "
+            + "WHERE book.id = ? "
+            + "AND book.id = publisher.bookId";
+    private final String GET_MULTIPLE_BOOK = "SELECT * FROM book LIMIT ?, ?";
+    private final String GET_BOOK_PUBLISHER = "SELECT * FROM publisher WHERE BookID=?;";
     private final String GET_LIST_BOOK_AUTHOR = "Select author.ID,author.name,author.Biography,author.Email,author.address\n"
             + "FROM ((bookauthor "
             + "INNER JOIN book ON book.ID=bookauthor.BookID) "
             + "INNER JOIN author ON author.ID=bookauthor.AuthorID) "
             + "where book.ID=?;";
     private final String GET_BOOKITEM_WITH_BOOKITEMID = "SELECT * FROM bookitem where ID=?;";
-    private final String DELETE_PUBLISHER_WITH_BOOKID = "DELETE FROM publisher WHERE (BookID = ?);";
-    private final String GET_BOOK_WITH_BOOKITEMID = "SELECT * FROM book where bookItemId=?;";
     private final String GET_BOOKITEMID_WITH_BOOKID = "SELECT BookitemID FROM book where ID=?";
     private final String GET_BOOKID_WITH_BOOKITEMID = "SELECT ID FROM book where BookitemID=?";
+    private final String GET_BOOK_WITH_BOOKITEMID = "SELECT * FROM book where bookItemId=?;";
+
+    private final String GET_AUTHOR_BY_ID = "SELECT * FROM author WHERE id = ?";
+
+    private final String UPDATE_BOOK = "UPDATE book "
+            + "SET IBSN = ?, Tittle = ?, Sumary = ?, PublicationYear = ?, NumberOfPage = ?, Cost = ?, Language = ?, RemainingQuantity = ? "
+            + "WHERE (ID = ?);";
+    private final String UPDATE_AUTHOR = "Update author SET Name=?,Biography=?,Email=?,Address=?" + "where ID=?";
+    private final String UPDATE_PUBLISHER = "UPDATE publisher SET Name = ?, address = IFNULL(?, address) WHERE bookId = ?";
+
+    private final String DELETE_PUBLISHER_WITH_BOOKID = "DELETE FROM publisher WHERE (BookID = ?);";
+    private final String DELETE_BOOK_WITH_BOOKID = "DELETE FROM book where ID=? ;";
+    private final String DELETE_BOOK_AUTHOR_WITH_BOOKID = "DELETE FROM bookauthor WHERE bookID=?";
+    private final String DELETE_AUTHOR = "DELETE FROM author WHERE id=?";
+
+    private final String COUNT_BOOK = "SELECT COUNT(id) from book";
 
     public BookDAOImpl() {
         conn = ConDB.getJDBCCOnection();
@@ -64,16 +81,26 @@ public class BookDAOImpl implements BookDAO {
         }
     }
 
-    public int deleteBookauthor(int bookID) {
+    @Override
+    public int deleteBookAuthor(int bookId, int authorId) {
+        int rowDeleted = 0;
         PreparedStatement ps;
         try {
             ps = conn.prepareStatement(DELETE_BOOK_AUTHOR_WITH_BOOKID);
-            ps.setInt(1, bookID);
-            int rowDeleted = ps.executeUpdate();
-            return rowDeleted;
+            ps.setInt(1, bookId);
+
+            rowDeleted += ps.executeUpdate();
+
+            if (authorId > 0) {
+                ps = conn.prepareStatement(DELETE_AUTHOR);
+                ps.setInt(1, authorId);
+
+                rowDeleted += ps.executeUpdate();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+        } finally {
+            return rowDeleted;
         }
     }
 
@@ -81,7 +108,7 @@ public class BookDAOImpl implements BookDAO {
     public int deleteBook(int id) {
         PreparedStatement ps;
         try {
-            int rowDeleted = deleteBookauthor(id);
+            int rowDeleted = deleteBookAuthor(id, 0);
             int rowDeleted1 = deletePublisher(id);
             ps = conn.prepareStatement(DELETE_BOOK_WITH_BOOKID);
             ps.setInt(1, id);
@@ -94,88 +121,147 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public int updateBook(Book Book) {
-        PreparedStatement ps;
-        try {
-            ps = conn.prepareStatement(UPDATE_BOOK);
-            ps.setString(1, Book.getIBSN());
-            ps.setString(2, Book.getTitle());
-            ps.setString(3, Book.getSummary());
-            ps.setString(4, Book.getPublicationYear());
-            ps.setInt(5, Book.getNumberOfPage());
-            ps.setFloat(6, Book.getCost());
-            ps.setString(7, Book.getLanguage());
-            ps.setInt(8, Book.getRemainingQuantity());
-            ps.setBoolean(9, Book.getStatus());
-            ps.setInt(10, Book.getId());
-            int rowcount1 = ps.executeUpdate();
-            return rowcount1;
+    public int updateBook(Book book) {
+        int rowCount = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE_BOOK)) {
+            ps.setString(1, book.getIBSN());
+            ps.setString(2, book.getTitle());
+            ps.setString(3, book.getSummary());
+            ps.setString(4, book.getPublicationYear());
+            ps.setInt(5, book.getNumberOfPage());
+            ps.setFloat(6, book.getCost());
+            ps.setString(7, book.getLanguage());
+            ps.setInt(8, book.getRemainingQuantity());
+            ps.setInt(9, book.getId());
+
+            rowCount = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+        } finally {
+            return rowCount;
         }
 
     }
 
     @Override
-    public int UpdateAuthor(Author Author) {
-        PreparedStatement ps;
-        try {
-            ps = conn.prepareStatement(UPDATE_AUTHOR);
+    public int updateAuthor(Author Author) {
+        int rowCount = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE_AUTHOR)) {
             ps.setString(1, Author.getName());
             ps.setString(2, Author.getBiography());
             ps.setString(3, Author.getEmail());
             ps.setString(4, Author.getAddress());
             ps.setInt(5, Author.getId());
-            int rowcount2 = ps.executeUpdate();
-            return rowcount2;
+
+            rowCount = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+        } finally {
+            return rowCount;
         }
     }
 
     @Override
-    public int UpdatePublisher(Publisher publisher) {
-        PreparedStatement ps;
-        try {
-            ps = conn.prepareStatement(UPDATE_PUBLISHER);
+    public int updatePublisher(Publisher publisher, int bookId) {
+        int rowCount = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE_PUBLISHER)) {
             ps.setString(1, publisher.getName());
             ps.setString(2, publisher.getAddress());
-            ps.setInt(3, publisher.getId());
-            int rowcount3 = ps.executeUpdate();
-            return rowcount3;
+            ps.setInt(3, bookId);
+
+            rowCount = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+        } finally {
+            return rowCount;
+        }
+    }
+
+    @Override
+    public int addBookAuthor(Author author, int bookId) {
+        int rowCount = 0;
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(ADD_AUTHOR, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, author.getName());
+            ps.setString(2, author.getBiography());
+            ps.setString(3, author.getEmail());
+            ps.setString(4, author.getAddress());
+
+            rowCount = ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                int authorId = rs.getInt(1);
+
+                ps = conn.prepareStatement(ADD_BOOK_AUTHOR);
+                ps.setInt(1, bookId);
+                ps.setInt(2, authorId);
+
+                rowCount += ps.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return rowCount;
         }
     }
 
     @Override
     public Book getBook(int id) {
-        PreparedStatement ps;
-        ResultSet rs;
-        try {
-            ps = conn.prepareStatement(GET_BOOK);
+        Book book = null;
+
+        try (PreparedStatement ps = conn.prepareStatement(GET_BOOK)) {
             ps.setInt(1, id);
-            rs = ps.executeQuery();
-            Book b = new Book();
+
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                b.setId(rs.getInt("book.id"));
-                b.setIBSN(rs.getString("book.IBSN"));
-                b.setTitle(rs.getString("book.tittle"));
-                b.setSummary(rs.getString("book.sumary"));
-                b.setPublicationYear(rs.getString("book.publicationYear"));
-                b.setNumberOfPage(rs.getInt("book.numberOfPage"));
-                b.setCost(rs.getFloat("book.cost"));
-                b.setLanguage(rs.getString("book.language"));
-                b.setRemainingQuantity(rs.getInt("book.RemainingQuantity"));
-                b.setStatus(rs.getBoolean("book.status"));
+                book = Mapper.mapBook(rs);
+                book.setPub(Mapper.mapPublisher(rs));
+                book.setAut(getBookAU(id));
             }
-            return b;
         } catch (SQLException ex) {
             Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+        } finally {
+            return book;
+        }
+    }
+
+    @Override
+    public List<Book> getMultipleBook(int from, int to) {
+        List<Book> listBook = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(GET_MULTIPLE_BOOK)) {
+            ps.setInt(1, from);
+            ps.setInt(2, to);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Book book = Mapper.mapBook(rs);
+                listBook.add(book);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return listBook;
+        }
+    }
+
+    @Override
+    public int getBookCounting() {
+        int count = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(COUNT_BOOK)) {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return count;
         }
     }
 
@@ -246,10 +332,10 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public BookItem getBookIT(int bookitemID) {
         BookItem bookItem = null;
-        
+
         try (PreparedStatement ps = conn.prepareStatement(GET_BOOKITEM_WITH_BOOKITEMID)) {
             ps.setInt(1, bookitemID);
-            
+
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 bookItem = Mapper.mapBookItem(rs);
@@ -297,6 +383,24 @@ public class BookDAOImpl implements BookDAO {
         b.setAut(getBookAU(bookID));
         Pair<BookItem, Book> tmp = new Pair(getBookIT(bookItemID), b);
         return tmp;
+    }
+
+    @Override
+    public Author getAuthorById(int authorId) {
+        Author author = null;
+
+        try (PreparedStatement ps = conn.prepareStatement(GET_AUTHOR_BY_ID)) {
+            ps.setInt(1, authorId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                author = Mapper.mapAuthor(rs);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return author;
+        }
     }
 
 }

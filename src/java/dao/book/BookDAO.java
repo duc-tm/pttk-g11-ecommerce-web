@@ -6,6 +6,7 @@
 package dao.book;
 
 import java.util.ArrayList;
+import java.util.List;
 import javafx.util.Pair;
 import model.book.Author;
 import model.book.Book;
@@ -19,12 +20,14 @@ import model.book.Publisher;
 public interface BookDAO {
 
     int deleteBook(int id);
+    
+    int deleteBookAuthor(int bookId, int authorId);
 
     int updateBook(Book Book);
 
-    int UpdateAuthor(Author Author);
+    int updateAuthor(Author Author);
 
-    int UpdatePublisher(Publisher publisher);
+    int updatePublisher(Publisher publisher, int bookId);
 
     Book getBook(int id);
 
@@ -39,4 +42,12 @@ public interface BookDAO {
     Pair<BookItem, Book> getBookAllSttWithBookID(int bookid);
 
     Pair<BookItem, Book> getBooAllSTTWithBookItemID(int bookItemID);
+
+    Author getAuthorById(int authorId);
+
+    int getBookCounting();
+
+    List<Book> getMultipleBook(int from, int to);
+
+    int addBookAuthor(Author author, int bookId);
 }
