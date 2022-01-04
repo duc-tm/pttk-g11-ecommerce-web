@@ -31,61 +31,63 @@
     <body class="bg-light">
 
         <!-- Nav -->
-        <jsp:include page="components/header.jsp"></jsp:include>
+        <%@include file="/jsp/components/header.jsp" %>
 
-            <!-- payment -->
-            <div class="container my-5 p-3">
-                <br>
-                <div class="ps-3 text-capitalize">
-                    <h3>Thanh toán</h3>
-                </div>
-                <hr>
-                <div class="row row-cols-3 checkout-progress">
-                    <div class="col-3"></div>
-                    <div class="col-6">
-                        <div class="position-relative">
-                            <div class="progress" style="height: 2px;">
-                                <div class="progress-bar progress-bar-animated" style="width: 66%; height: 2px;"></div>
+
+        <!-- payment -->
+        <div class="container my-5 p-3">
+            <br>
+            <div class="ps-3 text-capitalize">
+                <h3>Thanh toán</h3>
+            </div>
+            <hr>
+            <div class="row row-cols-3 checkout-progress">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <div class="position-relative">
+                        <div class="progress" style="height: 2px;">
+                            <div class="progress-bar progress-bar-animated" style="width: 66%; height: 2px;"></div>
+                        </div>
+                        <div class="position-absolute text-center align-content-center" style="left: 16%; bottom: -8px;">
+                            <div><i class="bi-cart-fill me-1 text-primary"></i></div>
+                            <div>
+                                <p class="text-primary mb-2">Giỏ hàng</p>
                             </div>
-                            <div class="position-absolute text-center align-content-center" style="left: 16%; bottom: -8px;">
-                                <div><i class="bi-cart-fill me-1 text-primary"></i></div>
-                                <div>
-                                    <p class="text-primary mb-2">Giỏ hàng</p>
-                                </div>
-                                <div><span class="badge bg-primary text-white ms-1 rounded-pill my-0">1</span></div>
+                            <div><span class="badge bg-primary text-white ms-1 rounded-pill my-0">1</span></div>
+                        </div>
+                        <div class="position-absolute text-center align-content-center" style="left: 45%; bottom: -8px;">
+                            <div><i class="bi-currency-dollar me-1 text-primary"></i></div>
+                            <div>
+                                <p class="text-primary mb-1">Thanh toán</p>
                             </div>
-                            <div class="position-absolute text-center align-content-center" style="left: 45%; bottom: -8px;">
-                                <div><i class="bi-currency-dollar me-1 text-primary"></i></div>
-                                <div>
-                                    <p class="text-primary mb-1">Thanh toán</p>
-                                </div>
-                                <div><span class="badge bg-primary text-white ms-1 rounded-pill my-0">2</span></div>
+                            <div><span class="badge bg-primary text-white ms-1 rounded-pill my-0">2</span></div>
+                        </div>
+                        <div class="position-absolute text-center align-content-center" style="right: 16%; bottom: -8px;">
+                            <div><i class="bi-check-circle me-1 text-secondary"></i></div>
+                            <div>
+                                <p class="text-secondary mb-1">Hoàn tất</p>
                             </div>
-                            <div class="position-absolute text-center align-content-center" style="right: 16%; bottom: -8px;">
-                                <div><i class="bi-check-circle me-1 text-secondary"></i></div>
-                                <div>
-                                    <p class="text-secondary mb-1">Hoàn tất</p>
-                                </div>
-                                <div><span class="badge bg-secondary text-white ms-1 rounded-pill my-0">3</span></div>
-                            </div>
+                            <div><span class="badge bg-secondary text-white ms-1 rounded-pill my-0">3</span></div>
                         </div>
                     </div>
-                    <div class="col-3"></div>
                 </div>
-                <div class="row row-cols-3 mt-5 mb-4 px-5">
-                    <div class="col-4 px-2">
-                        <div class="border pb-2 shadow-sm bg-white rounded" style="height: 100%;">
-                            <div class="px-2 py-2 mb-2" style="background-color: rgb(245, 245, 245);">
-                                <h6 class="m-0">1. ĐỊA CHỈ THANH TOÁN VÀ GIAO HÀNG</h6>
-                            </div>
-                            <div class="py-1 px-3">
-                                <div class="pb-1"><p>THÔNG TIN THANH TOÁN</p></div>
-                                <div class="shipment-info mt-0 row">
-                                    <div class="col my-auto">
-                                        <label class="form-label mb-0">Người Nhận:</label>
-                                    </div>
-                                    <div class="col">
-                                        <input class="form-control-plaintext" readonly value="<c:out value="${user.fullName.toString()}" />" >
+                <div class="col-3"></div>
+            </div>
+            <div class="row row-cols-3 mt-5 mb-4 px-5">
+                <div class="col-4 px-2">
+                    <div class="border pb-2 shadow-sm bg-white rounded" style="height: 100%;">
+                        <div class="px-2 py-2 mb-2" style="background-color: rgb(245, 245, 245);">
+                            <h6 class="m-0">1. ĐỊA CHỈ THANH TOÁN VÀ GIAO HÀNG</h6>
+                        </div>
+                        <div class="py-1 px-3">
+                            <div class="pb-1"><p>THÔNG TIN THANH TOÁN</p></div>
+                            <div id="lack-individual-info-msg" class="text-danger fs-7"></div>
+                            <div class="shipment-info mt-0 row">
+                                <div class="col my-auto">
+                                    <label class="form-label mb-0">Người Nhận:</label>
+                                </div>
+                                <div class="col">
+                                    <input class="form-control-plaintext" readonly value="<c:out value="${user.fullName.toString()}" />" >
                                 </div>
                             </div>
                             <div class="shipment-info d-flex row">
@@ -215,10 +217,11 @@
         </div>
 
         <!-- Footer -->
-        <jsp:include page="components/footer.jsp"></jsp:include>
+        <%@include file="/jsp/components/footer.jsp" %>
 
-            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-            <script src="${pageContext.request.contextPath}/js/fill-info.js"></script>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="${pageContext.request.contextPath}/js/fill-info.js"></script>
 
     </body>
 </html>

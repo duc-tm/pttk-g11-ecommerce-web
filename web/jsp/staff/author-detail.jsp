@@ -96,22 +96,7 @@
         </div>
 
         <!--delete modal-->                    
-        <div class="modal fade" tabindex="-1" id="delete-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Bạn có chắc chắn muốn xóa?</h5>
-                    </div>
-                    <div class="modal-body">
-                        <p>Thông tin đã xóa không thể khôi phục lại</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" id="delete-btn" data-bs-dismiss="modal">Xóa</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%@include file="/jsp/staff/components/delete-modal.jsp" %>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>

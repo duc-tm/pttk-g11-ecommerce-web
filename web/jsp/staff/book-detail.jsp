@@ -76,7 +76,7 @@
                                                                     <a class="author-control text-decoration-none" 
                                                                        href="<c:url value="/staff/book/author/edit?bookid=${book.id}&authorid=${author.id}" />"
                                                                        >
-                                                                        <c:out value="${author.name}" />, 
+                                                                        <c:out value="${author.name}" />; 
                                                                     </a>
                                                                 </li>
                                                             </c:forEach>

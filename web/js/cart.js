@@ -255,38 +255,4 @@ function checkBillUpdate(updatedItem, checkboxChecked) {
         }
     });
 
-
-
-//    const createOrder = async  () => {
-//        saveSelectedItemToSessionStorage();
-//        
-//        const formData = new URLSearchParams();
-//
-//        formData.append('itemIdStr', itemIdStr);
-//
-//        const response = await fetch('http://localhost:8080/g11/user/order/create-order-cart',
-//                {
-//                    method: "POST",
-//                    contentType: "application/x-www-form-urlencoded",
-//                    body: formData,
-//                }
-//        );
-//
-//        const data = await response.text();
-//
-//        if (data) {
-//            const dataTokens = data.split(';');
-//            if (dataTokens[0] === '201') {
-//                window.location.href = 'http://localhost:8080/g11/user/order/fill-info';
-//            } else if (dataTokens[0] === '503') {
-//                Swal.fire({
-//                    icon: 'error',
-//                    title: 'Đã có lỗi xảy ra, vui lòng thử lại sau',
-//                    timer: 2000,
-//                    showCancelButton: false,
-//                });
-//            }
-//        }
-//    }
-
 })();

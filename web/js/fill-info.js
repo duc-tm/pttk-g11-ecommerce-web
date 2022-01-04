@@ -5,6 +5,7 @@
  */
 
 const totalPriceEle = document.getElementById('item-total-price');
+let customerAddressFilled = false;
 
 function jsonEscape(str) {
     return str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
@@ -58,16 +59,6 @@ function jsonEscape(str) {
         return null;
     }
 
-    const customerAddressInfo = await getCustomerAddressInfo();
-
-    if (customerAddressInfo === null) {
-        console.error('GET http://localhost:8080/g11/user/api/get-address FAILED')
-        return;
-    }
-
-// default shop address is Ba Dinh, Ha Noi
-    const shipmentList = await getShipmentList(shopId, shopDistrictId, Number(customerAddressInfo.shipmentDistrictId));
-
     const updateSelectedShipmentCost = async (e) => {
         const serviceId = Number(e.target.value);
         if (serviceId === 0) {
@@ -107,6 +98,27 @@ function jsonEscape(str) {
         }
 
     }
+
+    const customerAddressInfo = await getCustomerAddressInfo();
+
+    if (customerAddressInfo === null) {
+        console.error('GET http://localhost:8080/g11/user/api/get-address FAILED')
+        return;
+    }
+
+    const shipmentDistrictId = Number(customerAddressInfo.shipmentDistrictId);
+    if (!shipmentDistrictId) {
+        customerAddressFilled = false;
+        document.getElementById('lack-individual-info-msg').innerText = 'Thông tin nhận hàng còn thiếu. '
+                + 'Vui lòng điền đầy đủ thông tin nhận hàng trong mục "Tài Khoản Của Tôi"';
+
+        return;
+    } else {
+        customerAddressFilled = true;
+    }
+
+// default shop address is Ba Dinh, Ha Noi
+    const shipmentList = await getShipmentList(shopId, shopDistrictId, shipmentDistrictId);
 
 // create shipment option for select
     shipmentList.forEach((shipment) => {
@@ -173,7 +185,8 @@ function jsonEscape(str) {
 //    insert item info
     orderItemInfoArray.forEach((orderItemInfo, index) => {
         const quantity = selectedItemObject[orderItemInfo.id];
-        totalItemCost += orderItemInfo.price * quantity;
+        const discountedPrice = orderItemInfo.price - orderItemInfo.price * (orderItemInfo.discount / 100);
+        totalItemCost += discountedPrice * quantity;
 
         orderItemContainer.insertAdjacentHTML('beforeend', `
             <li class="d-flex align-items-center justify-content-between">
@@ -182,7 +195,7 @@ function jsonEscape(str) {
                       <span class="item-name">${orderItemInfo.name}</span>
                </div>
                <div class="item-price d-flex align-items-center">
-                       ${new Intl.NumberFormat().format(orderItemInfo.price)}
+                       ${new Intl.NumberFormat().format(discountedPrice)}
                        <sup>đ</sup>
                     <div class="item-multiplier ms-1">
                             x${quantity}
@@ -212,6 +225,17 @@ function jsonEscape(str) {
         if (selectedItemJSON == null) {
             window.location.pathname = "/g11/cart";
             return;
+        }
+
+        if (!customerAddressFilled) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Thông tin nhận hàng còn thiếu',
+                showCancelButton: false,
+                showConfirmButton: true,
+                confirmButtonText: '<a href="/g11/user/account/profile" class="text-decoration-none text-white">Điền thông tin nhận hàng</a>',
+                confirmButtonColor: '#0d6efd'
+            });
         }
 
         // check shipment type selected
@@ -247,7 +271,7 @@ function jsonEscape(str) {
 
             if (dataTokens[0] === '201') {
                 sessionStorage.removeItem('selectedItem');
-                
+
                 const orderId = dataTokens[1];
 
                 Swal.fire({

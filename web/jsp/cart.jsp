@@ -31,33 +31,33 @@
     </head>
     <body class="bg-light">
 
-        <jsp:include page="components/header.jsp"></jsp:include>
+        <%@include file="/jsp/components/header.jsp" %>
 
-            <!-- Cart -->
-            <div class="container my-5 p-3">
-                <div class="ps-3">
-                    <h3 class="text-primary">Giỏ hàng của tôi</h3>
-                </div>
-                <hr>
-                <div class="row mt-5 p-0">
-                    <div>
-                        <table class="table table-borderless shadow-sm bg-white">
-                            <thead style="background-color: rgb(245, 245, 245);">
-                                <tr>
-                                    <th class="text-center"><input type="checkbox" name="" id="select-all-checkbox" class="form-check-input select-item"></th>
-                                    <th>Sản phẩm</th>
-                                    <th>Đơn Giá</th>
-                                    <th>Số lượng</th>
-                                    <th>Số tiền</th>
-                                    <th style="width: 100px;" class="text-center">Thao Tác</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+        <!-- Cart -->
+        <div class="container my-5 p-3">
+            <div class="ps-3">
+                <h3 class="text-primary">Giỏ hàng của tôi</h3>
+            </div>
+            <hr>
+            <div class="row mt-5 p-0">
+                <div>
+                    <table class="table table-borderless shadow-sm bg-white">
+                        <thead style="background-color: rgb(245, 245, 245);">
+                            <tr>
+                                <th class="text-center"><input type="checkbox" name="" id="select-all-checkbox" class="form-check-input select-item"></th>
+                                <th>Sản phẩm</th>
+                                <th>Đơn Giá</th>
+                                <th>Số lượng</th>
+                                <th>Số tiền</th>
+                                <th style="width: 100px;" class="text-center">Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             <c:forEach items="${listItem}" var="item" varStatus="status">
                                 <tr class="align-content-lg-between center item" itemId="<c:out value="${item.ID}"/>">
                                     <td class="text-center"><input type="checkbox" name="" id="" class="form-check-input item-selector"></td>
                                     <td>
-                                        <a href="" class="item-general-info">
+                                        <a href="<c:url value="/product/${item.ID}" />" class="item-general-info">
                                             <div class="item-img">
                                                 <img src="<c:out value="${item.image}"/>" alt="item image">
                                             </div>
@@ -104,11 +104,12 @@
                 <button class="btn btn-primary mt-3" id="pay-now">Thanh toán</button>
             </div>
         </div>
+                    
         <!-- Footer -->
-        <jsp:include page="components/footer.jsp"></jsp:include>
+        <%@include file="/jsp/components/footer.jsp" %>
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            <script src="${pageContext.request.contextPath}/js/cart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/js/cart.js"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </body>
