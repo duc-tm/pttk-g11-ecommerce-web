@@ -76,16 +76,25 @@
                                         <td class="py-3"><c:out value="${book.title}" /></td>
                                         <td class="py-3"><c:out value="${book.publicationYear}" /></td>
                                         <td class="py-3"><c:out value="${book.remainingQuantity}" /></td>
-                                        <td class="py-3"><c:out value="${book.status}" /></td>
+                                        <td class="py-3">
+                                            <c:choose>
+                                                <c:when test="${book.status == true}">
+                                                    Đã lên trang bán
+                                                </c:when>
+                                                <c:otherwise>
+                                                    Chưa lên trang bán
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
                                         <td class="pe-3 py-3 unclickable">
                                             <div class="text-muted d-flex align-items-center justify-content-end">
-                                                <div class="row-control px-2 book-edit-control" 
+                                                <div class="row-control px-2 book-edit-control"
                                                      data-js-href="http://localhost:8080/g11/staff/book/edit?id=<c:out value="${book.id}" />"
                                                      >
                                                     <i class="fas fa-pen-fancy"></i>
                                                 </div>
                                                 <div class="gutter"></div>
-                                                <div class="row-control px-2 book-delete-control">
+                                                <div class="row-control px-2 book-delete-control" data-js-bookid="<c:out value="${book.id}" />">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </div>
                                             </div>
@@ -119,10 +128,20 @@
             })
 
             document.querySelectorAll('.book-delete-control').forEach((deleteControl) => {
-                deleteControl.addEventListener('click', function (e) {
-                    const tableRow = this.closest('tr')
-                    if (tableRow) {
-                        tableRow.remove();
+                deleteControl.addEventListener('click', async function (e) {
+                    const id = this.dataset.jsBookid;
+                    const response = await fetch('http://localhost:8080/g11/staff/book/delete', {
+                        method: 'POST',
+                        body: new URLSearchParams({
+                            id
+                        })
+                    });
+
+                    if (response.status === 200 && response.redirected === true) {
+                        const tableRow = this.closest('tr')
+                        if (tableRow) {
+                            tableRow.remove();
+                        }
                     }
                 })
             })

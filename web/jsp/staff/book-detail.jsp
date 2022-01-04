@@ -27,8 +27,16 @@
                         <div class="book-detail__header d-flex align-items-center justify-content-between mb-3 mt-4">
                             <h3 class="text-capitalize fs-4 mb-0">Chi tiết sách</h3>
                             <div class="book-edit-control d-flex">
-                                <button class="btn btn-danger shadow-sm">Xóa thông tin sách</button>
-                                <a class="btn btn-primary ms-2 shadow-sm" href="<c:url value="/staff/book-item/edit?id=${book.bookItemId}" />">
+                                <div class="book-status-control rounded-pill shadow-sm <c:if test="${book.status == false}">down</c:if>" 
+                                     id="book-status-control" 
+                                     data-js-status="<c:out value="${book.status}" />"
+                                    >
+                                    <div class="status-control-btn">
+                                        <i class="fas fa-chevron-circle-up shadow rounded-circle"></i>
+                                    </div>
+                                </div>
+
+                                <a class="btn btn-primary ms-3 shadow-sm" href="<c:url value="/staff/book-item/edit?id=${book.bookItemId}" />">
                                     Cập nhật thông tin trên trang bán
                                 </a>
                             </div>
@@ -43,7 +51,7 @@
                                                 <div class="form-group">
                                                     <label for="book-isbn" class="form-label">ISBN:</label>
                                                     <input class="form-control" type="text" id="book-isbn" name="isbn" value="<c:out value="${book.IBSN}" />">
-                                                    <input type="hidden" value="<c:out value="${book.id}" />" name="id">
+                                                    <input type="hidden" value="<c:out value="${book.id}" />" name="id" id="book-id">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="book-title" class="form-label">Tiêu đề:</label>
@@ -118,6 +126,7 @@
                                     </div>
                                 </div>
                                 <div class="form-btn text-end mt-3 mb-3">
+                                    <button class="btn btn-danger me-3" data-bs-toggle="modal" data-bs-target="#delete-modal">Xóa thông tin sách</button>
                                     <button class="btn btn-primary min-w-150" type="submit">Lưu</button>
                                 </div>
                             </form>
@@ -126,6 +135,68 @@
                 </div>
             </div>
         </div>
+
+
+        <%@include file="/jsp/staff/components/delete-modal.jsp" %>
+        <form action="<c:url value="/staff/book/delete" />" method="POST" id="delete-form" class="d-none">
+            <input type="hidden" name="id" value="<c:out value="${book.id}" />">
+        </form>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            document.getElementById('book-status-control').addEventListener('click', async function () {
+                const status = !(this.dataset.jsStatus === 'true');
+                const bookId = document.getElementById('book-id').value;
+                this.classList.toggle('down');
+
+                const response = await fetch('http://localhost:8080/g11/staff/book/edit/status', {
+                    method: 'POST',
+                    body: new URLSearchParams({
+                        status,
+                        id: bookId
+                    })
+                });
+
+                const data = await response.text();
+                if (data) {
+                    const dataTokens = data.split(';');
+
+                    if (dataTokens[0] === '201') {
+                        this.dataset.jsStatus = status;
+
+                        if (status) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Sản phẩm đã được đưa lên trang bán',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        } else {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Sản phẩm đã được gỡ khỏi trang bán',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+
+                        return;
+                    }
+                }
+
+                this.classList.toggle('down');
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Có lỗi xảy ra, vui lòng thử lại sau',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+        </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -147,6 +218,12 @@
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
             var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        </script>
+
+        <script>
+            document.getElementById('delete-btn').addEventListener('click', () => {
+                document.getElementById('delete-form').submit();
             })
         </script>
     </body>

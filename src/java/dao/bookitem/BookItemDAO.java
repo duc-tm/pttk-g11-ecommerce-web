@@ -16,7 +16,7 @@ public interface BookItemDAO {
 
     int deleteBookItem(int id);
 
-    int updateBookItem(BookItem bookitem);
+    int updateBookItem(BookItem bookItem);
 
     List<BookItem> getMultipleBookItem(int[] bookItemIdArray);
 

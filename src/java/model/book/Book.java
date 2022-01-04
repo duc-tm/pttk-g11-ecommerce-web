@@ -5,7 +5,7 @@
  */
 package model.book;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -24,7 +24,7 @@ public class Book {
     private float cost;
     private String language;
     private Publisher pub;
-    private ArrayList<Author> aut;
+    private List<Author> aut;
 
     private int bookItemId;
 
@@ -128,11 +128,11 @@ public class Book {
         this.pub = pub;
     }
 
-    public ArrayList<Author> getAut() {
+    public List<Author> getAut() {
         return aut;
     }
 
-    public void setAut(ArrayList<Author> aut) {
+    public void setAut(List<Author> aut) {
         this.aut = aut;
     }
 

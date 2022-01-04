@@ -24,7 +24,7 @@
                 <div class="author-detail px-3">
                     <div class="container-fluid">
                         <div class="author-detail__header d-flex align-items-center justify-content-between mb-3 mt-4">
-                            <h3 class="text-capitalize fs-4 mb-0">Chi tiết sách</h3>
+                            <h3 class="text-capitalize fs-4 mb-0">Chi tiết tác giả</h3>
                             <div class="author-edit-control d-flex">
                                 <button class="btn btn-danger shadow-sm" data-bs-toggle="modal" data-bs-target="#delete-modal">Xóa thông tin tác giả</button>
                                 <a class="btn btn-secondary shadow-sm ms-2" href="<c:url value="/staff/book/edit?id=${bookId}" />">Quay lại</a>

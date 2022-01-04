@@ -41,3 +41,19 @@ and open the template in the editor.
     height: 40px;
     margin-left: 12px;
 }
+
+.user:hover .user-control  {
+    display: flex !important;
+    flex-direction: column;
+}
+
+.user-control {
+    width: 150%;
+    right: 0;
+    padding: 16px 12px;
+}
+
+.user-control a {
+    display: block;
+    padding: 4px 0;
+}

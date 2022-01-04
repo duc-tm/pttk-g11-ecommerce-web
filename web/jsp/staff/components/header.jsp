@@ -35,10 +35,16 @@
                     <li class="menu-item header-item"><i class="far fa-envelope"></i></li>
                 </ul>
             </div>
-            <div class="user">
+            <div class="user position-relative">
                 <div class="user__avatar">
-                    <img class="rounded-circle" src="https://coreui.io/demo/4.0/assets/img/avatars/8.jpg" alt="User avatar"/>
+                    <img class="rounded-circle" src="${sessionScope.avatar}" alt="User avatar"/>
                 </div>
+                <div class="user-control position-absolute d-none shadow bg-white rounded">
+                    <ul class="list-unstyled mb-0" >
+                        <li><a href="${pageContext.request.contextPath}/user/account/profile" class="text-decoration-none text-capitalize">Tài khoản của tôi</a></li>
+                        <li><a href="${pageContext.request.contextPath}/auth/logout" class="text-decoration-none text-capitalize">Đăng xuất</a></li>
+                    </ul>
+                </div>     
             </div>
         </div>
     </div>

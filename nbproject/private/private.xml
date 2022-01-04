@@ -4,11 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/staff/book-detail.jsp</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/staff/author-detail.jsp</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/staff/book-item-detail.jsp</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/customer-order.jsp</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/book/BookDAOImpl.java</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/js/staff/author-detail.js</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/StaffController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/bookitem/BookItemDAOImpl.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/css/staff/book-item-detail.css</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/utils/Parser.java</file>
         </group>
     </open-files>
 </project-private>

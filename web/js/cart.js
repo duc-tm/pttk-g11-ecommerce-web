@@ -46,16 +46,16 @@ function checkBillUpdate(updatedItem, checkboxChecked) {
         element.addEventListener('change', function () {
 //            checkbox change -> update total price
             const container = this.closest('[itemid]');
-            const price = container.querySelector('.item-total-price__input').value;
+            const price = Number(container.querySelector('.item-total-price__input').value);
 
             if (this.checked) {
-                const newPrice = totalBillInput.value + price;
+                const newPrice = Number(totalBillInput.value) + price;
                 totalBill = newPrice;
 
                 billContainer.innerHTML = new Intl.NumberFormat().format(newPrice) + "<sup>đ</sub>"
                 totalBillInput.value = newPrice;
             } else {
-                const newPrice = totalBillInput.value - price;
+                const newPrice = Number(totalBillInput.value) - price;
                 totalBill = newPrice;
 
                 billContainer.innerHTML = new Intl.NumberFormat().format(newPrice) + "<sup>đ</sub>"
@@ -230,9 +230,9 @@ function checkBillUpdate(updatedItem, checkboxChecked) {
         let selectedItem = Array.from(document.querySelectorAll('.item-selector:checked')).reduce((total, element, index) => {
             haveItemSelected = true;
             const itemEle = element.closest('[itemId]');
-
-            const quantity = itemEle.querySelector(`#item-counter-${index} input`).value;
+            
             const itemId = itemEle.getAttribute('itemId');
+            const quantity = itemEle.querySelector(`#item-counter-${itemId} input`).value;
 
             return total + `"${itemId}":${quantity},`;
         }, '{');

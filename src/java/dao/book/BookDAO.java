@@ -20,10 +20,12 @@ import model.book.Publisher;
 public interface BookDAO {
 
     int deleteBook(int id);
-    
+
     int deleteBookAuthor(int bookId, int authorId);
 
     int updateBook(Book Book);
+
+    int updateBookStatus(int bookId, int status);
 
     int updateAuthor(Author Author);
 
@@ -33,7 +35,7 @@ public interface BookDAO {
 
     Publisher getBookPUB(int id);
 
-    ArrayList<Author> getBookAU(int id);
+    List<Author> getBookAU(int id);
 
     BookItem getBookIT(int id);
 

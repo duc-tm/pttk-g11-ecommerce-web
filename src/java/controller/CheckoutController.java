@@ -6,7 +6,6 @@
 package controller;
 
 import dao.bookitem.BookItemDAOImpl;
-import dao.order.OrderDAOImpl;
 import dao.user.UserDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.book.BookItem;
-import model.order.Shipment;
 import model.user.User;
 import utils.Jsonlizable;
 import utils.Parser;
@@ -29,7 +27,6 @@ import utils.Parser;
  */
 public class CheckoutController extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -61,7 +58,7 @@ public class CheckoutController extends HttpServlet {
             rd.forward(request, response);
         } else if (route.equalsIgnoreCase("/api/order-item-info")) {
             String itemIdStr = request.getParameter("orderitemid");
-            int[] itemIdArray = Parser.parseStringToIntegerArray(itemIdStr, ";");
+            int[] itemIdArray = Parser.parseStringToIntegerArray(itemIdStr, ",");
 
             String bookItemArrayJSON = createArrayJSON(getBookItems(itemIdArray));
 

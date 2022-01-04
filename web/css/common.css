@@ -38,3 +38,7 @@
     color: red;
     margin-left: 4px;
 }
+
+.main-content {
+    overflow-y: scroll;
+}

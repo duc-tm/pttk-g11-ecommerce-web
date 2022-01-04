@@ -44,6 +44,15 @@ public class Parser {
         return number;
     }
 
+    public static Boolean parseBooleanSafe(String target, Boolean defaultValue) {
+        if (target == null) {
+            return defaultValue;
+        }
+
+        Boolean bool = Boolean.parseBoolean(target);
+        return bool;
+    }
+
     public static String[] parseString(String target, String separator) {
         if (target == null) {
             return new String[0];

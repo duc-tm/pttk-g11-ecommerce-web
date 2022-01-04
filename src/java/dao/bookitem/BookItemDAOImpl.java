@@ -29,12 +29,21 @@ public class BookItemDAOImpl implements BookItemDAO {
     private final String sql1 = "DELETE FROM bookitem where ID = ?;";
     private final String DELETE_CARTITEM_WITH_BOOKITEMID = "DELETE FROM cartitem where bookitemID = ?;";
     private final String DELETE_ORDERITEM_WITH_BOOKITEMID = "DELETE FROM orderitem where bookitemID = ?;";
-    private final String sql2 = "UPDATE bookitem SET Price = ?, Discount = ?, SellingStatus = ?, Description = ?, Image = ? ,Name = ? ,Category = ? WHERE (ID = ?);";
-    private final String sql3 = "SELECT * FROM bookitem WHERE ID = ?;";
-    private final String GET_NEW_ITEMS_LIMIT_SQL = "SELECT * FROM bookitem WHERE id < ? ORDER BY id DESC LIMIT ?";
-    private final String GET_ITEMS_FILTER_BY_NAME_SQL = "SELECT * FROM bookitem WHERE id < ? AND name LIKE ? ORDER BY id DESC LIMIT ?";
-    private final String GET_NEW_ITEMS_LIMIT_BY_CATEGORY_SQL = "SELECT * FROM bookitem WHERE id <= ? AND category = ? ORDER BY id DESC LIMIT ?";
-    private final String GET_ITEMS_FILTER_BY_CATEGORY_AND_NAME_SQL = "SELECT * FROM bookitem WHERE id <= ? AND category = ? AND name LIKE ? ORDER BY id DESC LIMIT ?";
+    private final String UPDATE_BOOK_ITEM_SQL = "UPDATE bookitem "
+            + "SET price = ?, discount = ?, description = ?, image = ?, name = ?, category = ? WHERE id = ?";
+    private final String GET_BOOK_ITEM_BY_ID_SQL = "SELECT * FROM bookitem WHERE id = ?;";
+    private final String GET_NEW_ITEMS_LIMIT_SQL = "SELECT * FROM bookitem, book "
+            + "WHERE bookitem.id < ? AND bookitem.id = book.bookitemid AND book.status > 0 "
+            + "ORDER BY bookitem.id DESC LIMIT ?";
+    private final String GET_ITEMS_FILTER_BY_NAME_SQL = "SELECT * FROM bookitem, book "
+            + "WHERE bookitem.id < ? AND bookitem.name LIKE ? AND bookitem.id = book.bookitemid AND book.status > 0 "
+            + "ORDER BY bookitem.id DESC LIMIT ?";
+    private final String GET_NEW_ITEMS_LIMIT_BY_CATEGORY_SQL = "SELECT * FROM bookitem, book "
+            + "WHERE bookitem.id <= ? AND bookitem.category = ? AND bookitem.id = book.bookitemid AND book.status > 0"
+            + "ORDER BY bookitem.id DESC LIMIT ?";
+    private final String GET_ITEMS_FILTER_BY_CATEGORY_AND_NAME_SQL = "SELECT * FROM bookitem "
+            + "WHERE bookitem.id <= ? AND bookitem.category = ? AND bookitem.name LIKE ? AND bookitem.id = book.bookitemid AND book.status > 0"
+            + "ORDER BY bookitem.id DESC LIMIT ?";
     private final String GET_ITEM_CATEGORY_SQL = "SELECT category FROM bookitem WHERE id = ?";
     private final String GET_MULTIPLE_BOOK_ITEM_SQL = "SELECT * FROM bookitem WHERE id IN ";
 
@@ -90,7 +99,7 @@ public class BookItemDAOImpl implements BookItemDAO {
 
     @Override
     public int deleteBookItem(int id) {
-        PreparedStatement prestatement;
+        PreparedStatement ps;
         ResultSet rs;
 
         try {
@@ -99,9 +108,9 @@ public class BookItemDAOImpl implements BookItemDAO {
             int bookID = getBookID(id);
             BookDAOImpl bDAO = new BookDAOImpl();
             bDAO.deleteBook(bookID);
-            prestatement = conn.prepareStatement(sql1);
-            prestatement.setInt(1, id);
-            int rowDeleted = prestatement.executeUpdate();
+            ps = conn.prepareStatement(sql1);
+            ps.setInt(1, id);
+            int rowDeleted = ps.executeUpdate();
             return rowDeleted;
         } catch (SQLException ex) {
             Logger.getLogger(BookItemDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -111,24 +120,24 @@ public class BookItemDAOImpl implements BookItemDAO {
     }
 
     @Override
-    public int updateBookItem(BookItem bookitem) {
-        PreparedStatement prestatement;
+    public int updateBookItem(BookItem bookItem) {
 
-        try {
-            prestatement = conn.prepareStatement(sql2);
-            prestatement.setFloat(1, bookitem.getPrice());
-            prestatement.setFloat(2, bookitem.getDiscount());
-            prestatement.setInt(3, bookitem.getSellingStatus());
-            prestatement.setString(4, bookitem.getDescription());
-            prestatement.setString(5, bookitem.getImage());
-            prestatement.setString(6, bookitem.getName());
-            prestatement.setString(7, bookitem.getCategory());
-            prestatement.setInt(8, bookitem.getID());
-            int rowcount1 = prestatement.executeUpdate();
-            return rowcount1;
+        int rowCount = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(UPDATE_BOOK_ITEM_SQL)) {
+            ps.setFloat(1, bookItem.getPrice());
+            ps.setFloat(2, bookItem.getDiscount());
+            ps.setString(3, bookItem.getDescription());
+            ps.setString(4, bookItem.getImage());
+            ps.setString(5, bookItem.getName());
+            ps.setString(6, bookItem.getCategory());
+            ps.setInt(7, bookItem.getID());
+
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BookItemDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+        } finally {
+            return rowCount;
         }
     }
 
@@ -166,7 +175,7 @@ public class BookItemDAOImpl implements BookItemDAO {
     public BookItem getBookItem(int id) {
         BookItem bookItem = new BookItem();
 
-        try (PreparedStatement ps = conn.prepareStatement(sql3)) {
+        try (PreparedStatement ps = conn.prepareStatement(GET_BOOK_ITEM_BY_ID_SQL)) {
             ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();

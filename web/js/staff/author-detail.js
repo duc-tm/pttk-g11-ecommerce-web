@@ -25,7 +25,7 @@
             if (dataTokens[0] === '204') {
                 setTimeout(() => {
                     window.location.href = dataTokens[1];
-                }, 2500);
+                }, 2200);
 
                 Swal.fire({
                     icon: 'success',

@@ -76,7 +76,7 @@
                                     </td>
                                     <td>                                    
                                         <jsp:include page="components/counter.jsp">
-                                            <jsp:param name="id" value="item-counter-${status.index}"/>
+                                            <jsp:param name="id" value="item-counter-${item.ID}"/>
                                             <jsp:param name="quantity" value="${listQuantity[status.index]}" />
                                         </jsp:include>
                                     </td>
