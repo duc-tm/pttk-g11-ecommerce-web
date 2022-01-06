@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.book.BookItem;
+import model.user.User;
 
 /**
  *
@@ -142,7 +143,7 @@ public class CartController extends HttpServlet {
         if (cartItemId > 0) {
             rowAffected = cartDAO.addExistedItemToCart(cartItemId, itemQuantityNumber);
         } else {
-            int cartId = cartDAO.getCartByUserID(userId);
+            int cartId = cartDAO.getCartByUserID(new User(userId, null, null));
             if (cartId > 0) {
                 rowAffected = cartDAO.addItemToCart(itemQuantityNumber, cartId, itemIdNumber);
             }
@@ -152,7 +153,7 @@ public class CartController extends HttpServlet {
     }
 
     private boolean deleteItemInCart(int itemId, int userId) {
-        int cartId = cartDAO.getCartByUserID(userId);
+        int cartId = cartDAO.getCartByUserID(new User(userId, null, null));
 
         int rowCount = cartDAO.deleteItemInCartByItemID(itemId, cartId);
         if (rowCount > 0) {

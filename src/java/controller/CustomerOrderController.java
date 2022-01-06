@@ -24,6 +24,7 @@ import model.book.BookItem;
 import model.order.Order;
 import model.order.Payment;
 import model.order.Shipment;
+import model.user.User;
 import utils.Parser;
 
 /**
@@ -169,7 +170,7 @@ public class CustomerOrderController extends HttpServlet {
     }
 
     private int getCart(int userId) {
-        return new CartDAOImpl().getCartByUserID(userId);
+        return new CartDAOImpl().getCartByUserID(new User(userId, null, null));
     }
 
     private float calcItemTotalPrice(BookItem item, int quantity) {

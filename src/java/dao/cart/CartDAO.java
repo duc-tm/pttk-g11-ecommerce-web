@@ -5,7 +5,7 @@
  */
 package dao.cart;
 
-import model.order.Cart;
+import model.user.User;
 
 /**
  *
@@ -13,7 +13,7 @@ import model.order.Cart;
  */
 public interface CartDAO {
 
-    public int getCartByUserID(int userId);
+    public int getCartByUserID(User user);
 
     public int createCartByUserID(int ID);
 

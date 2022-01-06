@@ -5,16 +5,14 @@
  */
 package dao.user;
 
-import java.util.ArrayList;
-import java.util.Date;
 import model.user.Account;
 import model.user.Address;
-import model.user.FullName;
 import model.user.User;
 
 /**
  *
  * @author DELL
+ * @param <T>
  */
 public interface UserDAO<T> {
 
@@ -31,6 +29,4 @@ public interface UserDAO<T> {
     User createUserAccount(Account account);
 
     int updateUser(User user);
-//    T viewOrder(int orderID);
-//    ArrayList<T> getAllOrder(int UserID);
 }

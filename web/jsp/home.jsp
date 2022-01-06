@@ -53,7 +53,7 @@
                                 </div>
                                 <hr class="text-muted"/>
                                 <div class="row-cols-1 g-3">
-                                    <div class="mb-3">
+<!--                                    <div class="mb-3">
                                         <a class="home-product__item" href="#">
                                             <div class="home-product__item-img"
                                                  style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
@@ -84,7 +84,7 @@
                                                 <span class="home-product__item-country">Nhật bản</span>
                                             </div>
                                         </a>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -111,17 +111,7 @@
                                 <!-- The slideshow/carousel -->
                                 <div class="carousel-inner">
                                     <div class="carousel-item active">
-                                        <img src="https://cf.shopee.sg/file/db7ac0e40911209bd2bfb23734c44a12_xxhdpi" alt="Los Angeles" class="d-block py-2" style="width:100%">
-                                        <div class="carousel-caption text-black">
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="https://cf.shopee.sg/file/dbb46a96d0f77fb69fd7276d06314093_xxhdpi" alt="Los Angeles" class="d-block py-2" style="width:100%">
-                                        <div class="carousel-caption text-black">
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="https://cf.shopee.sg/file/248aed9bfe0583e760c893800ef6af00_xxhdpi" alt="Los Angeles" class="d-block py-2" style="width:100%">
+                                        <img src="https://cdn0.fahasa.com/media/magentothem/banner7/TrangMonthlySale_T122_mainbanner__920x420.jpg" alt="Los Angeles" class="d-block py-2" style="width:100%">
                                         <div class="carousel-caption text-black">
                                         </div>
                                     </div>
@@ -149,54 +139,40 @@
                                         <div class="category-list">
                                             <h5 class="">
                                                 <a href="${pageContext.request.contextPath}/product?category=2" class="text-black text-decoration-none">
-                                                <img src="https://cf.shopee.vn/file/75ea42f9eca124e9cb3cde744c060e4d_tn" alt="fashion">
-                                                Thời trang
+                                                <!--<img src="https://cdn0.fahasa.com/media/catalog/product/cache/1/small_image/400x400/9df78eab33525d08d6e5fb8d27136e95/n/a/naruto---tap-67.jpg" alt="fashion">-->
+                                                Sách thiếu nhi
                                             </a>
                                         </h5>
-                                        <a href="${pageContext.request.contextPath}/product?category=2&for=male" class="text-black text-decoration-none">Thời trang nam</a>
-                                        <a href="${pageContext.request.contextPath}/product?category=2&for=female" class="text-black text-decoration-none">Thời trang nữ</a>
-                                        <a href="${pageContext.request.contextPath}/product?category=2&for=kid" class="text-black text-decoration-none">Thời trang trẻ em</a>
                                     </div>
                                 </div>
                                 <div class="col-3 text-start">
                                     <div class="category-list">
                                         <h5 class="">
                                             <a href="${pageContext.request.contextPath}/product?category=3" class="text-black text-decoration-none">
-                                                <img src="https://cf.shopee.vn/file/74ca517e1fa74dc4d974e5d03c3139de_tn" alt="shoes">
-                                                Giày
+                                                <!--<img src="https://cf.shopee.vn/file/74ca517e1fa74dc4d974e5d03c3139de_tn" alt="shoes">-->
+                                                Sách trong nước
                                             </a>
                                         </h5>
-                                        <a href="${pageContext.request.contextPath}/product?category=3" class="text-black text-decoration-none">Giày thể thao</a>
-                                        <a href="${pageContext.request.contextPath}/product?category=3" class="text-black text-decoration-none">Giày lười</a>
-                                        <a href="${pageContext.request.contextPath}/product?category=3" class="text-black text-decoration-none">Giày da</a>
                                     </div>
                                 </div>
                                 <div class="col-3 text-start">
                                     <div class="category-list">
                                         <h5 class="">
                                             <a href="${pageContext.request.contextPath}/product?category=1" class="text-black text-decoration-none">
-                                                <img src="https://cf.shopee.vn/file/36013311815c55d303b0e6c62d6a8139_tn" alt="books">
-                                                Sách
+                                                <!--<img src="https://cf.shopee.vn/file/36013311815c55d303b0e6c62d6a8139_tn" alt="books">-->
+                                                Sách nước ngoài
                                             </a>
                                         </h5>
-                                        <a href="${pageContext.request.contextPath}/product?category=1" class="text-black text-decoration-none">Tiểu thuyết</a>
-                                        <a href="${pageContext.request.contextPath}/product?category=1" class="text-black text-decoration-none">Sách văn học</a>
-                                        <a href="${pageContext.request.contextPath}/product?category=1" class="text-black text-decoration-none">Sách đời sống xã hội</a>
-
-                                        <a href="" class="text-black text-decoration-none">Truyện tranh</a>
                                     </div>
                                 </div>
                                 <div class="col-3 text-start">
                                     <div class="category-list">
                                         <h5 class="">
                                             <a href="${pageContext.request.contextPath}/product?category=4" class="text-black text-decoration-none">
-                                                <img src="https://cf.shopee.vn/file/978b9e4cb61c611aaaf58664fae133c5_tn" alt="electronics">
-                                                Đồ điện tử
+                                                <!--<img src="https://cf.shopee.vn/file/978b9e4cb61c611aaaf58664fae133c5_tn" alt="electronics">-->
+                                                E-book
                                             </a>
                                         </h5>
-                                        <a href="${pageContext.request.contextPath}/product?category=4&type=laptop" class="text-black text-decoration-none">Laptop</a>
-                                        <a href="${pageContext.request.contextPath}/product?category=4&type=mobile" class="text-black text-decoration-none">Điện thoại</a>
-                                        <a href="${pageContext.request.contextPath}/product?category=4&type=television" class="text-black text-decoration-none">TV</a>
                                     </div>
                                 </div>
                             </div>
@@ -214,7 +190,7 @@
                             </div>
                             <hr class="text-muted"/>
                             <div class="row-cols-1 g-3">
-                                <div class="mb-3">
+<!--                                <div class="mb-3">
                                     <a class="home-product__item" href="#">
                                         <div class="home-product__item-img"
                                              style="background-image: url(https://cf.shopee.vn/file/2df142298b8762051efcf635c368d99d);">
@@ -245,7 +221,7 @@
                                             <span class="home-product__item-country">Nhật bản</span>
                                         </div>
                                     </a>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>

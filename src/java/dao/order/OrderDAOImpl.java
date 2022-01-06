@@ -5,8 +5,6 @@
  */
 package dao.order;
 
-import dao.bookitem.BookItemDAOImpl;
-import dao.user.UserDAOImpl;
 import dao.utils.ConDB;
 import dao.utils.Mapper;
 import java.sql.Connection;
@@ -24,6 +22,7 @@ import model.book.BookItem;
 import model.order.Order;
 import model.order.Payment;
 import model.order.Shipment;
+import model.user.User;
 
 /**
  *
@@ -142,7 +141,7 @@ public class OrderDAOImpl implements OrderDAO {
 
                 rowCount += ps.executeUpdate();
             } catch (SQLException ex) {
-                Logger.getLogger(BookItemDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -243,6 +242,7 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public Order getOrderDetail(int orderId) {
         Order order = null;
+        User user = null;
 
         try (PreparedStatement ps = conn.prepareStatement(GET_ORDER_DETAIL_SQL)) {
             ps.setInt(1, orderId);
@@ -250,9 +250,10 @@ public class OrderDAOImpl implements OrderDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 order = Mapper.mapOrder(rs);
+                user = Mapper.mapUser(rs);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             return order;
         }
@@ -283,7 +284,7 @@ public class OrderDAOImpl implements OrderDAO {
                 listOrder.add(order);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OrderDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             return listOrder;
         }

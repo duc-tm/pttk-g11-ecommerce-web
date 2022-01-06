@@ -47,10 +47,13 @@
                                 <hr class="text-muted">
                                 <ul class="category-list list-unstyled">
                                     <li class="category-list__item">
-                                        <a href="" >Quần áo nam</a>
+                                        <a href="" >Sách thiếu nhi</a>
                                     </li>
                                     <li class="category-list__item">
-                                        <a href="" >Quần áo nữ</a>
+                                        <a href="" >Sách trong nước</a>
+                                    </li>
+                                    <li class="category-list__item">
+                                        <a href="" >Sách nước ngoài</a>
                                     </li>
                                 </ul>
                             </div>
@@ -58,18 +61,6 @@
                                 <h5 class="filter-heading text-capitalize fs-6"><i class="fas fa-filter me-2"></i>Bộ lọc tìm kiếm</h5>
                                 <hr class="text-muted"/>
                                 <div class="filter-criteria">
-                                    <div class="filter-citeria__brand text-capitalize d-flex flex-column">
-                                        <div class="text-capitalize mb-3">Thương hiệu</div>
-                                        <div class="form-group">
-                                            <input type="checkbox" class="form-check-input" value="MLB" id="brand-1">
-                                            <label class="form-check-label ms-2" for="brand-1">MLB</label>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="checkbox" class="form-check-input" value="MLB" id="brand-2">
-                                            <label class="form-check-label ms-2" for="brand-2">Tommy</label>
-                                        </div>                                      
-                                    </div>
-                                    <hr class="text-muted"/>
                                     <div class="filter-criteria__price">
                                         <div class="price-range">
                                             <div class="text-capitalize my-3">Khoảng giá</div>
@@ -90,19 +81,6 @@
                                 <span class="home-filter__label">Sắp xếp theo</span>
                                 <button class="home-filter__bt bt bt--primary">Mới nhất</button>
                                 <button class="home-filter__bt bt">Bán chạy</button>
-
-                                <div class="select-input">
-                                    <span class="select-input__label">Giá</span>
-                                    <i class="select-input__icon fas fa-angle-down"></i>
-                                    <ul class="select-input__list shadow-sm">
-                                        <li class="select-input__item">
-                                            <a href="" class="select-input__link">Giá: Thấp đến cao</a>
-                                        </li>
-                                        <li class="select-input__item">
-                                            <a href="" class="select-input__link">Giá: Cao đến thấp</a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
 
                             <div class="home-product">

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
+import model.user.User;
 
 /**
  *
@@ -42,11 +43,11 @@ public class CartDAOImpl implements CartDAO {
     }
 
     @Override
-    public int getCartByUserID(int userId) {
+    public int getCartByUserID(User user) {
         int cartId = -1;
 
         try (PreparedStatement ps = conn.prepareStatement(GET_CART_BY_USERID)) {
-            ps.setInt(1, userId);
+            ps.setInt(1, user.getId());
 
             ResultSet rs = ps.executeQuery();
 

@@ -6,11 +6,17 @@
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/staff/book-detail.jsp</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/staff/book-item-detail.jsp</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/customer-order.jsp</file>
-            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/book/BookDAOImpl.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/checkout.jsp</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/StaffController.java</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/bookitem/BookItemDAOImpl.java</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/css/staff/book-item-detail.css</file>
             <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/utils/Parser.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/js/fill-info.js</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/css/staff/header.css</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/dao/book/BookDAOImpl.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/BookController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/src/java/controller/AuthController.java</file>
+            <file>file:/D:/Code/NetBeansWorkSpace/%20pttk-g11-ecommerce-web/web/jsp/staff/components/header.jsp</file>
         </group>
     </open-files>
 </project-private>

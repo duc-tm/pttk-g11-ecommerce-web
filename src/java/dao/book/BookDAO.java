@@ -5,7 +5,6 @@
  */
 package dao.book;
 
-import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 import model.book.Author;
