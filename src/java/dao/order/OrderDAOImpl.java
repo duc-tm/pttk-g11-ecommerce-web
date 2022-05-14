@@ -149,7 +149,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public int createOrder(int customerId, Order order, List listItem) {
+    public int createOrder(User user, Order order, List listItem) {
         Shipment shipmentInfo = order.getShipmentInfo();
         Payment paymentInfo = order.getPaymentInfo();
 
@@ -159,7 +159,7 @@ public class OrderDAOImpl implements OrderDAO {
         int orderId = -1;
 
         try (PreparedStatement ps = conn.prepareStatement(INSERT_ORDER_SQL, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, customerId);
+            ps.setInt(1, user.getId());
             ps.setInt(2, shipmentId);
             ps.setInt(3, paymentId);
             ps.setInt(4, order.getStatus());

@@ -5,6 +5,8 @@
  */
 package dao.cart;
 
+import java.util.List;
+import javafx.util.Pair;
 import model.user.User;
 
 /**
@@ -14,6 +16,8 @@ import model.user.User;
 public interface CartDAO {
 
     public int getCartByUserID(User user);
+    
+    Pair<List<Integer>, List<Integer>> getBookInCartByUserId(int userId);
 
     public int createCartByUserID(int ID);
 

@@ -149,7 +149,7 @@ public class CustomerOrderController extends HttpServlet {
                 new Payment(shipmentCost, paymentStatus, selectedPaymentType)
         );
 
-        return (orderDAO.createOrder(userId, order, selectedItemIdAndQuantity));
+        return (orderDAO.createOrder(new User(userId, null, null), order, selectedItemIdAndQuantity));
     }
 
     private List<Pair<Integer, Integer>> parseSelectedItem(String selectedItemJSON) {
