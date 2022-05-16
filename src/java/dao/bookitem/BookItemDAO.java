@@ -28,4 +28,5 @@ public interface BookItemDAO {
 
     String getItemCategory(int itemId);
 
+    int getTotalPage();
 }

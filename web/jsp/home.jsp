@@ -127,7 +127,7 @@
                             </div>
                         </div>
 
-                        <!-- Danh mục hàng -->
+<!--                         Danh mục hàng 
                         <div class="row row-cols-1 bg-white mt-5 shadow-sm">
                             <div class="col py-3">
                                 <div class="text-center text-uppercase">
@@ -139,7 +139,7 @@
                                         <div class="category-list">
                                             <h5 class="">
                                                 <a href="${pageContext.request.contextPath}/product?category=2" class="text-black text-decoration-none">
-                                                <!--<img src="https://cdn0.fahasa.com/media/catalog/product/cache/1/small_image/400x400/9df78eab33525d08d6e5fb8d27136e95/n/a/naruto---tap-67.jpg" alt="fashion">-->
+                                                <img src="https://cdn0.fahasa.com/media/catalog/product/cache/1/small_image/400x400/9df78eab33525d08d6e5fb8d27136e95/n/a/naruto---tap-67.jpg" alt="fashion">
                                                 Sách thiếu nhi
                                             </a>
                                         </h5>
@@ -149,7 +149,7 @@
                                     <div class="category-list">
                                         <h5 class="">
                                             <a href="${pageContext.request.contextPath}/product?category=3" class="text-black text-decoration-none">
-                                                <!--<img src="https://cf.shopee.vn/file/74ca517e1fa74dc4d974e5d03c3139de_tn" alt="shoes">-->
+                                                <img src="https://cf.shopee.vn/file/74ca517e1fa74dc4d974e5d03c3139de_tn" alt="shoes">
                                                 Sách trong nước
                                             </a>
                                         </h5>
@@ -159,7 +159,7 @@
                                     <div class="category-list">
                                         <h5 class="">
                                             <a href="${pageContext.request.contextPath}/product?category=1" class="text-black text-decoration-none">
-                                                <!--<img src="https://cf.shopee.vn/file/36013311815c55d303b0e6c62d6a8139_tn" alt="books">-->
+                                                <img src="https://cf.shopee.vn/file/36013311815c55d303b0e6c62d6a8139_tn" alt="books">
                                                 Sách nước ngoài
                                             </a>
                                         </h5>
@@ -169,7 +169,7 @@
                                     <div class="category-list">
                                         <h5 class="">
                                             <a href="${pageContext.request.contextPath}/product?category=4" class="text-black text-decoration-none">
-                                                <!--<img src="https://cf.shopee.vn/file/978b9e4cb61c611aaaf58664fae133c5_tn" alt="electronics">-->
+                                                <img src="https://cf.shopee.vn/file/978b9e4cb61c611aaaf58664fae133c5_tn" alt="electronics">
                                                 E-book
                                             </a>
                                         </h5>
@@ -177,7 +177,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
 
 
@@ -235,138 +235,6 @@
             <div class="banner-sale px-4">
                 <img src="https://www.magiamgiaonline.com/wp-content/uploads/2019/03/m%C3%A3-gi%E1%BA%A3m-gi%C3%A1-banner.jpeg" alt="">
                 <img src="http://thegioidohoacom.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2019/01/10040532/201807120816_banner-bai-viet-ctkm-hung-tuy-1511235823.jpg" alt="">
-            </div>
-        </div>
-
-        <!-- Slider Best Seller -->
-
-        <div class="container px-5">
-            <div class="bg-white best-seller py-2 rounded shadow-sm">
-                <div class="d-flex align-items-center justify-content-between text-capitalize mt-2 mb-3 px-4">
-                    <h4 class="mb-0 fw-normal">Best Seller</h4>
-                    <a href="" class="best-seller__view-all-link">
-                        Xem tất cả
-                        <i class="fas fa-chevron-right"></i>
-                    </a>
-                </div>
-                <hr class="text-muted" />
-
-                <div id="best-seller-carousel" class="carousel slide ps-3" data-bs-ride="carousel">
-
-                    <!-- The slideshow/carousel -->
-                    <div class="carousel-inner custom-carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row row-cols-4 g-5">
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row row-cols-4 g-5">
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="best-seller__item">
-                                        <div class="best-seller__badge bg-danger text-white">HOT</div>
-                                        <img src="https://cf.shopee.vn/file/46f4a1c42ce6c897c179817f956bea8f_tn" />
-                                        <div class="best-seller__item-selling-status">Bán <span class="best-seller__item-selling-amount">81k+</span> / tháng</div>
-                                        <div class="best-seller__item-caption">Quần Ống Rộng Nữ</div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right controls/icons -->
-                    <button class="carousel-control-next" type="button" data-bs-target="#best-seller-carousel"
-                            data-bs-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
-                </div>
             </div>
         </div>
 

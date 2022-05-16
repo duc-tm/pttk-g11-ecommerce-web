@@ -41,7 +41,6 @@
                 </div>
                 <div class="user-control position-absolute d-none shadow bg-white rounded">
                     <ul class="list-unstyled mb-0" >
-                        <li><a href="${pageContext.request.contextPath}/user/account/profile" class="text-decoration-none text-capitalize">Tài khoản của tôi</a></li>
                         <li><a href="${pageContext.request.contextPath}/auth/logout" class="text-decoration-none text-capitalize">Đăng xuất</a></li>
                     </ul>
                 </div>     

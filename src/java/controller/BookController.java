@@ -7,6 +7,7 @@ package controller;
 
 import dao.book.BookDAO;
 import dao.book.BookDAOImpl;
+import dao.bookitem.BookItemDAO;
 import dao.bookitem.BookItemDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,13 +29,15 @@ import model.book.BookItem;
 public class BookController extends HttpServlet {
 
     private BookDAO bookDAO;
-    private final int limitItemPerPage = 15;
+    private BookItemDAO bookItemDAO;
+    private final int limitItemPerPage = 12;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
 
         bookDAO = new BookDAOImpl();
+        bookItemDAO = new BookItemDAOImpl();
     }
 
     /**
@@ -58,8 +61,10 @@ public class BookController extends HttpServlet {
             int pageNumber = getPageNumber(page);
 
             List<BookItem> listItem = getItems(pageNumber, searchQuery);
+            int totalPage = getTotalPage();
 
             request.setAttribute("listItem", listItem);
+            request.setAttribute("totalPage", totalPage);
             RequestDispatcher rd = request.getRequestDispatcher("/jsp/list-item.jsp");
             rd.forward(request, response);
 
@@ -123,9 +128,13 @@ public class BookController extends HttpServlet {
     }// </editor-fold>
 
     private List<BookItem> getItems(int page, String searchQuery) {
-        int from = page * limitItemPerPage + limitItemPerPage;
-        List<BookItem> listItem = new BookItemDAOImpl().getNewItems(limitItemPerPage, from, searchQuery);
+        int from = page * limitItemPerPage - limitItemPerPage;
+        List<BookItem> listItem = bookItemDAO.getNewItems(limitItemPerPage, from, searchQuery);
         return listItem;
+    }
+
+    private int getTotalPage() {
+        return bookItemDAO.getTotalPage();
     }
 
     private int getPageNumber(String page) {
@@ -133,7 +142,7 @@ public class BookController extends HttpServlet {
             return Integer.parseInt(page);
         }
 
-        return 0;
+        return 1;
     }
 
     private boolean checkBookAvailable(int quantity, Book book) {

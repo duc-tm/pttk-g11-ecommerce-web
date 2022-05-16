@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,8 +31,11 @@ public class BookDAOImpl implements BookDAO {
     private final Connection conn;
 
     private final String ADD_AUTHOR = "INSERT INTO author (name, biography, email, address) VALUES (?, ?, ?, ?)";
-    private final String ADD_BOOK_AUTHOR = "INSERT INTO bookauthor (bookId, authorId) VALUES(?, ?)";
-
+    private final String ADD_BOOK_AUTHOR = "INSERT INTO bookauthor (bookId, authorId) VALUES";
+    private final String ADD_BOOK = "INSERT INTO book (bookItemId, ibsn, title, sumary, publicationYear, numberOfPage, cost, language, remainingQuantity, status) "
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private final String ADD_PUBLISHER = "INSERT INTO publisher (bookId, name) VALUES (?, ?)";
+    
     private final String GET_BOOK = "SELECT * FROM book, publisher "
             + "WHERE book.id = ? "
             + "AND book.id = publisher.bookId";
@@ -48,9 +52,10 @@ public class BookDAOImpl implements BookDAO {
     private final String GET_BOOK_WITH_BOOKITEMID = "SELECT * FROM book where bookItemId=?;";
 
     private final String GET_AUTHOR_BY_ID = "SELECT * FROM author WHERE id = ?";
+    private final String GET_ALL_AUTHOR = "SELECT id, name FROM author";
 
     private final String UPDATE_BOOK = "UPDATE book "
-            + "SET IBSN = ?, Tittle = ?, Sumary = ?, PublicationYear = ?, NumberOfPage = ?, Cost = ?, Language = ?, RemainingQuantity = ? "
+            + "SET IBSN = ?, title = ?, Sumary = ?, PublicationYear = ?, NumberOfPage = ?, Cost = ?, Language = ?, RemainingQuantity = ? "
             + "WHERE (ID = ?);";
     private final String UPDATE_BOOK_STATUS = "UPDATE book SET status = ? WHERE id = ?";
     private final String UPDATE_AUTHOR = "Update author SET Name=?,Biography=?,Email=?,Address=?" + "where ID=?";
@@ -65,6 +70,72 @@ public class BookDAOImpl implements BookDAO {
 
     public BookDAOImpl() {
         conn = ConDB.getJDBCCOnection();
+    }
+
+    private int addBookPublisher(Publisher publisher, int bookId) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(ADD_PUBLISHER);
+        ps.setInt(1, bookId);
+        ps.setString(2, publisher.getName());
+        int rowCount = ps.executeUpdate();
+        return rowCount;
+    }
+    
+    private int addBookItem(BookItem bookItem) throws SQLException {
+        String ADD_BOOK_ITEM = "INSERT INTO bookitem (description, name) VALUES (?, ?)";
+
+        PreparedStatement ps = conn.prepareStatement(ADD_BOOK_ITEM, Statement.RETURN_GENERATED_KEYS);
+        ps.setString(1, bookItem.getDescription());
+        ps.setString(2, bookItem.getName());
+
+        ps.executeUpdate();
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+
+        return -1;
+    }
+
+    @Override
+    public int addBook(Book book, int[] authorsId) {
+        PreparedStatement ps;
+        int rowCount = -1;
+
+        try {
+            BookItem bookItem = new BookItem();
+            bookItem.setName(book.getTitle());
+            bookItem.setDescription(book.getSummary());
+            int bookItemId = addBookItem(bookItem);
+
+            if (bookItemId == -1) {
+                return -1;
+            }
+
+            ps = conn.prepareStatement(ADD_BOOK, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, bookItemId);
+            ps.setString(2, book.getIBSN());
+            ps.setString(3, book.getTitle());
+            ps.setString(4, book.getSummary());
+            ps.setString(5, book.getPublicationYear());
+            ps.setInt(6, book.getNumberOfPage());
+            ps.setFloat(7, book.getCost());
+            ps.setString(8, book.getLanguage());
+            ps.setInt(9, book.getRemainingQuantity());
+            ps.setInt(10, 0);
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                int bookId = rs.getInt(1);
+                rowCount = addBookAuthors(authorsId, bookId);
+                rowCount += addBookPublisher(book.getPub(), bookId);
+            }
+        } catch (Exception e) {
+            Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+            return -1;
+        } finally {
+            return rowCount;
+        }
     }
 
     private int deleteBookItem(int bookItemId) throws SQLException {
@@ -255,6 +326,23 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
+    public int addAuthor(Author author) {
+        int rowCount = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(ADD_AUTHOR, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, author.getName());
+            ps.setString(2, author.getBiography());
+            ps.setString(3, author.getEmail());
+            ps.setString(4, author.getAddress());
+            rowCount = ps.executeUpdate();
+        } catch (Exception e) {
+            Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            return rowCount;
+        }
+    }
+
+    @Override
     public int addBookAuthor(Author author, int bookId) {
         int rowCount = 0;
 
@@ -276,6 +364,31 @@ public class BookDAOImpl implements BookDAO {
 
                 rowCount += ps.executeUpdate();
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return rowCount;
+        }
+    }
+
+    private int addBookAuthors(int[] authorsId, int bookId) {
+        int rowCount = 0;
+
+        try {
+            String sql = ADD_BOOK_AUTHOR;
+            for (int i = 0; i < authorsId.length; i++) {
+                sql += " (?, ?),";
+            }
+            sql = sql.substring(0, sql.length()-1);
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            int j = 1;
+            for (int i = 0; i < authorsId.length; i++) {
+                ps.setInt(j, bookId);
+                ps.setInt(j + 1, authorsId[i]);
+                j+=2;
+            }
+            rowCount = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -490,4 +603,25 @@ public class BookDAOImpl implements BookDAO {
         }
     }
 
+    @Override
+    public List<Author> getAllAuthor() {
+        PreparedStatement ps;
+        List<Author> authors = new ArrayList<>();
+
+        try {
+            ps = conn.prepareStatement(GET_ALL_AUTHOR);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Author author = new Author();
+                author.setName(rs.getString("name"));
+                author.setId(rs.getInt("id"));
+                authors.add(author);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return authors;
+        }
+
+    }
 }

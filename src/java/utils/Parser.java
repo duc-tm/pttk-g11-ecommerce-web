@@ -93,4 +93,14 @@ public class Parser {
 
         return listInteger.stream().mapToInt(Integer::intValue).toArray();
     }
+    
+    public static int[] parseJsonArray(String json) {
+        String[] strArray = json.substring(1, json.length()-1).split(",");
+        int[] res = new int[strArray.length];
+        for(int i = 0; i < res.length; i++) {
+            res[i] = Integer.parseInt(strArray[i].trim());
+        }
+        
+        return res;
+    }
 }

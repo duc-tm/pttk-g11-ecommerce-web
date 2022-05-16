@@ -73,7 +73,7 @@ public class Mapper {
         int id = rs.getInt("book.id");
         int bookItemId = rs.getInt("book.bookItemId");
         String isbn = rs.getString("book.ibsn");
-        String title = rs.getString("book.tittle");
+        String title = rs.getString("book.title");
         String summary = rs.getString("book.sumary");
         String publicationYear = rs.getString("book.publicationYear");
         int numberOfPage = rs.getInt("book.numberOfPage");

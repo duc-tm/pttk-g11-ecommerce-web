@@ -71,7 +71,7 @@ public class CustomerOrderController extends HttpServlet {
         }
 
         if (route == null) {
-            Integer orderId = Parser.parseIntSafe(request.getParameter("orderid"), null);
+            Integer orderId = Parser.parseIntSafe(request.getParameter("id"), null);
 
 //            get multiple order route
             if (orderId == null) {

@@ -15,14 +15,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/product">Các mặt hàng</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">Hot</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Hàng HOT</a></li>
-                        <li><a class="dropdown-item" href="#!">Hàng mới</a></li>
-                    </ul>
-                </li>
             </ul>
             <div class="search me-5 position-relative" style="width: 35%;">
                 <input type="text" placeholder="Tìm kiếm mặt hàng" class="form-control pe-5" id="search-input">

@@ -135,9 +135,9 @@
                                             </div>
                                             <hr class="text-muted"/>
                                             <div class="order__body mt-3">
-                                                <a href="" class="d-block text-decoration-none text-black">
-                                                    <ul class="order__item-list list-unstyled">
-                                                        <c:forEach items="${listBookItem[status.index]}" var="bookItemAndQuantity">
+                                                <ul class="order__item-list list-unstyled">
+                                                    <c:forEach items="${listBookItem[status.index]}" var="bookItemAndQuantity">
+                                                        <a href="${pageContext.request.contextPath}/product/${bookItemAndQuantity.key.ID}" class="d-block text-decoration-none text-black">
                                                             <li class="order__item d-flex align-items-center">
                                                                 <div class="order__item-img me-3">
                                                                     <img src="<c:out value="${bookItemAndQuantity.key.image}" />" alt=""/>
@@ -188,9 +188,9 @@
 
                                                                 </div>
                                                             </li>
-                                                        </c:forEach>
-                                                    </ul>
-                                                </a>
+                                                        </a>
+                                                    </c:forEach>
+                                                </ul>
                                             </div>
                                         </div>
                                         <div class="order-post-purchase-control p-4 pb-3 shadow-sm rounded">
@@ -205,7 +205,7 @@
                                             </div>
                                             <div class="order-control text-end">
                                                 <button type="button" class="btn btn-primary me-2 min-w-150">Mua lại</button>
-                                                <a href="order/<c:out value="${order.id}" />" class="btn btn-outline-white min-w-150">
+                                                <a href="order?id=<c:out value="${order.id}" />" class="btn btn-outline-white min-w-150">
                                                     Chi Tiết Đơn Hàng
                                                 </a>
                                             </div>
@@ -229,7 +229,7 @@
         </script>
         <script>
             document.querySelectorAll('.order-list-nav__link a').forEach((linkEle) => {
-                if(linkEle.href === window.location.href) {
+                if (linkEle.href === window.location.href) {
                     linkEle.parentElement.classList.add('active');
                 }
             })

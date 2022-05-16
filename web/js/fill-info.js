@@ -278,7 +278,7 @@ function jsonEscape(str) {
                     icon: 'success',
                     title: 'Tạo đơn hàng thành công',
                     allowOutsideClick: false,
-                    confirmButtonText: `<a href="/g11/customer/order?orderid=${orderId}" class="text-decoration-none text-white">Xem trạng thái đơn hàng</a>`,
+                    confirmButtonText: `<a href="/g11/customer/order?id=${orderId}" class="text-decoration-none text-white">Xem trạng thái đơn hàng</a>`,
                     footer: '<a href="/g11/home" class="text-decoration-none fs-6">Tiếp tục mua hàng</a>'
                 });
             } else {

@@ -51,14 +51,6 @@
 
                     <div class="user__nav">
                         <ul class="nav-list list-unstyled">
-                            <li class="nav-item">
-                                <a href="" class="d-flex align-items-center">
-                                    <img class="img-fluid me-2" src="https://cf.shopee.vn/file/84feaa363ce325071c0a66d3c9a88748">
-                                    <span>
-                                        Ưu đãi dành riêng cho bạn
-                                    </span>
-                                </a>
-                            </li>
                             <li class="nav-item active">
                                 <a href="${pageContext.request.contextPath}/user/account/profile"  class="d-flex align-items-center">
                                     <i class="far fa-user me-2 text-primary"></i>

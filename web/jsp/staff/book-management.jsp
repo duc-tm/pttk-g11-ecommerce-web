@@ -30,7 +30,12 @@
 
                 <div class="book-information">
                     <div class="book-information__header pt-4 px-3">
-                        <h3 class="text-capitalize fs-4 pb-3 mb-0">Thông tin sách</h3>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="text-capitalize fs-4 pb-3 mb-0">Thông tin sách</h3>
+                            <a href="http://localhost:8080/g11/staff/book/add" class="btn btn-primary px-3 py-2">
+                                Thêm sách
+                            </a>
+                        </div>
                         <div class="book-information__functionality d-flex align-items-center justify-content-between fw-500">
                             <div class="functionality__sort">
                                 <span class="text-capitalize text-muted">Sắp xếp theo</span>

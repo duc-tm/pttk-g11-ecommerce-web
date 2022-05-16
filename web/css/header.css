@@ -16,18 +16,6 @@
     position: relative;
 }
 
-.cart::after {
-    content: "0";
-    position: absolute;
-    top: 0;
-    right: -4px;
-    font-size: 1rem;
-    padding: 0 7px;
-    background-color: #fff;
-    border-radius: 50%;
-    font-size: 0.9rem;
-}
-
 .user {
     margin-left: 96px;
 }

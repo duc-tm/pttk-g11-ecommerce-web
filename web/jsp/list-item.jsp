@@ -41,47 +41,8 @@
 
                 <div class="container mt-4">
                     <div class="row">
-                        <div class="col-2">
-                            <div class="category">
-                                <h5 class="category-heading text-capitalize fs-6">Tất cả danh mục</h5>
-                                <hr class="text-muted">
-                                <ul class="category-list list-unstyled">
-                                    <li class="category-list__item">
-                                        <a href="" >Sách thiếu nhi</a>
-                                    </li>
-                                    <li class="category-list__item">
-                                        <a href="" >Sách trong nước</a>
-                                    </li>
-                                    <li class="category-list__item">
-                                        <a href="" >Sách nước ngoài</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="filter">
-                                <h5 class="filter-heading text-capitalize fs-6"><i class="fas fa-filter me-2"></i>Bộ lọc tìm kiếm</h5>
-                                <hr class="text-muted"/>
-                                <div class="filter-criteria">
-                                    <div class="filter-criteria__price">
-                                        <div class="price-range">
-                                            <div class="text-capitalize my-3">Khoảng giá</div>
-                                            <div class="form-group d-flex align-items-center justify-content-between">
-                                                <input type="text" id="price-range__from" class="form-control" placeholder="TỪ">
-                                                <hr />
-                                                <input type="text" id="price-range__to" class="form-control" placeholder="ĐẾN">
-                                            </div>
-                                            <button type="button" class="btn btn-primary btn-sm text-uppercase w-100 mt-3">Áp dụng</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-10">
-                            <div class="home-filter hide-on-mobile-tablet">
-                                <span class="home-filter__label">Sắp xếp theo</span>
-                                <button class="home-filter__bt bt bt--primary">Mới nhất</button>
-                                <button class="home-filter__bt bt">Bán chạy</button>
-                            </div>
+                        <div class="col-12">
+                            <h2 class="mb-4 fs-4">Danh sách sản phẩm</h2>
 
                             <div class="home-product">
                                 <div class="row">
@@ -113,10 +74,9 @@
                                 <i class="fas fa-chevron-left"></i>
                             </button>
                             <div class="pagination-list">
-                                <a href="?page=1">1</a>
-                                <a href="?page=2">2</a>
-                                <a href="?page=3">3</a>
-                                <a class="still-more-page">...</a>
+                                <c:forEach var = "i" begin = "1" end = "${totalPage}">
+                                    <a href="?page=<c:out value = "${i}"/>"><c:out value = "${i}"/></a>
+                                </c:forEach>
                             </div>
                             <button class="next-page-btn">
                                 <i class="fas fa-chevron-right"></i>

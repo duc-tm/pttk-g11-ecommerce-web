@@ -56,7 +56,7 @@ and open the template in the editor.
     margin-bottom: 12px;
 }
 
-.author-item:last-child {
+.author-item:first-child {
     color: var(--primary-color);
     border: 3px dashed var(--primary-color);
 }

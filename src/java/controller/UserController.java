@@ -108,7 +108,7 @@ public class UserController extends HttpServlet {
         String email = request.getParameter("email");
         String gender = request.getParameter("gender");
         String phoneNumber = request.getParameter("phonenumber");
-        String addressDetail = request.getParameter("detailaddress");
+        String addressDetail = request.getParameter("addressdetail");
         String[] districtInfo = Parser.parseStringWithFilledNull(request.getParameter("district"), ";", 2);
         String[] cityInfo = Parser.parseStringWithFilledNull(request.getParameter("city"), ";", 2);
 

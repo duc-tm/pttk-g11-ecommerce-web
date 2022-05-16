@@ -25,6 +25,7 @@ import model.book.BookItem;
 public class BookItemDAOImpl implements BookItemDAO {
 
     private final Connection conn;
+    private final String GET_TOTAL_PAGE = "SELECT COUNT(id) FROM bookitem";
     private final String GET_BOOKID_WITH_BOOKITEMID = "SELECT * FROM book WHERE BookitemID=?";
     private final String sql1 = "DELETE FROM bookitem where ID = ?;";
     private final String DELETE_CARTITEM_WITH_BOOKITEMID = "DELETE FROM cartitem where bookitemID = ?;";
@@ -33,11 +34,11 @@ public class BookItemDAOImpl implements BookItemDAO {
             + "SET price = ?, discount = ?, description = ?, image = ?, name = ?, category = ? WHERE id = ?";
     private final String GET_BOOK_ITEM_BY_ID_SQL = "SELECT * FROM bookitem WHERE id = ?;";
     private final String GET_NEW_ITEMS_LIMIT_SQL = "SELECT * FROM bookitem, book "
-            + "WHERE bookitem.id < ? AND bookitem.id = book.bookitemid AND book.status > 0 "
-            + "ORDER BY bookitem.id DESC LIMIT ?";
+            + "WHERE bookitem.id = book.bookitemid AND book.status > 0 "
+            + "ORDER BY bookitem.id DESC LIMIT ?, ?";
     private final String GET_ITEMS_FILTER_BY_NAME_SQL = "SELECT * FROM bookitem, book "
-            + "WHERE bookitem.id < ? AND bookitem.name LIKE ? AND bookitem.id = book.bookitemid AND book.status > 0 "
-            + "ORDER BY bookitem.id DESC LIMIT ?";
+            + "WHERE bookitem.name LIKE ? AND bookitem.id = book.bookitemid AND book.status > 0 "
+            + "ORDER BY bookitem.id DESC LIMIT ?, ?";
     private final String GET_NEW_ITEMS_LIMIT_BY_CATEGORY_SQL = "SELECT * FROM bookitem, book "
             + "WHERE bookitem.id <= ? AND bookitem.category = ? AND bookitem.id = book.bookitemid AND book.status > 0"
             + "ORDER BY bookitem.id DESC LIMIT ?";
@@ -201,9 +202,10 @@ public class BookItemDAOImpl implements BookItemDAO {
                 ps.setInt(1, from);
                 ps.setInt(2, limit);
             } else {
+                System.out.println(itemName);
                 ps = conn.prepareStatement(GET_ITEMS_FILTER_BY_NAME_SQL);
-                ps.setInt(1, from);
-                ps.setString(2, "%" + itemName + "%");
+                ps.setString(1, "%" + itemName + "%");
+                ps.setInt(2, from);
                 ps.setInt(3, limit);
             }
 
@@ -269,6 +271,22 @@ public class BookItemDAOImpl implements BookItemDAO {
             Logger.getLogger(BookItemDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             return category;
+        }
+    }
+
+    @Override
+    public int getTotalPage() {
+        int totalPage = 0;
+
+        try (PreparedStatement ps = conn.prepareStatement(GET_TOTAL_PAGE)) {
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                totalPage = (int) Math.ceil(rs.getInt(1) / 12.0);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookItemDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return totalPage;
         }
     }
 }

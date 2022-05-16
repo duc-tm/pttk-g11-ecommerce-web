@@ -25,24 +25,10 @@
                 <div class="book-detail px-3">
                     <div class="container-fluid">
                         <div class="book-detail__header d-flex align-items-center justify-content-between mb-3 mt-4">
-                            <h3 class="text-capitalize fs-4 mb-0">Chi tiết sách</h3>
-                            <div class="book-edit-control d-flex">
-                                <div class="book-status-control rounded-pill shadow-sm <c:if test="${book.status == false}">down</c:if>" 
-                                     id="book-status-control" 
-                                     data-js-status="<c:out value="${book.status}" />"
-                                    >
-                                    <div class="status-control-btn">
-                                        <i class="fas fa-chevron-circle-up shadow rounded-circle"></i>
-                                    </div>
-                                </div>
-
-                                <a class="btn btn-primary ms-3 shadow-sm" href="<c:url value="/staff/book-item/edit?id=${book.bookItemId}" />">
-                                    Cập nhật thông tin trên trang bán
-                                </a>
-                            </div>
+                            <h3 class="text-capitalize fs-4 mb-0">Thêm sách</h3>
                         </div>
                         <div class="book-detail__form">
-                            <form action="<c:url value="/staff/book/edit" />" method="POST">
+                            <form action="<c:url value="/staff/book/add" />" method="POST">
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col">
@@ -50,24 +36,23 @@
                                                 <h4 class="text-capitalize fs-5">Thông tin chung</h4>
                                                 <div class="form-group">
                                                     <label for="book-isbn" class="form-label">ISBN:</label>
-                                                    <input class="form-control" type="text" id="book-isbn" name="isbn" value="<c:out value="${book.IBSN}" />">
-                                                    <input type="hidden" value="<c:out value="${book.id}" />" name="id" id="book-id">
+                                                    <input class="form-control" type="text" id="book-isbn" name="isbn">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="book-title" class="form-label">Tiêu đề:</label>
-                                                    <input class="form-control" type="text" id="book-title" name="title" value="<c:out value="${book.title}" />">
+                                                    <input class="form-control" type="text" id="book-title" name="title">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="book-page" class="form-label">Số trang:</label>
-                                                    <input class="form-control" type="number" id="book-page" name="page" min="1" value="<c:out value="${book.numberOfPage}" />">
+                                                    <input class="form-control" type="number" id="book-page" name="page" min="1">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="book-language" class="form-label">Ngôn ngữ:</label>
-                                                    <input class="form-control" type="text" id="book-language" name="language" value="<c:out value="${book.language}" />">
+                                                    <input class="form-control" type="text" id="book-language" name="language">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="book-summary" class="form-label">Tóm tắt:</label>
-                                                    <textarea class="form-control" id="book-summary" name="summary" rows="4"><c:out value="${book.summary}" /></textarea>
+                                                    <textarea class="form-control" id="book-summary" name="summary" rows="4"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -78,36 +63,29 @@
                                                 <div class="form-group">
                                                     <label for="book-author" class="form-label">Tác giả:</label>
                                                     <div class="book-author-control" id="book-author">
+                                                        <input type="hidden" name="authors" id="input-authors"/>
                                                         <ul class="author-list list-unstyled mb-0 d-flex align-items-center flex-wrap">
                                                             <li class="author-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Thêm tác giả">
-                                                                <a class="author-control d-flex align-items-center justify-content-center text-decoration-none" 
-                                                                   href="<c:url value="/staff/book/author/add?bookid=${book.id}" />"
-                                                                   >
+                                                                <button 
+                                                                    type="button"
+                                                                    class="author-control d-flex align-items-center justify-content-center border-0 outline-none py-2 bg-transparent text-primary" 
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#author-modal"
+                                                                    >
                                                                     <i class="fas fa-plus"></i>
-                                                                </a>
+                                                                </button>
                                                             </li>
-                                                            <c:forEach items="${book.aut}" var="author">
-                                                                <li class="author-item ms-2">
-                                                                    <a class="author-control text-decoration-none" 
-                                                                       href="<c:url value="/staff/book/author/edit?bookid=${book.id}&authorid=${author.id}" />"
-                                                                       >
-                                                                        <c:out value="${author.name}" />; 
-                                                                    </a>
-                                                                </li>
-                                                            </c:forEach>
                                                         </ul>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="book-publisher" class="form-label">Nhà xuất bản:</label>
-                                                    <input class="form-control" type="text" id="book-publisher" name="publisher" value="<c:out value="${book.pub.name}" />">
+                                                    <input class="form-control" type="text" id="book-publisher" name="publisher">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="book-publish-year" class="form-label me-3">Năm xuất bản:</label>
                                                     <input type="text" class="datepicker form-control d-inline-block w-auto ps-3" 
-                                                           id="book-publish-year" name="publishyear"  
-                                                           value="<c:out value="${book.publicationYear}" />"
-                                                           >
+                                                           id="book-publish-year" name="publishyear">
                                                 </div>
                                             </div>
 
@@ -115,18 +93,18 @@
                                                 <h4 class="text-capitalize fs-5">Thông tin nhập hàng</h4>
                                                 <div class="form-group">
                                                     <label for="book-price" class="form-label">Giá nhập (VND):</label>
-                                                    <input class="form-control" type="text" id="book-price" name="price" value="<c:out value="${book.cost}" />">
+                                                    <input class="form-control" type="text" id="book-price" name="price">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="book-remaining" class="form-label">Kho:</label>
-                                                    <input class="form-control" type="number" id="book-remaining" name="remaining" min="0" value="<c:out value="${book.remainingQuantity}" />">
+                                                    <input class="form-control" type="number" id="book-remaining" name="remaining" min="0">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-btn text-end mt-3 mb-3">
-                                    <button class="btn btn-danger me-3" data-bs-toggle="modal" data-bs-target="#delete-modal">Xóa thông tin sách</button>
+                                    <button class="btn btn-secondary me-3">Hủy</button>
                                     <button class="btn btn-primary min-w-150" type="submit">Lưu</button>
                                 </div>
                             </form>
@@ -136,68 +114,35 @@
             </div>
         </div>
 
-
-        <%@include file="/jsp/staff/components/delete-modal.jsp" %>
-        <form action="<c:url value="/staff/book/delete" />" method="POST" id="delete-form" class="d-none">
-            <input type="hidden" name="id" value="<c:out value="${book.id}" />">
-        </form>
+        <div class="modal fade" tabindex="-1" id="author-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tác giả</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-unstyled" id="authors-container">
+                            <c:forEach var="author" items="${authors}">
+                                <li class="d-flex align-items-center">
+                                    <input type="checkbox" data-js-id="${author.id}" data-js-name="${author.name}" id="${author.id}" style="width: 20px; height: 20px;"/>
+                                    <label class="ms-2 py-2  user-select-none" for="${author.id}">
+                                        ${author.name}
+                                    </label>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="<c:url value="/staff/book/author/add"/>" class="btn btn-secondary">Thêm tác giả mới</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-primary" id="btn-select-authors" data-bs-dismiss="modal">Chọn</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-        <script>
-            document.getElementById('book-status-control').addEventListener('click', async function () {
-                const status = !(this.dataset.jsStatus === 'true');
-                const bookId = document.getElementById('book-id').value;
-                this.classList.toggle('down');
-
-                const response = await fetch('http://localhost:8080/g11/staff/book/edit/status', {
-                    method: 'POST',
-                    body: new URLSearchParams({
-                        status,
-                        id: bookId
-                    })
-                });
-
-                const data = await response.text();
-                if (data) {
-                    const dataTokens = data.split(';');
-
-                    if (dataTokens[0] === '201') {
-                        this.dataset.jsStatus = status;
-
-                        if (status) {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Sản phẩm đã được đưa lên trang bán',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        } else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Sản phẩm đã được gỡ khỏi trang bán',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
-
-                        return;
-                    }
-                }
-
-                this.classList.toggle('down');
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: 'Có lỗi xảy ra, vui lòng thử lại sau',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            })
-        </script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
@@ -222,9 +167,28 @@
         </script>
 
         <script>
-            document.getElementById('delete-btn').addEventListener('click', () => {
-                document.getElementById('delete-form').submit();
-            })
+            const btnSelectAuthor = document.getElementById('btn-select-authors');
+            const inputAuthors = document.getElementById('input-authors');
+            const checkboxes = Array.from(document.querySelectorAll('#authors-container input'));
+            const authorListContainer = document.querySelector('.author-list');
+
+            btnSelectAuthor.addEventListener('click', () => {
+                const [selectedAuthorsId, selectedAuthorsName] = checkboxes.reduce((total, checkbox) => {
+                    if (checkbox.checked) {
+                        total[0].push(+checkbox.dataset.jsId);
+                        total[1].push(checkbox.dataset.jsName);
+                    }
+                    return total;
+                }, [[], []])
+                inputAuthors.value = JSON.stringify(selectedAuthorsId);
+                selectedAuthorsName.forEach((name) => {
+                    const liEle = document.createElement('li');
+                    liEle.textContent = name + ';';
+                    liEle.className = 'author-item ms-2';
+                    authorListContainer.insertAdjacentElement('beforeend', liEle);
+                })
+
+            });
         </script>
     </body>
 </html>

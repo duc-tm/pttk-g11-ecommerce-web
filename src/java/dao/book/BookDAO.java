@@ -18,6 +18,8 @@ import model.book.Publisher;
  */
 public interface BookDAO {
 
+    int addBook(Book book, int[] authorsId);
+    
     int deleteBook(int id);
 
     int deleteBookAuthor(int bookId, int authorId);
@@ -50,5 +52,9 @@ public interface BookDAO {
 
     List<Book> getMultipleBook(int from, int to);
 
+    int addAuthor(Author author);
+    
     int addBookAuthor(Author author, int bookId);
+    
+    List<Author> getAllAuthor();
 }
